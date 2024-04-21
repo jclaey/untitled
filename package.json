@@ -1,0 +1,29 @@
+{
+  "name": "untitled_company_project",
+  "version": "1.0.0",
+  "description": "Company website",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "web",
+    "development",
+    "mobile",
+    "app",
+    "development",
+    "desktop",
+    "app",
+    "development",
+    "web",
+    "apps",
+    "ai",
+    "web",
+    "apps",
+    "artificial",
+    "intelligence"
+  ],
+  "author": "Jason Claeys",
+  "license": "ISC"
+}
