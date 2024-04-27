@@ -19,4 +19,12 @@ hr {
 
 .column-group {
     margin-bottom: 2rem;
-} 
+}
+
+.footer .columns {
+    margin-bottom: 3rem;
+}
+
+#footer-built-by {
+    font-size: 18px;
+}
