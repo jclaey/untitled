@@ -21,10 +21,22 @@ hr {
     margin-bottom: 2rem;
 }
 
+.footer {
+    height: 300px;
+}
+
 .footer .columns {
     margin-bottom: 3rem;
 }
 
 #footer-built-by {
     font-size: 18px;
+}
+
+header {
+    margin-bottom: 2rem;
+}
+
+#contact-form {
+    margin-bottom: 5rem;
 }

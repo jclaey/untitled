@@ -7,10 +7,10 @@ const footer = () => {
                 </div>
                 <div class="column">
                     <div>
-                        <a href="#" target="_blank" class="has-text-dark is-size-5">About Us</a>
+                        <a href="/about" target="_blank" class="has-text-dark is-size-5">About Us</a>
                     </div>
                     <div>
-                        <a href="#" target="_blank" class="has-text-dark is-size-5">Contact Us</a>
+                        <a href="/contact" target="_blank" class="has-text-dark is-size-5">Contact Us</a>
                     </div>
                     <div>
                         <a href="#" target="_blank" class="has-text-dark is-size-5">Terms and Conditions</a>
