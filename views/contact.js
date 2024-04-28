@@ -5,7 +5,7 @@ const contactPage = () => {
             <main>
                 <section id="">
                     <h1 class="title is-size-1">Contact Us</h1>
-                    <form id="contact-form" action="/success" method="POST">
+                    <form class="box" id="contact-form" action="/success" method="POST">
                         <div class="field">
                             <label for="name" class="label">Name</label>
                             <div class="control">
