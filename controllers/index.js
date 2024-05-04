@@ -1,6 +1,8 @@
 import indexPage from "../views/index.js"
 import aboutPage from "../views/about.js"
 import contactPage from "../views/contact.js"
+import successPage from '../views/success.js'
+import sendEmail from "../utils/sendEmail.js"
 
 export const getIndex = (req, res, next) => {
     res.send(indexPage())
@@ -12,4 +14,19 @@ export const getAbout = (req, res, next) => {
 
 export const getContact = (req, res, next) => {
     res.send(contactPage())
+}
+
+export const postContact = async (req, res, next) => {
+    await sendEmail(req)
+
+    // Send success page
+    res.send(successPage())
+
+    setTimeout(() => {
+        res.redirect('/')
+    }, 5000)
+}
+
+export const getSuccess = (req, res, next) => {
+    res.send(successPage())
 }
