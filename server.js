@@ -5,6 +5,7 @@ import express from 'express'
 import cookieSession from 'cookie-session'
 import index from './routes/index.js'
 import admin from './routes/admin/index.js'
+import quotes from './routes/quotes/index.js'
 import connectDB from './config/db.js'
 
 connectDB()
@@ -30,6 +31,7 @@ app.use(cookieSession({
 // Mount routes
 app.use('/', index)
 app.use('/admin', admin)
+app.use('/quotes', quotes)
 
 const PORT = process.env.PORT || 3000
 

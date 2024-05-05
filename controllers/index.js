@@ -18,13 +18,7 @@ export const getContact = (req, res, next) => {
 
 export const postContact = async (req, res, next) => {
     await sendEmail(req)
-
-    // Send success page
     res.send(successPage())
-
-    setTimeout(() => {
-        res.redirect('/')
-    }, 5000)
 }
 
 export const getSuccess = (req, res, next) => {
