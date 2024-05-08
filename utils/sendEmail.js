@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import nodemailer from 'nodemailer'
 
 const sendEmail = async req => {
@@ -6,8 +7,8 @@ const sendEmail = async req => {
         port: 587,
         secure: false,
         auth: {
-            user: 'jdclaeys@outlook.com',
-            pass: 'F4mRg295?b9Zfp6'
+            user: process.env.OUTLOOK_EMAIL,
+            pass: process.env.OUTLOOK_PASS
         }
     })
 
