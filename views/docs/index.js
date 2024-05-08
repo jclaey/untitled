@@ -4,7 +4,19 @@ const indexPage = () => {
     return layout({ template: `
         <main class="container">
             <section>
-                <h1>Docs Index Page</h1>
+                <div class="mb-6">
+                    <h1 class="title is-size-1">Docs and Stuff</h1>
+                </div>
+                <div class="columns">
+                    <div class="column">
+                        <h2 class="is-size-3">Latest Knowledge Base</h2>
+                        <hr>
+                    </div>
+                    <div class="column">
+                        <h2 class="is-size-3">Latest Blog Posts</h2>
+                        <hr>
+                    </div>
+                </div>
             </section>
         </main>
     ` })

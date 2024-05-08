@@ -5,4 +5,6 @@ import {
     getIndex
 } from '../../controllers/docs/index.js'
 
-router.route('/', getIndex)
+router.route('/').get(getIndex)
+
+export default router
