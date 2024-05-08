@@ -1,9 +1,34 @@
+:root {
+    --primary-color: #007AC1;
+    --secondary-color: #ff6600;
+}
+
 hr {
     margin: 1.5rem 0;
+    background-color: var(--secondary-color);
+    height: 1.5px;
 }
 
 main {
     min-height: 400px;
+    width: 100%;
+}
+
+/*  */
+#showcase-area .hero-body .columns .column .title {
+    color: var(--primary-color);
+}
+
+#showcase-area {
+    margin-bottom: 5rem;
+}
+
+#title-item {
+    color: var(--primary-color);
+}
+
+.navbar-brand {
+    color: var(--primary-color);
 }
 
 /*  */
@@ -43,4 +68,17 @@ header {
 
 #contact-form {
     margin-bottom: 5rem;
+}
+
+#title-hr {
+    width: 80%;
+}
+
+#sub-showcase {
+    height: 150px;
+    background-color: var(--primary-color);
+}
+
+.navbar.container {
+    font-size: 18px;
 }

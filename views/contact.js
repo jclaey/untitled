@@ -2,7 +2,7 @@ import layout from "./layout.js"
 
 const contactPage = () => {
     return layout({ template: `
-            <main>
+            <main class="container">
                 <section id="">
                     <h1 class="title is-size-1">Contact Us</h1>
                     <form class="box" id="contact-form" action="/contact" method="POST">

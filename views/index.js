@@ -3,11 +3,12 @@ import layout from "./layout.js"
 const indexPage = () => {
     return layout({ template: `
             <main>
-                <section id="showcase-area" class="hero">
+                <section id="showcase-area" class="hero container">
                     <div class="hero-body">
                         <div class="columns">
                             <div class="column">
                                 <p class="title">Web Solutions</p>
+                                <hr id="title-hr">
                                 <p class="subtitle">Solutions for the web...</p>
                             </div>
                             <div class="column mt-5">
@@ -57,6 +58,11 @@ const indexPage = () => {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </section>
+                <section>
+                    <div id="sub-showcase">
+
                     </div>
                 </section>
             </main>

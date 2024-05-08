@@ -2,8 +2,8 @@ import layout from "./layout.js"
 
 const aboutPage = () => {
     return layout({ template: `
-            <main>
-                <section id="">
+            <main class="container">
+                <section>
                     <div class="mb-6">
                         <h1 class="title is-size-1">About Us</h1>
                     </div>

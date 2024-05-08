@@ -2,13 +2,16 @@ import layout from "../layout.js"
 
 const newQuotePage = () => {
     return layout({ template: `
-        <main>
+        <main class="container">
             <section>
                 <h1 class="title is-size-1">Get A Free Quote</h1>
-                <form action="/quotes" method="POST">
+                <form class="box" action="/quotes" method="POST">
+                    <div class="mb-3">
+                        <small>* denotes a required field</small>
+                    </div>
                     <div class="field">
                         <label for="firstName" class="label">
-                            First Name
+                            First Name*
                         </label>
                         <div class="control">
                             <input class="input" type="text" id="firstName" name="firstName" />
@@ -16,7 +19,7 @@ const newQuotePage = () => {
                     </div>
                     <div class="field">
                         <label for="lastName" class="label">
-                            Last Name
+                            Last Name*
                         </label>
                         <div class="control">
                             <input class="input" type="text" id="lastName" name="lastName" />
@@ -24,7 +27,7 @@ const newQuotePage = () => {
                     </div>
                     <div class="field">
                         <label for="businessName" class="label">
-                            Business Name
+                            Business Name*
                         </label>
                         <div class="control">
                             <input class="input" type="text" id="businessName" name="businessName" />
@@ -32,7 +35,7 @@ const newQuotePage = () => {
                     </div>
                     <div class="field">
                         <label for="streetAddressOne" class="label">
-                            Street Address One
+                            Street Address One*
                         </label>
                         <div class="control">
                             <input class="input" type="text" id="streetAddressOne" name="streetAddressOne" />
@@ -48,7 +51,7 @@ const newQuotePage = () => {
                     </div>
                     <div class="field">
                         <label for="city" class="label">
-                            City
+                            City*
                         </label>
                         <div class="control">
                             <input class="input" type="text" id="city" name="city" />
@@ -56,7 +59,7 @@ const newQuotePage = () => {
                     </div>
                     <div class="field">
                         <label for="state" class="label">
-                            State
+                            State*
                         </label>
                         <div class="control">
                             <div class="select">
@@ -117,7 +120,7 @@ const newQuotePage = () => {
                     </div>
                     <div class="field">
                         <label for="zipcode" class="label">
-                            Zip Code
+                            Zip Code*
                         </label>
                         <div class="control">
                             <input class="input" type="text" id="zipCode" name="zipCode" />
@@ -125,7 +128,7 @@ const newQuotePage = () => {
                     </div>
                     <div class="field">
                         <label for="phoneNumber" class="label">
-                            Phone Number
+                            Phone Number*
                         </label>
                         <div class="control">
                             <input class="input" type="text" id="phoneNumber" name="phoneNumber" />
@@ -133,7 +136,7 @@ const newQuotePage = () => {
                     </div>
                     <div class="field">
                         <label for="email" class="label">
-                            Email
+                            Email*
                         </label>
                         <div class="control">
                             <input class="input" type="text" id="email" name="email" />
@@ -141,33 +144,41 @@ const newQuotePage = () => {
                     </div>
                     <div class="field">
                         <label for="projectType" class="label">
-                            Project Type
+                            Project Type*
                         </label>
                         <div class="control">
                             <div class="select">
                                 <select>
-                                    <option></option>
-                                    <option></option>
+                                    <option>Web App (back end, database, etc.)</option>
+                                    <option>Website (front end only)</option>
+                                    <option>Desktop Application</option>
+                                    <option>Mobile Application (Android, iOS, cross platform)</option>
+                                    <option>Internet of Things</option>
+                                    <option>Virtual Reality</option>
+                                    <option>Augmented Reality</option>
+                                    <option>Artificial Intelligence</option>
+                                    <option>Other</option>
                                 </select>
                             </div>
                         </div>
                     </div>
                     <div class="field">
                         <label for="projectDetails" class="label">
-                            Project Details
+                            Project Details*
                         </label>
                         <div class="control">
                             <textarea class="textarea"></textarea>
                         </div>
                     </div>
-                    <div class="field">
+                    <div class="field mb-6">
                         <label for="budget" class="label">
-                            Budget
+                            Budget* (ballpark estimation, numbers only)
                         </label>
                         <div class="control">
                             <input class="input" type="number" id="budget" name="budget" />
                         </div>
                     </div>
+                    <button type="submit" class="button mb-3 is-medium is-success">Get Your Free Quote Now!</button>
                 </form>                
             </section>
         </main>

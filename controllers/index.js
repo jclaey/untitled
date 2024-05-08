@@ -2,6 +2,7 @@ import indexPage from "../views/index.js"
 import aboutPage from "../views/about.js"
 import contactPage from "../views/contact.js"
 import successPage from '../views/success.js'
+import servicesPage from "../views/services.js"
 import sendEmail from "../utils/sendEmail.js"
 
 export const getIndex = (req, res, next) => {
@@ -23,4 +24,8 @@ export const postContact = async (req, res, next) => {
 
 export const getSuccess = (req, res, next) => {
     res.send(successPage())
+}
+
+export const getServices = (req, res, next) => {
+    res.send(servicesPage())
 }
