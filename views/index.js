@@ -62,7 +62,7 @@ const indexPage = () => {
                 </section>
                 <section>
                     <div id="sub-showcase">
-
+                        <p>We develop for the future.</p>
                     </div>
                 </section>
             </main>

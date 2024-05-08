@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Jersey+25+Charted&family=Mynerve&family=Roboto&display=swap');
+
 :root {
     --primary-color: #007AC1;
     --secondary-color: #ff6600;
@@ -81,4 +83,13 @@ header {
 
 .navbar.container {
     font-size: 18px;
+}
+
+#sub-showcase {
+    font-family: 'Jersey 25 Charted', sans-serif;
+    color: #fff;
+    font-size: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
