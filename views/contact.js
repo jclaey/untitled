@@ -4,7 +4,11 @@ const contactPage = () => {
     return layout({ template: `
             <main class="container">
                 <section id="">
-                    <h1 class="title is-size-1">Contact Us</h1>
+                    <div class="mb-6 page-title-div">
+                        <h1 class="title is-size-1">
+                            <span class="pipe">|</span> Contact Us <span class="pipe">|</span>
+                        </h1>
+                    </div>
                     <form class="box" id="contact-form" action="/contact" method="POST">
                         <div class="field">
                             <label for="name" class="label">Name</label>

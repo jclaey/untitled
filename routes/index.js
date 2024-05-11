@@ -7,7 +7,8 @@ import {
     getContact,
     postContact,
     getSuccess,
-    getServices
+    getServices,
+    getDemo
 } from '../controllers/index.js'
 
 router.route('/').get(getIndex)
@@ -15,5 +16,6 @@ router.route('/about').get(getAbout)
 router.route('/contact').get(getContact).post(asyncHandler(postContact))
 router.route('/success').get(getSuccess)
 router.route('/services').get(getServices)
+router.route('/demos').get(getDemo)
 
 export default router

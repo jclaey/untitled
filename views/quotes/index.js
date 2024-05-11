@@ -4,7 +4,14 @@ const newQuotePage = () => {
     return layout({ template: `
         <main class="container">
             <section>
-                <h1 class="title is-size-1">Get A Free Quote</h1>
+                <div class="mb-6 page-title-div">
+                    <h1 class="title is-size-1">
+                        <span class="pipe">|</span> Get A Free Quote <span class="pipe">|</span>
+                    </h1>
+                </div>
+                <div class="mb-6">
+                    <p class="is-size-4">Free is the best, isn't it? Honestly, why would we charge you for this anyway? Fill out and submit the form below to get a personalized quote!</p>
+                </div>
                 <form class="box" action="/quotes" method="POST">
                     <div class="mb-3">
                         <small>* denotes a required field</small>

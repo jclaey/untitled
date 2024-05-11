@@ -4,8 +4,10 @@ const aboutPage = () => {
     return layout({ template: `
             <main class="container">
                 <section>
-                    <div class="mb-6">
-                        <h1 class="title is-size-1">About Us</h1>
+                    <div class="mb-6 page-title-div">
+                        <h1 class="title is-size-1">
+                            <span class="pipe">|</span> About Us <span class="pipe">|</span>
+                        </h1>
                     </div>
                     <p class="is-size-4 block">Hi! We are Web Solutions and we create solutions for the web! Think web sites, web apps, mobile apps, desktop apps, Internet of Things,
                     and some cool AI stuff too. We build for individuals, small businesses, and enterprises as well.</p>

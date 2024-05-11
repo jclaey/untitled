@@ -4,7 +4,11 @@ const indexPage = () => {
     return layout({ template: `
         <main>
             <section class="container">
-                <h1 class="title is-size-1 mb-6">Admin Area</h1>
+                <div class="mb-6 page-title-div">
+                    <h1 class="title is-size-1">
+                        <span class="pipe">|</span> Admin Area <span class="pipe">|</span>
+                    </h1>
+                </div>
                 <div class="columns">
                     <div class="column">
                         <div id="admin-index-posts-area" class="level">
