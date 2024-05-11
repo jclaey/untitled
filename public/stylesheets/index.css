@@ -93,3 +93,25 @@ header {
     align-items: center;
     justify-content: center;
 }
+
+#services-demos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--secondary-color);
+    color: #fff;
+    height: 100px;
+}
+
+#services-demos h2 {
+    color: #fff;
+}
+
+.pipe {
+    color: var(--secondary-color);
+    display: inline;
+}
+
+.page-title-div h1 {
+    text-align: center;
+}
