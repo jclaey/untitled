@@ -57,6 +57,7 @@ const newDocPage = () => {
                             <input type="file" class="input" id="image" name="image" />
                         </div>
                     </div>
+                    <button class="button" type="submit">Create Post</button>
                 </form>
             </section>
         </main>
