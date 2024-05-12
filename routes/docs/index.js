@@ -6,5 +6,6 @@ import {
 } from '../../controllers/docs/index.js'
 
 router.route('/').get(getIndex)
+router.route('/new').get(getNew)
 
 export default router

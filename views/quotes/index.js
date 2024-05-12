@@ -70,7 +70,7 @@ const newQuotePage = () => {
                         </label>
                         <div class="control">
                             <div class="select">
-                                <select>
+                                <select id="state" name="state">
                                     <option>Alabama</option>
                                     <option>Alaska</option>
                                     <option>Arizona</option>

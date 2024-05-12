@@ -11,6 +11,29 @@ const newDocPage = () => {
             <section id="new-doc-form">
                 <form class="box" action="/docs/new" method="POST">
                     <div class="field">
+                        <label class="label" for="type">Type</label>
+                        <div class="control">
+                            <div class="select">
+                                <select id="type" name="type">
+                                    <option>Knowledge Base Article</option>
+                                    <option>Blog Post</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label" for="category">Category</label>
+                        <div class="control">
+                            <div class="select">
+                                <select id="category" name="category">
+                                    <option>Web Development</option>
+                                    <option>Business</option>
+                                    <option>Health and Lifestyle</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
                         <label class="label" for="title">Title</label>
                         <div class="control">
                             <input type="text" class="input" id="title" name="title" />
