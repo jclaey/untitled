@@ -115,3 +115,13 @@ header {
 .page-title-div h1 {
     text-align: center;
 }
+
+.title-underline {
+    margin: 0;
+    width: 200px;
+}
+
+.demo-image {
+    height: 180px;
+    width: 240px;
+}
