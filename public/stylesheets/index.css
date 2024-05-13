@@ -125,3 +125,12 @@ header {
     height: 180px;
     width: 240px;
 }
+
+#the-crew-section {
+    background-color: var(--primary-color);
+    height: 600px;
+}
+
+#the-crew-section h2 {
+    color: #fff;
+}

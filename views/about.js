@@ -2,8 +2,8 @@ import layout from "./layout.js"
 
 const aboutPage = () => {
     return layout({ template: `
-            <main class="container">
-                <section>
+            <main>
+                <section class="mb-6 container">
                     <div class="mb-6 page-title-div">
                         <h1 class="title is-size-1">
                             <span class="pipe">|</span> About Us <span class="pipe">|</span>
@@ -20,6 +20,27 @@ const aboutPage = () => {
                         <li class="is-size-4">The company's favorite color is pink.*</li>
                     </ul>
                     <p>*I know, hard to tell from this website</p>
+                </section>
+                <section id="the-crew-section" class="mb-6">
+                    <div class="container">
+                        <h2 class="subtitle is-size-2 mb-6 pt-6">The Crew</h2>
+                        <div class="columns">
+                            <div class="column">
+                                <div class="card">
+                                    <div class="card-image">
+                                        <figure class="image is-4x3">
+                                            <img src="/resources/images/crew-boss.webp" />
+                                        </figure>
+                                    </div>
+                                    <div class="card-content">
+                                        <p>Veronica Web: CEO</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="column"></div>
+                            <div class="column"></div>
+                        </div>
+                    </div>
                 </section>
             </main>
         ` 
