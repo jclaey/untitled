@@ -130,7 +130,7 @@ const newQuotePage = () => {
                             Zip Code*
                         </label>
                         <div class="control">
-                            <input class="input" type="text" id="zipCode" name="zipCode" />
+                            <input class="input" type="text" id="zipcode" name="zipcode" />
                         </div>
                     </div>
                     <div class="field">
@@ -155,7 +155,7 @@ const newQuotePage = () => {
                         </label>
                         <div class="control">
                             <div class="select">
-                                <select>
+                                <select id="projectType" name="projectType">
                                     <option>Web App (back end, database, etc.)</option>
                                     <option>Website (front end only)</option>
                                     <option>Desktop Application</option>
@@ -174,7 +174,7 @@ const newQuotePage = () => {
                             Project Details*
                         </label>
                         <div class="control">
-                            <textarea class="textarea"></textarea>
+                            <textarea class="textarea" id="projectDetails" name="projectDetails"></textarea>
                         </div>
                     </div>
                     <div class="field mb-6">

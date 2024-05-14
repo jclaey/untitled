@@ -10,11 +10,13 @@ export const postNewQuote = async (req, res, next) => {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         businessName: req.body.businessName,
-        streetAddressOne: req.body.streetAddressOne,
-        streetAddressTwo: req.body.streetAddressTwo ? req.body.streetAddressTwo : '',
-        city: req.body.city,
-        state: req.body.state,
-        zipcode: req.body.zipcode,
+        businessAddress: {
+            streetAddressOne: req.body.streetAddressOne,
+            streetAddressTwo: req.body.streetAddressTwo ? req.body.streetAddressTwo : '',
+            city: req.body.city,
+            state: req.body.state,
+            zipcode: req.body.zipcode,
+        },
         phoneNumber: req.body.phoneNumber,
         email: req.body.email,
         projectType: req.body.projectType,
@@ -25,5 +27,7 @@ export const postNewQuote = async (req, res, next) => {
     if (quote) {
         await quote.save()
         res.redirect('/success')
+    } else {
+        throw new Error('Info could not be submitted successfully')
     }
 }
