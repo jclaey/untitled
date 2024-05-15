@@ -1,10 +1,16 @@
 import express from 'express'
 const router = express.Router()
-
+import asyncHandler from '../../middleware/async.js'
+import { requireAuth } from '../../middleware/auth.js'
 import {
-    getIndex
+    getIndex,
+    getLogin,
+    postLogin,
+    getLogout
 } from '../../controllers/admin/index.js'
 
-router.route('/').get(getIndex)
+router.route('/').get(requireAuth, getIndex)
+router.route('/login').get(getLogin).post(asyncHandler(postLogin))
+router.route('/logout').get(getLogout)
 
 export default router

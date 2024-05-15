@@ -3,7 +3,6 @@ import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 
 const AdminSchema = new Schema({
-  name: String,
   email: String,
   password: String
 })
@@ -11,7 +10,11 @@ const AdminSchema = new Schema({
 AdminSchema.methods.comparePasswords = function(suppliedPassword) {
   const [hashed, salt] = this.password.split('.')
 
+  console.log(hashed)
+
   const hashedSupplied = crypto.createHash('sha256').update(suppliedPassword + salt).digest('hex')
+
+  console.log(hashedSupplied)
 
   return hashedSupplied === hashed
 }

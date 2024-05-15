@@ -134,3 +134,17 @@ header {
 #the-crew-section h2 {
     color: #fff;
 }
+
+#admin-login-section {
+    display: flex;
+    justify-content: center;
+}
+
+#admin-login-form {
+    width: 50%;
+}
+
+#admin-login-btn {
+    color: white;
+    background-color: var(--primary-color);
+}

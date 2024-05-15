@@ -2,6 +2,7 @@ import indexPage from "../views/index.js"
 import aboutPage from "../views/about.js"
 import contactPage from "../views/contact.js"
 import successPage from '../views/success.js'
+import failurePage from "../views/failure.js"
 import servicesPage from "../views/services.js"
 import demoPage from "../views/demos.js"
 import sendEmail from "../utils/sendEmail.js"
@@ -33,4 +34,8 @@ export const getServices = (req, res, next) => {
 
 export const getDemo = (req, res, next) => {
     res.send(demoPage())
+}
+
+export const getFailure = (req, res, next) => {
+    res.send(failurePage())
 }

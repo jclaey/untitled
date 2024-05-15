@@ -36,6 +36,6 @@ const DocSchema = new Schema({
     }
 })
 
-const Doc = mongoose.model('Doc', DocSchema)
+const DocItem = mongoose.model('Doc', DocSchema)
 
-export default Doc
+export default DocItem
