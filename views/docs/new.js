@@ -1,6 +1,7 @@
 import layout from "../layout.js"
+import { getErrors } from "../../utils/getErrors.js"
 
-const newDocPage = () => {
+const newDocPage = ({ errors, values = {} }) => {
     return layout({ template: `
         <main class="container">
             <div class="mb-6 page-title-div">
@@ -8,8 +9,19 @@ const newDocPage = () => {
                     <span class="pipe">|</span> Create A New Doc <span class="pipe">|</span>
                 </h1>
             </div>
+            <div>
+                ${errors ? 
+                    `
+                        <div>
+                            <div>
+                                ${getErrors(errors)}
+                            </div>
+                        </div>
+                    `
+                : ''}
+            </div>
             <section id="new-doc-form">
-                <form class="box" action="/docs/new" method="POST">
+                <form class="box" action="/docs/new" method="POST" enctype="multipart/form-data">
                     <div class="field">
                         <label class="label" for="type">Type</label>
                         <div class="control">
@@ -27,6 +39,7 @@ const newDocPage = () => {
                             <div class="select">
                                 <select id="category" name="category">
                                     <option>Web Development</option>
+                                    <option>Cybersecurity</option>
                                     <option>Business</option>
                                     <option>Health and Lifestyle</option>
                                 </select>
@@ -36,25 +49,25 @@ const newDocPage = () => {
                     <div class="field">
                         <label class="label" for="title">Title</label>
                         <div class="control">
-                            <input type="text" class="input" id="title" name="title" />
+                            <input type="text" class="input" id="title" name="title" value="${errors && values.title && values.title !== '' ? values.title : ''}" />
                         </div>
                     </div>
                     <div class="field">
                         <label class="label" for="description">Description</label>
                         <div class="control">
-                            <input type="text" class="input" id="description" name="description" />
+                            <input type="text" class="input" id="description" name="description" value="${errors && values.description && values.description !== '' ? values.description : ''}" />
                         </div>
                     </div>
                     <div class="field">
                         <label class="label" for="content">Content</label>
                         <div class="control">
-                            <textarea id="content" name="content" class="textarea"></textarea>
+                            <textarea id="content" name="content" class="textarea" value="${errors && values.content && values.content !== '' ? values.content : ''}"></textarea>
                         </div>
                     </div>
                     <div class="field">
                         <label class="label" for="image">Image</label>
                         <div class="control">
-                            <input type="file" class="input" id="image" name="image" />
+                            <input type="file" class="input" id="image" name="image" accept="images/*" />
                         </div>
                     </div>
                     <button class="button" type="submit">Create Post</button>

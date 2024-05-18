@@ -2,30 +2,15 @@ import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 
 const DocSchema = new Schema({
-    type: {
-        type: String,
-        required: true
-    },
-    category: {
-        type: String,
-        required: true
-    },
-    title: {
-        type: String,
-        required: true
-    },
+    type: String,
+    category: String,
+    title: String,
     author: {
         type: Schema.Types.ObjectId,
         ref: 'Admin',
     },
-    description: {
-        type: String,
-        required: true
-    },
-    content: {
-        type: String,
-        required: true
-    },
+    description: String,
+    content: String,
     image: {
         path: String,
         filename: String
