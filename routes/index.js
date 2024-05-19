@@ -2,6 +2,11 @@ import express from 'express'
 const router = express.Router()
 import asyncHandler from '../middleware/async.js'
 import {
+    validateName,
+    requireValidEmail,
+    validateContent
+} from './validators.js'
+import {
     getIndex,
     getAbout,
     getContact,
@@ -14,7 +19,7 @@ import {
 
 router.route('/').get(getIndex)
 router.route('/about').get(getAbout)
-router.route('/contact').get(getContact).post(asyncHandler(postContact))
+router.route('/contact').get(getContact).post([ validateName, requireValidEmail, validateContent ], asyncHandler(postContact))
 router.route('/success').get(getSuccess)
 router.route('/failure').get(getFailure)
 router.route('/services').get(getServices)
