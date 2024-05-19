@@ -8,8 +8,8 @@ import asyncHandler from '../../middleware/async.js'
 import { requireAuth } from '../../middleware/auth.js'
 import {
     validateTitle,
-    validatePostContent,
-    validatePostDescription
+    validateContent,
+    validateDescription
 } from '../validators.js'
 import {
     getIndex,
@@ -23,7 +23,7 @@ router.route('/new')
     .post(
         requireAuth, 
         upload.single('image'),    
-        [validateTitle, validatePostContent, validatePostDescription], 
+        [validateTitle, validateContent, validateDescription], 
         asyncHandler(postNew)
 )
 
