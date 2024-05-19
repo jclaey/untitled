@@ -20,6 +20,7 @@ export const getContact = (req, res, next) => {
 }
 
 export const postContact = async (req, res, next) => {
+    // Refactor this code
     await sendEmail(req)
     res.send(successPage())
 }

@@ -16,9 +16,24 @@ const header = (req = null) => {
                     <div class="navbar-item has-dropdown is-hoverable">
                         <a class="navbar-link">More</a>
                         <div class="navbar-dropdown">
-                            <a href="/about" class="navbar-item">About</a>
-                            <a href="/contact" class="navbar-item">Contact</a>
-                            <a href="/quotes" class="navbar-item">Get A Free Quote</a>
+                            <div class="columns">
+                                <div class="column">
+                                    <div class="level">
+                                        <a href="/services" class="navbar-item"><i class="fa-solid fa-gears pr-2"></i> Services</a>
+                                    </div>
+                                    <div class="level">
+                                        <a href="/quotes" class="navbar-item"><i class="fa-regular fa-clipboard pr-2"></i> Get A Free Quote</a>
+                                    </div>
+                                </div>
+                                <div class="column">
+                                    <div class="level">
+                                        <a href="/about" class="navbar-item"><i class="fa-solid fa-circle-question pr-2"></i> About</a>
+                                    </div>
+                                    <div class="level">
+                                        <a href="/contact" class="navbar-item"><i class="fa-regular fa-envelope pr-2"></i> Contact</a>
+                                    </div>
+                                </div>
+                            </div>
                     </div>
                 </div>
             </div>
