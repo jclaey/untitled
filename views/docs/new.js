@@ -1,8 +1,7 @@
 import layout from "../layout.js"
 import { getErrors } from "../../utils/getErrors.js"
 
-const newDocPage = ({ errors, values = {} }) => {
-    console.log(errors)
+const newDocPage = ({ errors, values = {} }, req) => {
     return layout({ template: `
         <main class="container">
             <div class="mb-6 page-title-div">
@@ -23,7 +22,7 @@ const newDocPage = ({ errors, values = {} }) => {
             </div>
             <section id="new-doc-form">
                 <form class="box" action="/docs/new" method="POST" enctype="multipart/form-data">
-                    <div class="field">
+                    <div class="field mb-4">
                         <label class="label" for="type">Type</label>
                         <div class="control">
                             <div class="select">
@@ -34,7 +33,7 @@ const newDocPage = ({ errors, values = {} }) => {
                             </div>
                         </div>
                     </div>
-                    <div class="field">
+                    <div class="field mb-4">
                         <label class="label" for="category">Category</label>
                         <div class="control">
                             <div class="select">
@@ -47,35 +46,35 @@ const newDocPage = ({ errors, values = {} }) => {
                             </div>
                         </div>
                     </div>
-                    <div class="field">
+                    <div class="field mb-4">
                         <label class="label" for="title">Title</label>
                         <div class="control">
                             <input type="text" class="input" id="title" name="title" value="${errors && values.title && values.title !== '' ? values.title : ''}" />
                         </div>
                     </div>
-                    <div class="field">
+                    <div class="field mb-4">
                         <label class="label" for="description">Description</label>
                         <div class="control">
                             <input type="text" class="input" id="description" name="description" value="${errors && values.description && values.description !== '' ? values.description : ''}" />
                         </div>
                     </div>
-                    <div class="field">
+                    <div class="field mb-4">
                         <label class="label" for="content">Content</label>
                         <div class="control">
                             <textarea id="content" name="content" class="textarea" value="${errors && values.content && values.content !== '' ? values.content : ''}"></textarea>
                         </div>
                     </div>
-                    <div class="field">
+                    <div class="field mb-6">
                         <label class="label" for="image">Image</label>
                         <div class="control">
                             <input type="file" class="input" id="image" name="image" accept="images/*" />
                         </div>
                     </div>
-                    <button class="button" type="submit">Create Post</button>
+                    <button class="button is-medium" type="submit">Create Post</button>
                 </form>
             </section>
         </main>
-    ` })
+    ` }, req)
 }
 
 export default newDocPage

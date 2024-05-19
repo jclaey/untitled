@@ -16,7 +16,7 @@ export const getAbout = (req, res, next) => {
 }
 
 export const getContact = (req, res, next) => {
-    res.send(contactPage())
+    res.send(contactPage({}, req))
 }
 
 export const postContact = async (req, res, next) => {
