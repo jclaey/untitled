@@ -1,47 +1,45 @@
 import { body } from "express-validator"
-import sanitize from "../utils/sanitize.js"
 
 export const validateAuthorName = 
-    sanitize(body('author')
-    .isEmpty()
-    .withMessage('Please enter an author name')
+    body('author')
     .trim()
-    .escape())
+    .notEmpty()
+    .withMessage('Please enter an author name')
+    .escape()
 
 export const validateTitle = 
-    sanitize(body('title')
-    .isLength({ min: 1, max: Infinity })
-    .withMessage('Please enter a title')
+    body('title')
     .trim()
-    .escape())
+    .notEmpty()
+    .withMessage('Please enter a title')
+    .escape()
 
 export const validatePostContent =
-    sanitize(body('content')
-    .isLength({ min: 1, max: Infinity })
-    .withMessage('Please enter some post content')
+    body('content')
     .trim()
-    .escape())
+    .notEmpty()
+    .withMessage('Please enter some post content')
+    .escape()
 
 export const validatePostDescription = 
-    sanitize(body('description')
-    .isLength({ min: 1, max: Infinity })
-    .withMessage('Please enter a description')
+    body('description')
     .trim()
-    .escape())
+    .notEmpty()
+    .withMessage('Please enter a description')
+    .escape()
 
 export const requireValidEmail = 
-    sanitize(body('email')
+    body('email')
     .trim()
     .normalizeEmail()
     .isEmail()
     .withMessage('Must provide a valid email')
     .isLength({ min: 1, max: 30 })
     .withMessage('Email must be between 1 and 30 characters')
-    .escape())
+    .escape()
 
 export const requireValidPasswordForUser =
     body('password')
     .trim()
     .isLength({ min: 8, max: 30 })
     .withMessage('Password must be between 8 and 30 characters')
-    .escape()

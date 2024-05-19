@@ -148,3 +148,10 @@ header {
     color: white;
     background-color: var(--primary-color);
 }
+
+#errors {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 3rem;
+}

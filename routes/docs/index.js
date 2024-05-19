@@ -1,5 +1,6 @@
 import express from 'express'
 const router = express.Router()
+import { body } from 'express-validator'
 import multer from 'multer'
 import { storage } from '../../cloudinary/index.js'
 const upload = multer({ storage })
@@ -19,10 +20,11 @@ import {
 router.route('/').get(getIndex)
 router.route('/new')
     .get(requireAuth, getNew)
-    .post(requireAuth, [ 
-        validateTitle,
-        validatePostContent,
-        validatePostDescription
-], upload.single('image'), asyncHandler(postNew))
+    .post(
+        requireAuth, 
+        upload.single('image'),    
+        [validateTitle, validatePostContent, validatePostDescription], 
+        asyncHandler(postNew)
+)
 
 export default router
