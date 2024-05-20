@@ -26,6 +26,7 @@ const layout = ({ template }, req) => {
               ${footer()}
             </footer>
 
+            ${req && req.originalUrl && req.originalUrl === '/products/new' ? '<script src="/javascript/selectToggler.js"></script>' : ''}
             ${req && req.originalUrl && req.originalUrl === '/docs/new' || req && req.originalUrl && req.originalUrl === '/contact' ? '<script src="/javascript/tiny.js"></script>' : ''}
           </body>
         </html>

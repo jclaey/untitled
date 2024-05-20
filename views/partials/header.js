@@ -42,7 +42,7 @@ const header = (req = null) => {
                     <div class="navbar-end">
                         <div class="navbar-item">
                             <div class="buttons">
-                                <a href="/logout" class="button">Logout</a>
+                                <a href="/admin/logout" class="button">Logout</a>
                             </div>
                         </div>
                     </div>

@@ -9,6 +9,6 @@ import {
     getNew
 } from '../../controllers/products/index.js'
 
-router.route('/').get()
+router.route('/new').get(getNew)
 
 export default router
