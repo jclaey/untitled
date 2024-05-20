@@ -1,6 +1,5 @@
 import express from 'express'
 const router = express.Router()
-import { body } from 'express-validator'
 import multer from 'multer'
 import { storage } from '../../cloudinary/index.js'
 const upload = multer({ storage })
