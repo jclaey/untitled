@@ -37,6 +37,18 @@ const header = (req = null) => {
                     </div>
                 </div>
             </div>
+            <div class="nav-right">
+            ${req && req.session && req.session.userId ? `
+                    <div class="navbar-end">
+                        <div class="navbar-item">
+                            <div class="buttons">
+                                <a href="/logout" class="button">Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                ` : ''
+            }
+            </div>
         </nav>
     `
 }
