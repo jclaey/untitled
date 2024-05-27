@@ -8,6 +8,10 @@ export const getNew = (req, res, next) => {
     res.send(newProductPage({}, req))
 }
 
+export const postNew = (req, res, next) => {
+    
+}
+
 export const getProducts = async (req, res, next) => {
     const products = await Product.find({})
 
