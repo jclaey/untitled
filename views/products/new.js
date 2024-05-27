@@ -74,7 +74,7 @@ const newProductPage = ({}, req) => {
                             <input class="input" type="number" min="0.01" step="0.01" id="price" name="price" />
                         </div>
                     </div>
-                    <div class="field mb-4">
+                    <div class="field mb-6">
                         <label for="countInStock" class="label">
                             Count In Stock
                         </label>
