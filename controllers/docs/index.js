@@ -37,6 +37,7 @@ export const postNew = async (req, res, next) => {
         res.redirect('/admin')
     } else {
         if (process.env.NODE_ENV === 'development') {
+            res.redirect('/failure')
             res.status(500)
             throw new Error('Server error')
         } else {

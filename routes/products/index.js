@@ -9,6 +9,6 @@ import {
     getNew
 } from '../../controllers/products/index.js'
 
-router.route('/new').get(getNew)
+router.route('/new').get(requireAuth, getNew)
 
 export default router
