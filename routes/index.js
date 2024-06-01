@@ -4,7 +4,8 @@ import asyncHandler from '../middleware/async.js'
 import {
     validateName,
     requireValidEmail,
-    validateContent
+    validateContent,
+    validateSubject
 } from './validators.js'
 import {
     getIndex,
@@ -19,7 +20,7 @@ import {
 
 router.route('/').get(getIndex)
 router.route('/about').get(getAbout)
-router.route('/contact').get(getContact).post([ validateName, requireValidEmail, validateContent ], asyncHandler(postContact))
+router.route('/contact').get(getContact).post([ validateName, requireValidEmail, validateContent, validateSubject ], asyncHandler(postContact))
 router.route('/success').get(getSuccess)
 router.route('/failure').get(getFailure)
 router.route('/services').get(getServices)
