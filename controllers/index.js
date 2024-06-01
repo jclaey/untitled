@@ -1,3 +1,5 @@
+import 'dotenv/config'
+import { validationResult } from 'express-validator'
 import indexPage from "../views/index.js"
 import aboutPage from "../views/about.js"
 import contactPage from "../views/contact.js"
@@ -5,6 +7,7 @@ import successPage from '../views/success.js'
 import failurePage from "../views/failure.js"
 import servicesPage from "../views/services.js"
 import demoPage from "../views/demos.js"
+import message from "../views/partials/message.js"
 import sendEmail from "../utils/sendEmail.js"
 
 export const getIndex = (req, res, next) => {
@@ -20,9 +23,24 @@ export const getContact = (req, res, next) => {
 }
 
 export const postContact = async (req, res, next) => {
-    // Refactor this code
-    await sendEmail(req)
-    res.send(successPage())
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+        return res.send(contactPage({ errors, values: req.body }, req))
+    }
+
+    try {
+        await sendEmail(req)
+        res.send(successPage())
+    } catch (err) {
+        if (process.env.NODE_ENV === 'development') {
+            res.redirect('/failure')
+            res.status(500)
+            throw new Error('Server error')
+        } else {
+            res.redirect('/failure')
+        }
+    }
 }
 
 export const getSuccess = (req, res, next) => {
