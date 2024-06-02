@@ -27,7 +27,8 @@ const layout = ({ template }, req) => {
             </footer>
 
             ${req && req.originalUrl && req.originalUrl === '/products/new' ? '<script src="/javascript/selectToggler.js"></script>' : ''}
-            ${req && req.originalUrl && req.originalUrl === '/docs/new' || req && req.originalUrl && req.originalUrl === '/contact' ? '<script src="/javascript/tiny.js"></script>' : ''}
+            ${req && req.originalUrl && req.originalUrl === '/docs/new' ? '<script src="/javascript/tiny-admin-facing.js"></script>' : ''}
+            ${req && req.originalUrl && req.originalUrl === '/contact' ? '<script src="/javascript/tiny-user-facing.js"></script><script src="/javascript/closeMessage.js"></script>"' : ''}
           </body>
         </html>
     `

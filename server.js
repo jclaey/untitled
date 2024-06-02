@@ -25,9 +25,11 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 app.use(cookieSession({
-  keys: ['lklekaiudbfip32n48dpa3pihirgldnagf3qp3r09ieemviej'],
+  secret: 'lklekaiudbfip32n48dpa3pihirgldnagf3qp3r09ieemviej',
   secure: process.env.NODE_ENV === 'production' ? true : false,
-  httpOnly: true
+  httpOnly: true,
+  maxAge: 10800000,
+  sameSite: 'strict'
 }))
 
 // Mount routes

@@ -13,17 +13,18 @@ const sendEmail = async req => {
     })
 
     const info = await transporter.sendMail({
-        from: `"${req.body.name}" <jdclaeys@outlook.com>`,
+        from: `"${req.body.name}" <${process.env.OUTLOOK_EMAIL}>`,
         to: 'contact@handierme.com',
         subject: req.body.subject,
         text: `From: ${req.body.name}, Subject: ${req.body.subject}, Body: ${req.body.content}`,
         html: `<div>
-                <p>From: ${req.body.name}, ${req.body.email}</p>
-                <p>${req.body.content}</p>
+                From: ${req.body.name}, ${req.body.email}<br />${req.body.content}
             </div>`
     })
 
-    console.log("Message sent: %s", info.messageId)
+    if (process.env.NODE_ENV === 'development') {
+        console.log("Message sent: %s", info.messageId)
+    }
 }
 
 export default sendEmail

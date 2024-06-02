@@ -29,18 +29,9 @@ export const postContact = async (req, res, next) => {
         return res.send(contactPage({ errors, values: req.body }, req))
     }
 
-    try {
-        await sendEmail(req)
-        res.send(successPage())
-    } catch (err) {
-        if (process.env.NODE_ENV === 'development') {
-            res.redirect('/failure')
-            res.status(500)
-            throw new Error('Server error')
-        } else {
-            res.redirect('/failure')
-        }
-    }
+    // Refactor this code
+    await sendEmail(req)
+    res.send(successPage())
 }
 
 export const getSuccess = (req, res, next) => {
