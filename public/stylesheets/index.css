@@ -164,3 +164,7 @@ header {
     font-size: 100px;
     padding: 1rem 1rem;
 }
+
+#demos-tag {
+    background-color: var(--primary-color);
+}

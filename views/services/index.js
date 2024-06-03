@@ -44,7 +44,9 @@ const indexPage = () => {
                                 <div class="card mb-4 service">
                                     <div class="card-image">
                                         <figure class="image is-4by3">
-                                            <img src="/resources/images/services_mobile_applications.png" />
+                                            <a href="/services/mobileApplications">
+                                                <img src="/resources/images/services_mobile_applications.png" />
+                                            </a>
                                         </figure>
                                     </div>
                                     <div class="card-content">

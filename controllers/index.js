@@ -6,7 +6,6 @@ import contactPage from "../views/contact.js"
 import successPage from '../views/success.js'
 import failurePage from "../views/failure.js"
 import demoPage from "../views/demos.js"
-import message from "../views/partials/message.js"
 import sendEmail from "../utils/sendEmail.js"
 
 export const getIndex = (req, res, next) => {
