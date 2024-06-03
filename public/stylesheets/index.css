@@ -159,3 +159,8 @@ header {
 #new-product-upload {
     display: none;
 }
+
+#websites .column i {
+    font-size: 100px;
+    padding: 1rem 1rem;
+}

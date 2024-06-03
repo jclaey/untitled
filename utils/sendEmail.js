@@ -27,18 +27,31 @@ const sendEmail = async req => {
                 <title>User Contact Email</title>
             </head>
             <body>
-                <div class="block">
-                    From: <strong>${req.body.name}</strong>
-                </div>
-                <div class="block">
-                    Email: <strong>${req.body.email}</strong>
-                </div>
-                <div class="block">
-                    Subject: <strong>${req.body.subject}</strong>
-                </div>
-                <div class="block">
-                    Content: <strong>${req.body.content}</strong>
-                </div>
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td align="center">
+                            <table width="600" cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td>
+                                        <h1>A User Has Submitted a Question or Comment</h1>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><h3>From: <strong>${req.body.name}</strong></h3></td>
+                                </tr>
+                                <tr>
+                                    <td><h3>Email: <strong>${req.body.email}</strong></h3></td>
+                                </tr>
+                                <tr>
+                                    <td><h3>Subject: <strong>${req.body.subject}</strong></h3></td>
+                                </tr>
+                                <tr>
+                                    <td><h3>Content: <strong>${req.body.content}</strong></h3></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
             </body>
             </html>
         `, 'utf-8')

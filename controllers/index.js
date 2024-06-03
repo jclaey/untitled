@@ -5,7 +5,6 @@ import aboutPage from "../views/about.js"
 import contactPage from "../views/contact.js"
 import successPage from '../views/success.js'
 import failurePage from "../views/failure.js"
-import servicesPage from "../views/services.js"
 import demoPage from "../views/demos.js"
 import message from "../views/partials/message.js"
 import sendEmail from "../utils/sendEmail.js"
@@ -36,10 +35,6 @@ export const postContact = async (req, res, next) => {
 
 export const getSuccess = (req, res, next) => {
     res.send(successPage())
-}
-
-export const getServices = (req, res, next) => {
-    res.send(servicesPage())
 }
 
 export const getDemo = (req, res, next) => {

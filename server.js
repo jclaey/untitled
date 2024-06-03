@@ -8,6 +8,7 @@ import admin from './routes/admin/index.js'
 import quotes from './routes/quotes/index.js'
 import docs from './routes/docs/index.js'
 import products from './routes/products/index.js'
+import services from './routes/services/index.js'
 import connectDB from './config/db.js'
 
 connectDB()
@@ -38,6 +39,7 @@ app.use('/admin', admin)
 app.use('/quotes', quotes)
 app.use('/docs', docs)
 app.use('/products', products)
+app.use('/services', services)
 
 const PORT = process.env.PORT || 3000
 
