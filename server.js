@@ -25,6 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+// Use cookie session for authentication
 app.use(cookieSession({
   secret: 'lklekaiudbfip32n48dpa3pihirgldnagf3qp3r09ieemviej',
   secure: process.env.NODE_ENV === 'production' ? true : false,

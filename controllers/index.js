@@ -9,11 +9,11 @@ import demoPage from "../views/demos.js"
 import sendEmail from "../utils/sendEmail.js"
 
 export const getIndex = (req, res, next) => {
-    res.send(indexPage())
+    res.send(indexPage(req))
 }
 
 export const getAbout = (req, res, next) => {
-    res.send(aboutPage())
+    res.send(aboutPage(req))
 }
 
 export const getContact = (req, res, next) => {
@@ -29,17 +29,17 @@ export const postContact = async (req, res, next) => {
 
     // Refactor this code
     await sendEmail(req)
-    res.send(successPage())
+    res.send(successPage(req))
 }
 
 export const getSuccess = (req, res, next) => {
-    res.send(successPage())
+    res.send(successPage(req))
 }
 
 export const getDemo = (req, res, next) => {
-    res.send(demoPage())
+    res.send(demoPage(req))
 }
 
 export const getFailure = (req, res, next) => {
-    res.send(failurePage())
+    res.send(failurePage(req))
 }

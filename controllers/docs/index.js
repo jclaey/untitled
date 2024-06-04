@@ -5,7 +5,7 @@ import newDocPage from "../../views/docs/new.js"
 import DocItem from "../../models/Doc.js"
 
 export const getIndex = (req, res, next) => {
-    res.send(indexPage())
+    res.send(indexPage(req))
 }
 
 export const getNew = (req, res, next) => {
@@ -16,7 +16,7 @@ export const postNew = async (req, res, next) => {
     const errors = validationResult(req)
 
     if (!errors.isEmpty()) {
-        return res.send(newDocPage({ errors, values: req.body }))
+        return res.send(newDocPage({ errors, values: req.body }, req))
     }
 
     const doc = new DocItem({

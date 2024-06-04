@@ -1,6 +1,6 @@
 import layout from "../layout.js"
 
-const newQuotePage = () => {
+const newQuotePage = (req) => {
     return layout({ template: `
         <main class="container">
             <section>
@@ -146,7 +146,7 @@ const newQuotePage = () => {
                             Email*
                         </label>
                         <div class="control">
-                            <input class="input" type="text" id="email" name="email" />
+                            <input class="input" type="email" id="email" name="email" />
                         </div>
                     </div>
                     <div class="field">
@@ -179,17 +179,17 @@ const newQuotePage = () => {
                     </div>
                     <div class="field mb-6">
                         <label for="budget" class="label">
-                            Budget* (ballpark estimation, numbers only)
+                            Budget* (USD, ballpark estimation, numbers only)
                         </label>
                         <div class="control">
-                            <input class="input" type="number" id="budget" name="budget" />
+                            <input class="input" min="1" max="${Infinity}" step="1" type="number" id="budget" name="budget" />
                         </div>
                     </div>
-                    <button type="submit" class="button mb-3 is-medium is-success">Get Your Free Quote Now!</button>
+                    <button type="submit" class="button mb-3 is-medium is-success">Get Your Free Quote!</button>
                 </form>                
             </section>
         </main>
-    ` })
+    ` }, req)
 }
 
 export default newQuotePage

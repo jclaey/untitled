@@ -1,8 +1,8 @@
 import layout from "../layout.js"
 
-const websiteServicesPage = () => {
+const websiteServicesPage = (req) => {
     return layout({ template: `
-        <main id="websites">
+        <main id="websites" class="services">
             <div class="mb-6 page-title-div">
                 <h1 class="title is-size-1">
                     <span class="pipe">|</span> Websites <span class="pipe">|</span>
@@ -12,14 +12,14 @@ const websiteServicesPage = () => {
                 <div class="columns mb-6">
                     <div class="column">
                         <div class="columns">
-                            <div class="column">
+                            <div class="column logos">
                                 <i class="fa-brands fa-js"></i>
                                 <i class="fa-brands fa-html5"></i>
                                 <i class="fa-brands fa-css3"></i>
                             </div>
                         </div>
                         <div class="columns">
-                            <div class="column">
+                            <div class="column logos">
                                 <i class="fa-brands fa-wordpress"></i>
                             </div>
                         </div>
@@ -49,7 +49,7 @@ const websiteServicesPage = () => {
                 </a>
             </section>
         </main>
-    ` })
+    ` }, req)
 }
 
 export default websiteServicesPage

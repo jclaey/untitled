@@ -2,7 +2,7 @@ import newQuotePage from '../../views/quotes/index.js'
 import QuoteInfoItem from '../../models/QuoteInfoItem.js'
 
 export const getNewQuote = (req, res, next) => {
-    res.send(newQuotePage())
+    res.send(newQuotePage(req))
 }
 
 export const postNewQuote = async (req, res, next) => {

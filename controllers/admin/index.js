@@ -3,10 +3,14 @@ import adminLoginPage from "../../views/admin/login.js"
 import Admin from "../../models/Admin.js"
 
 export const getIndex = (req, res, next) => {
-    res.send(indexPage())
+    res.send(indexPage(req))
 }
 
 export const getLogin = (req, res, next) => {
+    if (req && req.session && req.session.userId) {
+        res.redirect('/admin')
+    }
+
     res.send(adminLoginPage())
 }
 

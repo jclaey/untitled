@@ -22,5 +22,5 @@ export const postNew = (req, res, next) => {
 export const getProducts = async (req, res, next) => {
     const products = await Product.find({})
 
-    res.send(productsPage({ products }))
+    res.send(productsPage({ products }, req))
 }

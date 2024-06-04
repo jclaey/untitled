@@ -6,13 +6,13 @@ import mobileApplicationServicesPage from '../../views/services/mobileApplicatio
 
 
 export const getIndex = (req, res, next) => {
-    res.send(indexPage())
+    res.send(indexPage(req))
 }
 
 export const getWebsiteServices = (req, res, next) => {
-    res.send(websiteServicesPage())
+    res.send(websiteServicesPage(req))
 }
 
 export const getMobileApplicationServices = (req, res, next) => {
-    res.send(mobileApplicationServicesPage())
+    res.send(mobileApplicationServicesPage(req))
 }

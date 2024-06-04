@@ -1,6 +1,6 @@
 import layout from "../layout.js"
 
-const indexPage = () => {
+const indexPage = (req) => {
     return layout({ template: `
         <main>
             <section class="container">
@@ -48,7 +48,7 @@ const indexPage = () => {
                 </div>
             </section>
         </main>
-    ` })
+    ` }, req)
 }
 
 export default indexPage

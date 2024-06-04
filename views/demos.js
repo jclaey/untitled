@@ -1,6 +1,6 @@
 import layout from "./layout.js"
 
-const demoPage = () => {
+const demoPage = (req) => {
     return layout({ template: `
         <main class="container">
             <div class="mb-6 page-title-div">
@@ -74,7 +74,7 @@ const demoPage = () => {
                 </div>
             </section>
         </main>
-    ` })
+    ` }, req)
 }
 
 export default demoPage
