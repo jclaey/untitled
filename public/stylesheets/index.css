@@ -160,9 +160,22 @@ header {
     display: none;
 }
 
-#websites .column i {
+.services .column i {
     font-size: 100px;
     padding: 1rem 1rem;
+}
+
+.services .column .logos {
+    display: flex;
+    align-items: center;
+}
+
+.services .column #flutter {
+    height: 100px;
+}
+
+.services .column #unity {
+    height: 100px;
 }
 
 #demos-tag {
