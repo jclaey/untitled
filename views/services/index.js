@@ -27,7 +27,7 @@ const indexPage = (req) => {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card service">
+                                <div class="card mb-4 service">
                                     <div class="card-image">
                                         <figure class="image is-4by3">
                                             <img src="/resources/images/services_web_applications.png" />
@@ -36,6 +36,18 @@ const indexPage = (req) => {
                                     <div class="card-content">
                                         <div class="content">
                                             Web Applications
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card service">
+                                    <div class="card-image">
+                                        <figure class="image is-4by3">
+                                            <img src="/resources/images/full-systems.png" />
+                                        </figure>
+                                    </div>
+                                    <div class="card-content">
+                                        <div class="content">
+                                            Full Systems
                                         </div>
                                     </div>
                                 </div>

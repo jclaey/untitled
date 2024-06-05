@@ -178,6 +178,28 @@ header {
     height: 100px;
 }
 
+.services .column .logo {
+    height: 100px;
+}
+
+.services .column #electron {
+    height: 100px;
+}
+
+.services .column .fa-plus {
+    font-size: 50px;
+}
+
 #demos-tag {
     background-color: var(--primary-color);
 }
+
+.popover {
+    width: 150px;
+    height: 90px;
+    position: absolute;
+    inset: unset;
+    top: 10px;
+    left: 150px;
+    margin: 0;
+  }

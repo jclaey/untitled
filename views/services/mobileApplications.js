@@ -5,7 +5,7 @@ const mobileApplicationServicesPage = (req) => {
         <main id="mobile-applications" class="services">
             <div class="mb-6 page-title-div">
                 <h1 class="title is-size-1">
-                    <span class="pipe">|</span> Services <span class="pipe">|</span>
+                    <span class="pipe">|</span> Mobile Applications <span class="pipe">|</span>
                 </h1>
             </div>
             <section class="container mb-6">

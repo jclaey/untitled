@@ -29,6 +29,7 @@ const layout = ({ template }, req) => {
             ${req && req.originalUrl && req.originalUrl === '/products/new' ? '<script src="/javascript/selectToggler.js"></script>' : ''}
             ${req && req.originalUrl && req.originalUrl === '/docs/new' ? '<script src="/javascript/tiny-admin-facing.js"></script>' : ''}
             ${req && req.originalUrl && req.originalUrl === '/contact' ? '<script src="/javascript/tiny-user-facing.js"></script><script src="/javascript/closeMessage.js"></script>"' : ''}
+            ${req && req.originalUrl && req.originalUrl === '/services/fullSystem' || req && req.originalUrl && req.originalUrl === '/services/mobileApplications' || req && req.originalUrl && req.originalUrl === '/services/websites' ? '</script><script src="/javascript/popover.js"></script>"' : ''}
           </body>
         </html>
     `
