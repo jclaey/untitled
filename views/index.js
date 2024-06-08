@@ -7,13 +7,13 @@ const indexPage = (req) => {
                     <div class="hero-body">
                         <div class="columns">
                             <div class="column">
-                                <p class="title">Web Solutions</p>
+                                <h1 class="title" data-aos="fade-right" data-aos-anchor-placement="middle-middle" data-aos-duration="1000" data-aos-delay="50">Web Solutions</h1>
                                 <hr id="title-hr">
                                 <p class="subtitle">Solutions for the web...</p>
                             </div>
                             <div class="column mt-5">
                                 <div class="column-group">
-                                    <h3 class="is-size-3">Platforms</h3>
+                                    <h3 class="is-size-3" data-aos="fade-left" data-aos-anchor-placement="middle-middle" data-aos-duration="1000" data-aos-delay="50">Platforms</h3>
                                     <hr>
                                     <div class="icon-group">
                                         <div class="icon icon-first">
@@ -35,7 +35,7 @@ const indexPage = (req) => {
                                     </div>
                                 </div>
                                 <div class="column-group">
-                                    <h3 class="is-size-3">Fields</h3>
+                                    <h3 class="is-size-3" data-aos="fade-left" data-aos-anchor-placement="middle-middle" data-aos-duration="1000" data-aos-delay="50">Fields</h3>
                                     <hr>
                                     <div class="icon-group">
                                         <div class="icon icon-first">
