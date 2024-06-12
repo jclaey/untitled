@@ -4,6 +4,7 @@ import indexPage from '../../views/services/index.js'
 import websiteServicesPage from '../../views/services/websites.js'
 import mobileApplicationServicesPage from '../../views/services/mobileApplications.js'
 import fullSystemServicesPage from '../../views/services/fullSystem.js'
+import webApplicationServicesPage from '../../views/services/webApplications.js'
 
 
 export const getIndex = (req, res, next) => {
@@ -20,4 +21,8 @@ export const getMobileApplicationServices = (req, res, next) => {
 
 export const getFullSystemServices = (req, res, next) => {
     res.send(fullSystemServicesPage(req))
+}
+
+export const getWebApplicationServices = (req, res, next) => {
+    res.send(webApplicationServicesPage(req))
 }

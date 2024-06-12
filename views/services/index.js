@@ -30,7 +30,9 @@ const indexPage = (req) => {
                                 <div class="card mb-4 service">
                                     <div class="card-image">
                                         <figure class="image is-4by3">
-                                            <img src="/resources/images/services_web_applications.png" />
+                                            <a href="/services/webApplications">
+                                                <img src="/resources/images/services_web_applications.png" />
+                                            </a>
                                         </figure>
                                     </div>
                                     <div class="card-content">
