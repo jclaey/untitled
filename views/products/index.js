@@ -1,6 +1,6 @@
 import layout from "../layout.js"
 
-const productsPage = async ({ products }, req) => {
+const productsPage = ({ products }, req) => {
     const renderedProducts = products.map(product => {
         return `
             <div class="card">
@@ -30,7 +30,7 @@ const productsPage = async ({ products }, req) => {
                 </div>
             </div>
         `
-    })
+    }).join('')
 
     return layout({ template: `
         <main>

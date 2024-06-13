@@ -26,7 +26,7 @@ const newDocPage = ({ errors, values = {} }, req) => {
                         <label class="label" for="type">Type</label>
                         <div class="control">
                             <div class="select">
-                                <select id="type" name="type">
+                                <select id="type" name="type" value="${errors && values.type && values.type !== '' ? values.type : ''}">
                                     <option>Knowledge Base Article</option>
                                     <option>Blog Post</option>
                                 </select>
@@ -37,7 +37,7 @@ const newDocPage = ({ errors, values = {} }, req) => {
                         <label class="label" for="category">Category</label>
                         <div class="control">
                             <div class="select">
-                                <select id="category" name="category">
+                                <select id="category" name="category" value="${errors && values.category && values.category !== '' ? values.category : ''}">
                                     <option>Web Development</option>
                                     <option>Cybersecurity</option>
                                     <option>Business</option>
