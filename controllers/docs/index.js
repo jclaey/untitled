@@ -2,10 +2,13 @@ import 'dotenv/config'
 import { validationResult } from 'express-validator'
 import indexPage from "../../views/docs/index.js"
 import newDocPage from "../../views/docs/new.js"
+import showDocPage from '../../views/docs/show.js'
 import DocItem from "../../models/Doc.js"
 
-export const getIndex = (req, res, next) => {
-    res.send(indexPage(req))
+export const getIndex = async (req, res, next) => {
+    const docs = await DocItem.find({}).populate('author').exec()
+
+    res.send(indexPage({ docs }, req))
 }
 
 export const getNew = (req, res, next) => {
@@ -35,6 +38,22 @@ export const postNew = async (req, res, next) => {
     if (doc) {
         await doc.save()
         res.redirect('/admin')
+    } else {
+        if (process.env.NODE_ENV === 'development') {
+            res.redirect('/failure')
+            res.status(500)
+            throw new Error('Server error')
+        } else {
+            res.redirect('/failure')
+        }
+    }
+}
+
+export const getShow = async (req, res, next) => {
+    const doc = await DocItem.findById(req.params.id).populate('author').exec()
+
+    if (doc) {
+        res.send(showDocPage({ doc }, req))
     } else {
         if (process.env.NODE_ENV === 'development') {
             res.redirect('/failure')

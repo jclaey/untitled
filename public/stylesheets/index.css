@@ -190,6 +190,10 @@ header {
     font-size: 50px;
 }
 
+.services .columns .column .fa-node {
+    font-size: 200px;
+}
+
 #demos-tag {
     background-color: var(--primary-color);
 }
@@ -202,4 +206,13 @@ header {
     top: 10px;
     left: 150px;
     margin: 0;
-  }
+}
+
+#doc-featured-image {
+    display: flex;
+    justify-content: center;
+}
+
+#doc-featured-image .image {
+    width: 80%;
+}

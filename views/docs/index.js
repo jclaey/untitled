@@ -6,31 +6,56 @@ const indexPage = ({ docs }, req) => {
     const renderedArticles = knowledgeBaseArticles.length === 0 ? '' : knowledgeBaseArticles.map(article => {
         return `
             <article class="media box">
-                <a href="/docs/${article._id}">
-                    <figure class="media-left">
-                        <p class="image is-128x128">
-                            <img src="${article.image.path}" alt="article image" />
+                <figure class="media-left">
+                    <p class="image is-128x128">
+                        <img src="${article.image.path}" alt="article image" />
+                    </p>
+                </figure>
+                <div class="media-content">
+                    <div class="content">
+                        <p>
+                            <a href="/docs/doc/${article._id}"><strong>${article.title}</strong></a>
+                            <br />
+                            by <strong>${article.author.email}</strong>
+                            <br />
+                            <small>${article.type}</small> <strong>in</strong> <small>${article.category}</small>
                         </p>
-                    </figure>
-                    <div class="media-content">
-                        <div class="content">
-                            <p>
-                                <strong>${article.title}</strong> by <strong>${String(article.author)}</strong>
-                                <br />
-                                <small>${article.type}</small> <strong>in</strong> <small>${article.category}</small>
-                            </p>
-                            <p>
-                                ${article.description}
-                            </p>
-                        </div>
+                        <p>
+                            ${article.description}
+                        </p>
                     </div>
-                </a>
+                </div>
             </article>
         `
     }).join('')
 
     const blogPosts = docs.filter(doc => doc.type === 'Blog Post')
-    console.log(blogPosts)
+
+    const renderedBlogPosts = blogPosts.length === 0 ? '' : blogPosts.map(post => {
+        return `
+            <article class="media box">
+                <figure class="media-left">
+                    <p class="image is-128x128">
+                        <img src="${post.image.path}" alt="article image" />
+                    </p>
+                </figure>
+                <div class="media-content">
+                    <div class="content">
+                        <p>
+                            <a href="/docs/doc/${post._id}"><strong>${post.title}</strong></a>
+                            <br />
+                            by <strong>${post.author.email}</strong>
+                            <br />
+                            <small>${post.type}</small> <strong>in</strong> <small>${post.category}</small>
+                        </p>
+                        <p>
+                            ${post.description}
+                        </p>
+                    </div>
+                </div>
+            </article>
+        `
+    }).join('')
 
     return layout({ template: `
         <main class="container">
@@ -49,6 +74,7 @@ const indexPage = ({ docs }, req) => {
                     <div class="column mt-6">
                         <h2 class="is-size-3">Latest Blog Posts</h2>
                         <hr>
+                        ${renderedBlogPosts}
                     </div>
                 </div>
             </section>
