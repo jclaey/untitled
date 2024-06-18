@@ -1,6 +1,6 @@
 import layout from "../layout.js"
 
-const newProductPage = ({}, req) => {
+const newProductPage = ({ errors, values = {} }, req) => {
     return layout({ template: `
         <main>
             <section class="container">
@@ -9,7 +9,7 @@ const newProductPage = ({}, req) => {
                         <span class="pipe">|</span> Add A New Product <span class="pipe">|</span>
                     </h1>
                 </div>
-                <form class="box" action="/products/new" method="POST">
+                <form class="box" action="/products/new" method="POST" enctype="multipart/form-data">
                     <div class="mb-3">
                         <small>* denotes a required field</small>
                     </div>
@@ -26,7 +26,7 @@ const newProductPage = ({}, req) => {
                             Product Image
                         </label>
                         <div class="control">
-                            <input class="input" type="file" id="image" name="image" />
+                            <input class="input" type="file" id="image" name="image" accept="image/*" />
                         </div>
                     </div>
                     <div class="field mb-4">
@@ -47,7 +47,7 @@ const newProductPage = ({}, req) => {
                             Upload Digital Product
                         </label>
                         <div class="control">
-                            <input class="input" type="file" id="product" name="product" accept="" />
+                            <input class="input" type="file" id="product" name="product" accept=".zip" />
                         </div>
                     </div>
                     <div class="field mb-4">
@@ -56,14 +56,6 @@ const newProductPage = ({}, req) => {
                         </label>
                         <div class="control">
                             <input class="input" type="text" id="description" name="description" />
-                        </div>
-                    </div>
-                    <div class="field mb-4">
-                        <label for="rating" class="label">
-                            Rating
-                        </label>
-                        <div class="control">
-                            <input class="input" type="number" min="0" max="0" step="0.5" id="rating" name="rating" />
                         </div>
                     </div>
                     <div class="field mb-4">

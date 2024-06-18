@@ -35,7 +35,7 @@ const ProductSchema = new Schema({
         path: String,
         filename: String
     },
-    category: {
+    type: {
         type: String,
         required: true
     },

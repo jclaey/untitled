@@ -1,6 +1,6 @@
 import layout from "../layout.js"
 
-const productsPage = ({ products }, req) => {
+const productsIndexPage = ({ products }, req) => {
     const renderedProducts = products.map(product => {
         return `
             <div class="card">
@@ -46,4 +46,4 @@ const productsPage = ({ products }, req) => {
     ` }, req)
 }
 
-export default productsPage
+export default productsIndexPage
