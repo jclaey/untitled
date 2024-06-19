@@ -1,5 +1,6 @@
 import { body } from "express-validator"
 import { parsePhoneNumber } from "libphonenumber-js"
+import Admin from "../models/Admin.js"
 
 export const validateAuthorName = 
     body('author')
@@ -19,7 +20,7 @@ export const validateName =
     body('name')
     .trim()
     .notEmpty()
-    .withMessage()
+    .withMessage('Please enter a valid name')
     .escape()
 
 export const validateTitle = 
@@ -83,6 +84,31 @@ export const validateState =
     .trim()
     .notEmpty()
     .withMessage('Please enter a city')
+    .escape()
+
+export const validatePrice =
+    body('price')
+    .trim()
+    .notEmpty()
+    .withMessage('Please enter a price')
+    .isNumeric()
+    .withMessage('Price must be a number')
+    .escape()
+
+export const validateCountInStock =
+    body('countInStock')
+    .trim()
+    .notEmpty()
+    .withMessage('Please enter a count in stock')
+    .isNumeric()
+    .withMessage('Count in stock must be a number')
+    .escape()
+
+export const validateProductType =
+    body('type')
+    .trim()
+    .notEmpty()
+    .withMessage('Please select a type')
     .escape()
 
 export const validateZipcode =

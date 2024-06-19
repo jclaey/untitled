@@ -1,4 +1,5 @@
 import layout from "../layout.js"
+import { getErrors } from "../../utils/getErrors.js"
 
 const newProductPage = ({ errors, values = {} }, req) => {
     return layout({ template: `
@@ -9,6 +10,17 @@ const newProductPage = ({ errors, values = {} }, req) => {
                         <span class="pipe">|</span> Add A New Product <span class="pipe">|</span>
                     </h1>
                 </div>
+                <div>
+                    ${errors ? 
+                        `
+                            <div>
+                                <div>
+                                    ${getErrors(errors)}
+                                </div>
+                            </div>
+                        `
+                    : ''}
+                </div>
                 <form class="box" action="/products/new" method="POST" enctype="multipart/form-data">
                     <div class="mb-3">
                         <small>* denotes a required field</small>
@@ -18,7 +30,7 @@ const newProductPage = ({ errors, values = {} }, req) => {
                             Title
                         </label>
                         <div class="control">
-                            <input class="input" type="text" id="title" name="title" />
+                            <input class="input" type="text" id="title" name="title" value="${errors && values.title && values.title !== '' ? values.title : ''}" />
                         </div>
                     </div>
                     <div class="field mb-4">
@@ -55,7 +67,7 @@ const newProductPage = ({ errors, values = {} }, req) => {
                             Description
                         </label>
                         <div class="control">
-                            <input class="input" type="text" id="description" name="description" />
+                            <input class="input" type="text" id="description" name="description" value="${errors && values.description && values.description !== '' ? values.description : ''}" />
                         </div>
                     </div>
                     <div class="field mb-4">
@@ -63,7 +75,7 @@ const newProductPage = ({ errors, values = {} }, req) => {
                             Price
                         </label>
                         <div class="control">
-                            <input class="input" type="number" min="0.01" step="0.01" id="price" name="price" />
+                            <input class="input" type="number" min="0.01" step="0.01" id="price" name="price" value="${errors && values.price && values.price !== '' ? values.price : ''}" />
                         </div>
                     </div>
                     <div class="field mb-6">
@@ -71,7 +83,7 @@ const newProductPage = ({ errors, values = {} }, req) => {
                             Count In Stock
                         </label>
                         <div class="control">
-                            <input class="input" type="number" min="0" step="1" id="countInStock" name="countInStock" />
+                            <input class="input" type="number" min="0" step="1" id="countInStock" name="countInStock" value="${errors && values.countInStock && values.countInStock !== '' ? values.countInStock : ''}" />
                         </div>
                     </div>
                     <button type="submit" class="button mb-3 is-medium">Add Product</button>

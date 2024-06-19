@@ -6,6 +6,13 @@ const upload = multer()
 import asyncHandler from '../../middleware/async.js'
 import { requireAuth } from '../../middleware/auth.js'
 import {
+    validateTitle,
+    validateProductType,
+    validateDescription,
+    validatePrice,
+    validateCountInStock
+} from '../validators.js'
+import {
     getNew,
     postNew,
     getIndex
@@ -15,6 +22,12 @@ router.route('/').get(getIndex)
 
 router.route('/new')
     .get(requireAuth, getNew)
-    .post(upload.fields([{ name: 'image' }, { name: 'product' }]), asyncHandler(postNew))
+    .post(upload.fields([{ name: 'image' }, { name: 'product' }]), [
+        validateTitle,
+        validateProductType,
+        validateDescription,
+        validatePrice,
+        validateCountInStock
+    ], asyncHandler(postNew))
 
 export default router
