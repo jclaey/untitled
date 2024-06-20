@@ -18,7 +18,7 @@ import {
     getIndex
 } from '../../controllers/products/index.js'
 
-router.route('/').get(getIndex)
+router.route('/').get(asyncHandler(getIndex))
 
 router.route('/new')
     .get(requireAuth, getNew)

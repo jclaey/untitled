@@ -31,10 +31,7 @@ const ProductSchema = new Schema({
         type: String,
         required: true
     },
-    image: {
-        path: String,
-        filename: String
-    },
+    imageId: String,
     type: {
         type: String,
         required: true

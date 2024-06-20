@@ -1,36 +1,46 @@
 import layout from "../layout.js"
 
 const productsIndexPage = ({ products }, req) => {
-    const renderedProducts = products.map(product => {
-        return `
-            <div class="card">
-                <div class="card-image">
-                    <figure class="image is-4by3">
-                        <img
-                            src="${product.image.path}"
-                            alt="Placeholder image"
-                        />
-                     </figure>
-                </div>
-                <div class="card-content">
-                    <div class="media">
-                        <div class="media-left">
-                            <p class="title is-size-2">
-                                ${product.title}
-                            </p>
-                        </div>
-                    </div>
-                    <div class="content">
-                        <p class="is-size-5">Description: ${product.description}</p>
-                        <p class="is=size-5">Rating: ${product.rating}</p>
-                        <p class="is-size-5">Number of Reviews: ${product.numReviews}</p>
-                        <p class="is-size-5">Price: $${product.price}</p>
-                        <p class="is-size-5">Number In Stock: ${product.countInStock}</p>
-                    </div>
-                </div>
+    let renderedProducts
+
+    if (!products || products.length === 0) {
+        renderedProducts = `
+            <div class="is-size-4">
+                No products yet.
             </div>
         `
-    }).join('')
+    } else {
+        renderedProducts = products.map(product => {
+            return `
+                <div class="card mb-4">
+                    <div class="card-image">
+                        <figure class="image is-128x128 ml-4 pt-3">
+                            <img
+                                src="https://drive.google.com/thumbnail?id=${product.imageId}"
+                                alt="Placeholder image"
+                            />
+                         </figure>
+                    </div>
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-left">
+                                <p class="title is-size-2">
+                                    ${product.title}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <p class="is-size-5">Description: ${product.description}</p>
+                            <p class="is=size-5">Rating: ${product.rating}</p>
+                            <p class="is-size-5">Number of Reviews: ${product.numReviews}</p>
+                            <p class="is-size-5">Price: $${product.price}</p>
+                            <p class="is-size-5">Number In Stock: ${product.countInStock}</p>
+                        </div>
+                    </div>
+                </div>
+            `
+        }).join('')
+    }
 
     return layout({ template: `
         <main>
@@ -40,7 +50,9 @@ const productsIndexPage = ({ products }, req) => {
                         <span class="pipe">|</span> All Products <span class="pipe">|</span>
                     </h1>
                 </div>
-
+                <div>
+                    ${renderedProducts}
+                </div>
             </section>
         </main>
     ` }, req)
