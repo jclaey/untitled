@@ -1,6 +1,43 @@
 import layout from "../layout.js"
 
-const indexPage = (req) => {
+const adminIndexPage = ({ docs }, req) => {
+    const recentDocs = []
+    const myDocs = []
+
+    docs.map((doc, index) => {
+        if (index >= docs.length - 3) {
+            recentDocs.push(doc)
+        }
+        
+        if (req && req.session && req.session.userId && req.session.userId === String(doc.author)) {
+            myDocs.push(doc)
+        }
+    })
+
+    const renderedDocs = docs => {
+        return docs.map(doc => {
+            return `
+                <article class="media">
+                    <figure class="media-left">
+                        <p class="image is-128x128">
+                            <img src="${doc.image.path}" />
+                        </p>
+                    </figure>
+                    <div class="media-content">
+                        <div class="content">
+                            <p>
+                                <a href="/docs/doc/${doc._id}">${doc.title}</a> <br />
+                                <small>${doc.type}</small> <strong>in</strong> <small>${doc.category}</small> <br />
+                                ${doc.description.slice(0, 20)}${doc.description.length > 20 ? '...' : ''}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="media-righ"></div>
+                </article>
+            `
+        }).join('')
+    }
+
     return layout({ template: `
         <main>
             <section class="container">
@@ -12,31 +49,19 @@ const indexPage = (req) => {
                 <div class="columns">
                     <div class="column">
                         <div id="admin-index-posts-area" class="level">
-                            <div class="level-item">
+                            <div class="level-item mr-5">
                                 <div class="box">
-                                    <h3 class="is-size-4 mb-3">Most Recent Docs</h3>
+                                    <h3 class="is-size-4 mb-5">Most Recent Docs</h3>
                                     <div>
-                                        <article class="media">
-                                            <div class="media-content">
-                                                <div class="content">
-                                                    I need content
-                                                </div>
-                                            </div>
-                                        </article>
+                                        ${renderedDocs(recentDocs)}
                                     </div>
                                 </div>
                             </div>
                             <div class="level-item">
                                 <div class="box">
-                                    <h3 class="is-size-4 mb-3">Your Docs</h3>
+                                    <h3 class="is-size-4 mb-5">Your Docs</h3>
                                     <div>
-                                        <article class="media">
-                                            <div class="media-content">
-                                                <div class="content">
-                                                    I need content
-                                                </div>
-                                            </div>
-                                        </article>
+                                        ${renderedDocs(myDocs)}
                                     </div>
                                 </div>
                             </div>
@@ -51,4 +76,4 @@ const indexPage = (req) => {
     ` }, req)
 }
 
-export default indexPage
+export default adminIndexPage

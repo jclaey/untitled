@@ -1,6 +1,6 @@
 import layout from "../layout.js"
 
-const indexPage = ({ docs }, req) => {
+const docsIndexPage = ({ docs }, req) => {
     const knowledgeBaseArticles = docs.filter(doc => doc.type === 'Knowledge Base Article')
     
     const renderedArticles = knowledgeBaseArticles.length === 0 ? '' : knowledgeBaseArticles.map(article => {
@@ -82,4 +82,4 @@ const indexPage = ({ docs }, req) => {
     ` }, req)
 }
 
-export default indexPage
+export default docsIndexPage

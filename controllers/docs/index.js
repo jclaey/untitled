@@ -1,6 +1,6 @@
 import 'dotenv/config'
 import { validationResult } from 'express-validator'
-import indexPage from "../../views/docs/index.js"
+import docsIndexPage from "../../views/docs/index.js"
 import newDocPage from "../../views/docs/new.js"
 import showDocPage from '../../views/docs/show.js'
 import DocItem from "../../models/Doc.js"
@@ -8,7 +8,7 @@ import DocItem from "../../models/Doc.js"
 export const getIndex = async (req, res, next) => {
     const docs = await DocItem.find({}).populate('author').exec()
 
-    res.send(indexPage({ docs }, req))
+    res.send(docsIndexPage({ docs }, req))
 }
 
 export const getNew = (req, res, next) => {

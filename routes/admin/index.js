@@ -13,7 +13,7 @@ import {
     getLogout
 } from '../../controllers/admin/index.js'
 
-router.route('/').get(requireAuth, getIndex)
+router.route('/').get(requireAuth, asyncHandler(getIndex))
 router.route('/login').get(getLogin).post([ requireValidEmail, requireValidPasswordForUser ], asyncHandler(postLogin))
 router.route('/logout').get(getLogout)
 

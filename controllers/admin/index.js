@@ -1,10 +1,17 @@
 import { validationResult } from "express-validator"
-import indexPage from "../../views/admin/index.js"
+import DocItem from '../../models/Doc.js'
+import adminIndexPage from "../../views/admin/index.js"
 import adminLoginPage from "../../views/admin/login.js"
 import Admin from "../../models/Admin.js"
 
-export const getIndex = (req, res, next) => {
-    res.send(indexPage(req))
+export const getIndex = async (req, res, next) => {
+    const docs = await DocItem.find({})
+
+    if (docs) {
+        res.send(adminIndexPage({ docs }, req))
+    } else {
+        res.redirect('/failure')
+    }
 }
 
 export const getLogin = (req, res, next) => {
