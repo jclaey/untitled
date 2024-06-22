@@ -36,6 +36,10 @@ const productsIndexPage = ({ products }, req) => {
                             <p class="is-size-5">Price: $${product.price}</p>
                             <p class="is-size-5">Number In Stock: ${product.countInStock}</p>
                         </div>
+                        <div class="buttons">
+                            <a href="/products/product/${product._id}" class="button">View More</a>
+                            <a href="/cart/add/${product._id}" class="button">Add To Cart</a>
+                        </div>
                     </div>
                 </div>
             `
