@@ -1,3 +1,4 @@
+import { decode } from 'html-entities'
 import layout from "../layout.js"
 
 const showDocPage = ({ doc }, req) => {
@@ -23,8 +24,8 @@ const showDocPage = ({ doc }, req) => {
                     </figure>
                 </div>
             </section>
-            <section class="section">
-                ${doc.content}
+            <section class="section" id="doc-content-show">
+                ${decode(doc.content)}
             </section>
         </main>
     ` })

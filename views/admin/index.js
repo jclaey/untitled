@@ -28,7 +28,7 @@ const adminIndexPage = ({ docs }, req) => {
                             <p>
                                 <a href="/docs/doc/${doc._id}">${doc.title}</a> <br />
                                 <small>${doc.type}</small> <strong>in</strong> <small>${doc.category}</small> <br />
-                                ${doc.description.slice(0, 20)}${doc.description.length > 20 ? '...' : ''}
+                                ${doc.description.slice(0, 50)}${doc.description.length > 50 ? '...' : ''}
                             </p>
                         </div>
                     </div>
@@ -48,21 +48,17 @@ const adminIndexPage = ({ docs }, req) => {
                 </div>
                 <div class="columns">
                     <div class="column">
-                        <div id="admin-index-posts-area" class="level">
-                            <div class="level-item mr-5">
-                                <div class="box">
-                                    <h3 class="is-size-4 mb-5">Most Recent Docs</h3>
-                                    <div>
-                                        ${renderedDocs(recentDocs)}
-                                    </div>
+                        <div id="admin-index-posts-area">
+                            <div class="box">
+                                <h3 class="is-size-4 mb-5">Most Recent Docs</h3>
+                                <div>
+                                    ${renderedDocs(recentDocs)}
                                 </div>
                             </div>
-                            <div class="level-item">
-                                <div class="box">
-                                    <h3 class="is-size-4 mb-5">Your Docs</h3>
-                                    <div>
-                                        ${renderedDocs(myDocs)}
-                                    </div>
+                            <div class="box">
+                                <h3 class="is-size-4 mb-5">Your Docs</h3>
+                                <div>
+                                    ${renderedDocs(myDocs)}
                                 </div>
                             </div>
                         </div>

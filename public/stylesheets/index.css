@@ -216,3 +216,7 @@ header {
 #doc-featured-image .image {
     width: 80%;
 }
+
+#doc-content-show {
+    font-size: 20px;
+}

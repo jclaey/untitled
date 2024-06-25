@@ -24,7 +24,7 @@ router.route('/new')
         upload.single('image'),    
         [validateTitle, validateContent, validateDescription], 
         asyncHandler(postNew)
-)
+    )
 router.route('/doc/:id').get(asyncHandler(getShow))
 
 export default router

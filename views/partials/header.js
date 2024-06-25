@@ -35,6 +35,9 @@ const header = (req = null) => {
                                     <div class="level">
                                         <a href="/contact" class="navbar-item"><i class="fa-regular fa-envelope pr-2"></i> Contact</a>
                                     </div>
+                                    <div class="level">
+                                        <a href="/docs" class="navbar-item"><i class="fa-solid fa-book pr-2"></i> Articles and Posts</a>
+                                    </div>
                                 </div>
                             </div>
                     </div>
