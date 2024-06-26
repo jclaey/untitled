@@ -7,6 +7,7 @@ import { Readable } from 'stream'
 import Product from '../../models/Product.js'
 import newProductPage from '../../views/products/new.js'
 import productsIndexPage from '../../views/products/index.js'
+import productsShowPage from '../../views/products/show.js'
 
 const CREDENTIALS_PATH = path.join(process.cwd(), 'credentials.json')
 
@@ -86,5 +87,19 @@ export const postNew = async (req, res, next) => {
         res.redirect('/products')
     } else {
         res.redirect('/failure')
+    }
+}
+
+export const getShow = async (req, res, next) => {
+    const product = await Product.findById(req.params.id)
+
+    if (product) {
+        res.send(productsShowPage({ product }, req))
+    } else {
+        if (process.env.NODE_ENV === 'development') {
+            throw new Error('Product not found')
+        } else {
+            res.redirect('/failure')
+        }
     }
 }

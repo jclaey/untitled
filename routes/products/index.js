@@ -1,7 +1,6 @@
 import express from 'express'
 const router = express.Router()
 import multer from 'multer'
-import { storage } from '../../cloudinary/index.js'
 const upload = multer()
 import asyncHandler from '../../middleware/async.js'
 import { requireAuth } from '../../middleware/auth.js'
@@ -15,7 +14,8 @@ import {
 import {
     getNew,
     postNew,
-    getIndex
+    getIndex,
+    getShow
 } from '../../controllers/products/index.js'
 
 router.route('/').get(asyncHandler(getIndex))
@@ -29,5 +29,7 @@ router.route('/new')
         validatePrice,
         validateCountInStock
     ], asyncHandler(postNew))
+
+router.route('/product/:id').get(asyncHandler(getShow))
 
 export default router
