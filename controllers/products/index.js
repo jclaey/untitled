@@ -8,6 +8,7 @@ import Product from '../../models/Product.js'
 import newProductPage from '../../views/products/new.js'
 import productsIndexPage from '../../views/products/index.js'
 import productsShowPage from '../../views/products/show.js'
+import productsEditPage from '../../views/products/edit.js'
 
 const CREDENTIALS_PATH = path.join(process.cwd(), 'credentials.json')
 
@@ -95,6 +96,50 @@ export const getShow = async (req, res, next) => {
 
     if (product) {
         res.send(productsShowPage({ product }, req))
+    } else {
+        if (process.env.NODE_ENV === 'development') {
+            throw new Error('Product not found')
+        } else {
+            res.redirect('/failure')
+        }
+    }
+}
+
+export const getEdit = async (req, res, next) => {
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+        res.send(productsEditPage({ errors, values: req.body }, req))
+    }
+
+    const product = await Product.findById(req.params.id)
+
+    if (product) {
+        res.send(productsEditPage({ product }, req))
+    } else {
+        if (process.env.NODE_ENV === 'developemtn') {
+            throw new Error('Product not found')
+        } else {
+            res.redirect('/failure')
+        }
+    }
+}
+
+export const postPatch = async (req, res, next) => {
+    let product = await Product.findById(req.params.id)
+
+    const update = {
+        title: req.body.title === product.title ? product.title : req.body.title,
+        type: req.body.type === product.type ? product.type : req.body.type,
+        description: req.body.description === product.description ? product.description : req.body.description,
+        price: req.body.price === product.price ? product.price : req.body.price,
+        countInStock: req.body.countInStock === product.countInStock ? product.countInStock : req.body.countInStock
+    }
+
+    product = await Product.findByIdAndUpdate(product.id, update)
+
+    if (product) {
+        res.redirect(`/products/${product.id}`)
     } else {
         if (process.env.NODE_ENV === 'development') {
             throw new Error('Product not found')
