@@ -20,7 +20,7 @@ const productsEditPage = ({ product, errors, values = {} }, req) => {
                         `
                     : ''}
                 </div>
-                <form class="box" action="/products/new" method="POST" enctype="multipart/form-data">
+                <form class="box" action="/products/${product._id}/edit" method="PATCH" enctype="multipart/form-data">
                     <div class="mb-3">
                         <small>* denotes a required field</small>
                     </div>

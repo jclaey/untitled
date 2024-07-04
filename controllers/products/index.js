@@ -125,8 +125,51 @@ export const getEdit = async (req, res, next) => {
     }
 }
 
-export const postPatch = async (req, res, next) => {
+export const patchEdit = async (req, res, next) => {
     let product = await Product.findById(req.params.id)
+
+    if (!product) {
+        if (process.env.NODE_ENV === 'development') {
+            throw new Error('Product not found')
+        } else {
+            res.redirect('/failure')
+        }
+    }
+
+    if (req.files) {
+        if (req.files['image']) {
+            const deleteImageResponse = await drive.files.update({
+                fileId: product.imageId,
+                requestBody: {
+                    trashed: true
+                }
+            })
+    
+            console.log(deleteImageResponse)
+    
+            if (deleteImageResponse) {
+                const newProductImage = await drive.files.create({
+                    resource: {
+                        name: req.files['image'][0].originalname,
+                        parents: [imagesFolderId]
+                    },
+                    media: {
+                        mimeType: 'application/octet-stream',
+                        body: Readable.from(req.files['image'][0].buffer)
+                    },
+                    fields: 'id'
+                })
+            }
+        }
+
+        if (req.files['product']) {
+            const listFiles = await drive.files.list({
+                q: `name contains '${product._id}'`
+            })
+    
+            console.log(listFiles)
+        }
+    }
 
     const update = {
         title: req.body.title === product.title ? product.title : req.body.title,

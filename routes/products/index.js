@@ -16,7 +16,8 @@ import {
     postNew,
     getIndex,
     getShow,
-    getEdit
+    getEdit,
+    patchEdit
 } from '../../controllers/products/index.js'
 
 router.route('/').get(asyncHandler(getIndex))
@@ -33,6 +34,6 @@ router.route('/new')
 
 router.route('/product/:id').get(asyncHandler(getShow))
 
-router.route('/product/:id/edit').get(asyncHandler(getEdit))
+router.route('/product/:id/edit').get(asyncHandler(getEdit)).patch(asyncHandler(patchEdit))
 
 export default router
