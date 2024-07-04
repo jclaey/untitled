@@ -92,6 +92,7 @@ export const postNew = async (req, res, next) => {
 }
 
 export const getShow = async (req, res, next) => {
+    const isSignedIn = req.userId && req.userId === process.env.ADMIN_ID ? true : false
     const product = await Product.findById(req.params.id)
 
     if (product) {

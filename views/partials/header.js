@@ -43,7 +43,7 @@ const header = (req = null) => {
                     </div>
                 </div>
             </div>
-            <div class="nav-right">
+            <div class="nav-right mt-2">
                 <div class="navbar-end">
                     <div class="navbar-item">
                         <div class="buttons">

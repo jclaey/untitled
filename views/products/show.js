@@ -32,8 +32,8 @@ const productsShowPage = ({ product }, req) => {
 
                         ${req && req.session && req.session.userId ? `
                             <div>
-                                <a href="/products/${product._id}/edit" class="button is-warning">Edit Product</a>
-                                <a href="/products/${product._id}/delete" class="button is-danger">Delete Product</a>
+                                <a href="/products/product/${product._id}/edit" class="button is-warning">Edit Product</a>
+                                <a href="/products/product/${product._id}/delete" class="button is-danger">Delete Product</a>
                             </div>
                         ` : ''}
                     </div>
