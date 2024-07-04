@@ -3,6 +3,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import express from 'express'
 import cookieSession from 'cookie-session'
+import methodOverride from 'method-override'
 import index from './routes/index.js'
 import admin from './routes/admin/index.js'
 import quotes from './routes/quotes/index.js'
@@ -19,7 +20,9 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 // Use public folder for static files
-app.use(express.static(path.join(__dirname, 'public'))) 
+app.use(express.static(path.join(__dirname, 'public')))
+
+app.use(methodOverride('_method'))
 
 // Use body parser for form data
 app.use(express.json())

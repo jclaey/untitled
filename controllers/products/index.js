@@ -127,7 +127,14 @@ export const getEdit = async (req, res, next) => {
 }
 
 export const patchEdit = async (req, res, next) => {
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+        res.send(productsEditPage({ errors, values: req.body }, req))
+    }
+
     let product = await Product.findById(req.params.id)
+    let update = {}
 
     if (!product) {
         if (process.env.NODE_ENV === 'development') {
@@ -146,8 +153,6 @@ export const patchEdit = async (req, res, next) => {
                 }
             })
     
-            console.log(deleteImageResponse)
-    
             if (deleteImageResponse) {
                 const newProductImage = await drive.files.create({
                     resource: {
@@ -160,6 +165,8 @@ export const patchEdit = async (req, res, next) => {
                     },
                     fields: 'id'
                 })
+
+                update.imageId = newProductImage.data.id
             }
         }
 
@@ -167,28 +174,81 @@ export const patchEdit = async (req, res, next) => {
             const listFiles = await drive.files.list({
                 q: `name contains '${product._id}'`
             })
-    
-            console.log(listFiles)
+
+            const deleteProductResponse = await drive.files.update({
+                fileId: listFiles.data.files[0].id,
+                requestBody: {
+                    trashed: true
+                }
+            })
+
+            if (deleteProductResponse) {
+                const prodExtIndex = req.files['product'][0].originalname.indexOf('.')
+
+                const newProduct = await drive.files.create({
+                    resource: {
+                        name: `${req.files['product'][0].originalname.slice(0, prodExtIndex)}-${product._id}.zip`,
+                        parents: [productsFolderId]
+                    },
+                    media: {
+                        mimeType: 'application/zip',
+                        body: Readable.from(req.files['product'][0].buffer)
+                    },
+                    fields: 'id'
+                })
+
+                if (!newProduct) {
+                    if (process.env.NODE_ENV === 'development') {
+                        throw new Error('Could not create new product')
+                    } else {
+                        res.redirect('/failure')
+                    }
+                }
+            } else {
+                if (process.env.NODE_ENV === 'development') {
+                    throw new Error('Could not delete existing product')
+                } else {
+                    res.redirect('/failure')
+                }
+            }
         }
-    }
 
-    const update = {
-        title: req.body.title === product.title ? product.title : req.body.title,
-        type: req.body.type === product.type ? product.type : req.body.type,
-        description: req.body.description === product.description ? product.description : req.body.description,
-        price: req.body.price === product.price ? product.price : req.body.price,
-        countInStock: req.body.countInStock === product.countInStock ? product.countInStock : req.body.countInStock
-    }
+        update.title = req.body.title === product.title ? product.title : req.body.title
+        update.type = req.body.type === product.type ? product.type : req.body.type
+        update.description = req.body.description === product.description ? product.description : req.body.description
+        update.price = req.body.price === product.price ? product.price : req.body.price
+        update.countInStock = req.body.countInStock === product.countInStock ? product.countInStock : req.body.countInStock
 
-    product = await Product.findByIdAndUpdate(product.id, update)
+        product = await Product.findByIdAndUpdate(product._id, update)
 
-    if (product) {
-        res.redirect(`/products/${product.id}`)
-    } else {
-        if (process.env.NODE_ENV === 'development') {
-            throw new Error('Product not found')
+        if (product) {
+            res.redirect(`/products/product/${product._id}`)
         } else {
-            res.redirect('/failure')
+            if (process.env.NODE_ENV === 'development') {
+                throw new Error('Could not update product')
+            } else {
+                res.redirect('/failure')
+            }
+        }
+    } else {
+        update = {
+                title: req.body.title === product.title ? product.title : req.body.title,
+                type: req.body.type === product.type ? product.type : req.body.type,
+                description: req.body.description === product.description ? product.description : req.body.description,
+                price: req.body.price === product.price ? product.price : req.body.price,
+                countInStock: req.body.countInStock === product.countInStock ? product.countInStock : req.body.countInStock
+            }
+
+        product = await Product.findByIdAndUpdate(product._id, update)
+
+        if (product) {
+            res.redirect(`/products/product/${product._id}`)
+        } else {
+            if (process.env.NODE_ENV === 'development') {
+                throw new Error('Could not update product')
+            } else {
+                res.redirect('/failure')
+            }
         }
     }
 }

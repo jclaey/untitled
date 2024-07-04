@@ -34,6 +34,8 @@ router.route('/new')
 
 router.route('/product/:id').get(asyncHandler(getShow))
 
-router.route('/product/:id/edit').get(asyncHandler(getEdit)).patch(asyncHandler(patchEdit))
+router.route('/product/:id/edit')
+    .get(asyncHandler(getEdit))
+    .patch(upload.fields([{ name: 'image' }, { name: 'product' }]), asyncHandler(patchEdit))
 
 export default router
