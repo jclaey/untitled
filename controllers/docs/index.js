@@ -3,6 +3,7 @@ import { validationResult } from 'express-validator'
 import docsIndexPage from "../../views/docs/index.js"
 import newDocPage from "../../views/docs/new.js"
 import showDocPage from '../../views/docs/show.js'
+import docsEditPage from '../../views/docs/edit.js'
 import DocItem from "../../models/Doc.js"
 
 export const getIndex = async (req, res, next) => {
@@ -66,17 +67,23 @@ export const getShow = async (req, res, next) => {
 }
 
 export const getEdit = async (req, res, next) => {
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+        return res.send(newDocPage({ errors, values: req.body }, req))
+    }
+    
     const doc = await DocItem.findById(req.params.id)
 
-    if (!doc) {
+    if (doc) {
+        res.send(docsEditPage({ doc }, req))
+    } else {
         if (process.env.NODE_ENV === 'development') {
             throw new Error('Resource not found')
         } else {
             res.redirect('/failure')
         }
     }
-
-    // res.send()
 }
 
 export const patchEdit = async (req, res, next) => {

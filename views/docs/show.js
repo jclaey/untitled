@@ -25,7 +25,17 @@ const showDocPage = ({ doc }, req) => {
                 </div>
             </section>
             <section class="section" id="doc-content-show">
-                ${decode(doc.content)}
+                <div class="mb-6">
+                    ${decode(doc.content)}
+                </div>
+                <div>
+                    ${req && req.session && req.session.userId ? `
+                        <div>
+                            <a href="/docs/doc/${doc._id}/edit" class="button is-warning">Edit Doc</a>
+                            <a href="/docs/doc/${doc._id}/delete" class="button is-danger">Delete Doc</a>
+                        </div>
+                    ` : ''}
+                </div>
             </section>
         </main>
     ` })

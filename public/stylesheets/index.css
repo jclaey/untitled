@@ -232,3 +232,12 @@ header {
     align-items: center;
     justify-content: center;
 }
+
+.form-section {
+    display: flex;
+    justify-content: center;
+}
+
+.resource-form {
+    width: 60%;
+}

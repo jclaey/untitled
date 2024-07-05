@@ -14,7 +14,8 @@ import {
     getIndex,
     getNew,
     postNew,
-    getShow
+    getShow,
+    getEdit
 } from '../../controllers/docs/index.js'
 
 router.route('/').get(getIndex)
@@ -26,5 +27,6 @@ router.route('/new')
         asyncHandler(postNew)
     )
 router.route('/doc/:id').get(asyncHandler(getShow))
+router.route('/doc/:id/edit').get(requireAuth, asyncHandler(getEdit))
 
 export default router
