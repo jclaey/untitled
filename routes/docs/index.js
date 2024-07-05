@@ -20,8 +20,8 @@ import {
 router.route('/').get(getIndex)
 router.route('/new')
     .get(requireAuth, getNew)
-    .post( 
-        upload.single('image'),    
+    .post(
+        upload.single('image'),
         [validateTitle, validateContent, validateDescription], 
         asyncHandler(postNew)
     )

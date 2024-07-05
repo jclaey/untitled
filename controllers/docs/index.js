@@ -64,3 +64,54 @@ export const getShow = async (req, res, next) => {
         }
     }
 }
+
+export const getEdit = async (req, res, next) => {
+    const doc = await DocItem.findById(req.params.id)
+
+    if (!doc) {
+        if (process.env.NODE_ENV === 'development') {
+            throw new Error('Resource not found')
+        } else {
+            res.redirect('/failure')
+        }
+    }
+
+    // res.send()
+}
+
+export const patchEdit = async (req, res, next) => {
+    let doc = await DocItem.findById(req.params.id)
+
+    if (!doc) {
+        if (process.env.NODE_ENV === 'development') {
+            throw new Error('Resource not found')
+        } else {
+            res.redirect('/failure')
+        }
+    }
+
+    const update = {
+        type: req.body.type === doc.type ? doc.type : req.body.type,
+        category: req.body.category === doc.category ? doc.category : req.body.category,
+        tite: req.body.title === doc.title ? doc.title : req.body.title,
+        description: req.body.description === doc.description ? doc.description : req.body.description,
+        content: req.body.content === doc.content ? doc.content : req.body.content
+    }
+
+    if (req.file) {
+        update.image.path = req.file.path
+        update.image.filename = req.file.filename
+    }
+
+    doc = await DocItem.findByIdAndUpdate(doc._id, update)
+
+    if (doc) {
+        res.redirect(`/docs/doc/${doc._id}`)
+    } else {
+        if (process.env.NODE_ENV === 'development') {
+            throw new Error('Could not update resource')
+        } else {
+            res.redirect('/failure')
+        }
+    }
+}
