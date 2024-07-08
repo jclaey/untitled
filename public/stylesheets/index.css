@@ -135,16 +135,16 @@ header {
     color: #fff;
 }
 
-#admin-login-section {
+.login-section {
     display: flex;
     justify-content: center;
 }
 
-#admin-login-form {
+.login-form {
     width: 50%;
 }
 
-#admin-login-btn {
+.login-btn {
     color: white;
     background-color: var(--primary-color);
 }
