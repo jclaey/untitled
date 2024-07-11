@@ -30,6 +30,7 @@ const layout = ({ template }, req) => {
             ${req && req.originalUrl && req.originalUrl === '/' ? '<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" integrity="sha512-A7AYk1fGKX6S2SsHywmPkrnzTZHrgiVT7GcQkLGDe2ev0aWb8zejytzS8wjo7PGEXKqJOrjQ4oORtnimIRZBtw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>' : ''}
             ${req && req.originalUrl && req.originalUrl.includes('/product') ? '<script src="/javascript/selectToggler.js"></script>' : ''}
             ${req && req.originalUrl && req.originalUrl === '/docs/new' || req && req.originalUrl && req.originalUrl.includes('/edit') ? '<script src="/javascript/tiny-admin-facing.js"></script>' : ''}
+            ${req && req.originalUrl && req.originalUrl === '/users/register' ? '<script src="/javascript/noMatch.js"></script>' : ''}
             ${req && req.originalUrl && req.originalUrl === '/contact' ? '<script src="/javascript/tiny-user-facing.js"></script><script src="/javascript/closeMessage.js"></script>"' : ''}
             ${req && req.originalUrl && req.originalUrl === '/' ? `<script>AOS.init()</script>` : ''}
           </body>
