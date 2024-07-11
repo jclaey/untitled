@@ -9,7 +9,8 @@ const adminIndexPage = ({ docs }, req) => {
             recentDocs.push(doc)
         }
         
-        if (req && req.session && req.session.userId && req.session.userId === String(doc.author)) {
+        // adminId
+        if (req && req.session && req.session.adminId === String(doc.author)) {
             myDocs.push(doc)
         }
     })

@@ -50,7 +50,7 @@ const header = (req = null) => {
                             <a href="/cart" class="button is-success"><i class="fa-solid fa-cart-shopping pr-2"></i> Cart</a>
                         </div>
                     </div>
-                    ${req && req.session && req.session.userId ? `
+                    ${req && req.session && req.session.userId || req && req.session && req.session.adminId ? `
                         <div class="navbar-item">
                             <div class="buttons">
                                 <a href="/admin/logout" class="button">Logout</a>

@@ -22,8 +22,11 @@ const newDocPage = ({ errors, values = {} }, req) => {
             </div>
             <section id="new-doc-form">
                 <form class="box" action="/docs/new" method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <small>* denotes a required field</small>
+                    </div>
                     <div class="field mb-4">
-                        <label class="label" for="type">Type</label>
+                        <label class="label" for="type">Type*</label>
                         <div class="control">
                             <div class="select">
                                 <select id="type" name="type" value="${errors && values.type && values.type !== '' ? values.type : ''}">
@@ -34,7 +37,7 @@ const newDocPage = ({ errors, values = {} }, req) => {
                         </div>
                     </div>
                     <div class="field mb-4">
-                        <label class="label" for="category">Category</label>
+                        <label class="label" for="category">Category*</label>
                         <div class="control">
                             <div class="select">
                                 <select id="category" name="category" value="${errors && values.category && values.category !== '' ? values.category : ''}">
@@ -47,25 +50,25 @@ const newDocPage = ({ errors, values = {} }, req) => {
                         </div>
                     </div>
                     <div class="field mb-4">
-                        <label class="label" for="title">Title</label>
+                        <label class="label" for="title">Title*</label>
                         <div class="control">
                             <input type="text" class="input" id="title" name="title" value="${errors && values.title && values.title !== '' ? values.title : ''}" />
                         </div>
                     </div>
                     <div class="field mb-4">
-                        <label class="label" for="description">Description</label>
+                        <label class="label" for="description">Description*</label>
                         <div class="control">
                             <input type="text" class="input" id="description" name="description" value="${errors && values.description && values.description !== '' ? values.description : ''}" />
                         </div>
                     </div>
                     <div class="field mb-4">
-                        <label class="label" for="content">Content</label>
+                        <label class="label" for="content">Content*</label>
                         <div class="control">
                             <textarea id="content" name="content" class="textarea" value="${errors && values.content && values.content !== '' ? values.content : ''}"></textarea>
                         </div>
                     </div>
                     <div class="field mb-6">
-                        <label class="label" for="image">Image</label>
+                        <label class="label" for="image">Image*</label>
                         <div class="control">
                             <input type="file" class="input" id="image" name="image" accept="images/*" />
                         </div>

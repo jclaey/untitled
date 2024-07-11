@@ -27,7 +27,7 @@ const newProductPage = ({ errors, values = {} }, req) => {
                     </div>
                     <div class="field mb-4">
                         <label for="title" class="label">
-                            Title
+                            Title*
                         </label>
                         <div class="control">
                             <input class="input" type="text" id="title" name="title" value="${errors && values.title && values.title !== '' ? values.title : ''}" />
@@ -35,7 +35,7 @@ const newProductPage = ({ errors, values = {} }, req) => {
                     </div>
                     <div class="field mb-4">
                         <label for="image" class="label">
-                            Product Image
+                            Product Image*
                         </label>
                         <div class="control">
                             <input class="input" type="file" id="image" name="image" accept="image/*" />
@@ -43,7 +43,7 @@ const newProductPage = ({ errors, values = {} }, req) => {
                     </div>
                     <div class="field mb-4">
                         <label for="type" class="label">
-                            Type
+                            Type*
                         </label>
                         <div class="control">
                             <div class="select">
@@ -56,7 +56,7 @@ const newProductPage = ({ errors, values = {} }, req) => {
                     </div>
                     <div class="field mb-4" id="new-product-upload">
                         <label for="product" class="label">
-                            Upload Digital Product
+                            Upload Digital Product*
                         </label>
                         <div class="control">
                             <input class="input" type="file" id="product" name="product" accept=".zip" />
@@ -64,7 +64,7 @@ const newProductPage = ({ errors, values = {} }, req) => {
                     </div>
                     <div class="field mb-4">
                         <label for="description" class="label">
-                            Description
+                            Description*
                         </label>
                         <div class="control">
                             <input class="input" type="text" id="description" name="description" value="${errors && values.description && values.description !== '' ? values.description : ''}" />
@@ -72,7 +72,7 @@ const newProductPage = ({ errors, values = {} }, req) => {
                     </div>
                     <div class="field mb-4">
                         <label for="price" class="label">
-                            Price
+                            Price*
                         </label>
                         <div class="control">
                             <input class="input" type="number" min="0.01" step="0.01" id="price" name="price" value="${errors && values.price && values.price !== '' ? values.price : ''}" />

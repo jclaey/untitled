@@ -30,7 +30,7 @@ const productsShowPage = ({ product }, req) => {
                             <p class="is-size-5">Number In Stock: ${product.countInStock}</p>
                         </div>
 
-                        ${req && req.session && req.session.userId ? `
+                        ${req && req.session && req.session.adminId ? `
                             <div>
                                 <a href="/products/product/${product._id}/edit" class="button is-warning">Edit Product</a>
                                 <a href="/products/product/${product._id}/delete" class="button is-danger">Delete Product</a>

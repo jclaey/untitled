@@ -1,12 +1,12 @@
 import layout from "../layout.js"
 import { getErrors } from "../../utils/getErrors.js"
 
-const adminLoginPage = ({ errors, values = {} }, req) => {
+const userLoginPage = ({ errors, values = {} }, req) => {
     return layout({ template: `
-        <main>
+        <main class="container">
             <div class="mb-6 page-title-div">
                 <h1 class="title is-size-1">
-                    <span class="pipe">|</span> Admin Login <span class="pipe">|</span>
+                    <span class="pipe">|</span> User Login <span class="pipe">|</span>
                 </h1>
             </div>
             <div>
@@ -20,8 +20,8 @@ const adminLoginPage = ({ errors, values = {} }, req) => {
                     `
                 : ''}
             </div>
-            <section class="container login-section">
-                <form action="/admin/login" method="POST" class="mt-6 box login-form">
+            <section class="login-section">
+                <form action="/users/login" method="POST" class="mt-6 box login-form">
                     <div class="field mb-5">
                         <label class="label" for="email">
                             <strong>Email</strong>
@@ -41,8 +41,8 @@ const adminLoginPage = ({ errors, values = {} }, req) => {
                     <button class="button is-medium mb-4 login-btn" type="submit">Login</button>
                 </form>
             </section>
-        </main>
+        </main>   
     ` }, req)
 }
 
-export default adminLoginPage
+export default userLoginPage

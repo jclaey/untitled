@@ -15,7 +15,7 @@ export const getIndex = async (req, res, next) => {
 }
 
 export const getLogin = (req, res, next) => {
-    if (req && req.session && req.session.userId) {
+    if (req && req.session && req.session.adminId) {
         res.redirect('/admin')
     }
 
@@ -33,7 +33,7 @@ export const postLogin = async (req, res, next) => {
     const admin = await Admin.findOne({ email })
 
     if (admin && admin.comparePasswords(password)) {
-        req.session.userId = String(admin._id)
+        req.session.adminId = String(admin._id)
         res.redirect('/admin')
     } else {
         if (process.env.NODE_ENV === 'development') {
