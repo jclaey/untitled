@@ -29,7 +29,7 @@ const showDocPage = ({ doc }, req) => {
                     ${decode(doc.content)}
                 </div>
                 <div>
-                    ${req && req.session && req.session.userId ? `
+                    ${req && req.session && req.session.adminId ? `
                         <div>
                             <a href="/docs/doc/${doc._id}/edit" class="button is-warning">Edit Doc</a>
                             <a href="/docs/doc/${doc._id}/delete" class="button is-danger">Delete Doc</a>
