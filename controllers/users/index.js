@@ -56,3 +56,8 @@ export const postRegister = async (req, res, next) => {
         res.redirect('/failure')
     }
 }
+
+export const getLogout = (req, res, next) => {
+    req.session.userId = null
+    res.redirect('/users/login')
+}

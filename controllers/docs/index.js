@@ -27,7 +27,7 @@ export const postNew = async (req, res, next) => {
         type: req.body.type,
         category: req.body.category,
         title: req.body.title,
-        author: req.session.userId,
+        author: req.session.adminId,
         description: req.body.description,
         content: req.body.content,
         image: {

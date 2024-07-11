@@ -12,7 +12,8 @@ import {
     getLogin,
     getRegister,
     postLogin,
-    postRegister
+    postRegister,
+    getLogout
 } from '../../controllers/users/index.js'
 
 router.route('/login')
@@ -29,5 +30,6 @@ router.route('/register')
         requireValidEmail,
         requireValidPasswordForUser
 ], asyncHandler(postRegister))
+router.route('/logout').get(getLogout)
 
 export default router
