@@ -4,7 +4,7 @@ import multer from 'multer'
 import { storage } from '../../cloudinary/index.js'
 const upload = multer({ storage })
 import asyncHandler from '../../middleware/async.js'
-import { requireAuth } from '../../middleware/auth.js'
+import { requireAdminAuth } from '../../middleware/auth.js'
 import {
     validateTitle,
     validateContent,
@@ -20,13 +20,13 @@ import {
 
 router.route('/').get(getIndex)
 router.route('/new')
-    .get(requireAuth, getNew)
+    .get(requireAdminAuth, getNew)
     .post(
         upload.single('image'),
         [validateTitle, validateContent, validateDescription], 
         asyncHandler(postNew)
     )
 router.route('/doc/:id').get(asyncHandler(getShow))
-router.route('/doc/:id/edit').get(requireAuth, asyncHandler(getEdit))
+router.route('/doc/:id/edit').get(requireAdminAuth, asyncHandler(getEdit))
 
 export default router

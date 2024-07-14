@@ -1,7 +1,7 @@
 import express from 'express'
 const router = express.Router()
 import asyncHandler from '../../middleware/async.js'
-import { requireAuth } from '../../middleware/auth.js'
+import { requireAdminAuth } from '../../middleware/auth.js'
 import {
     requireValidEmail,
     requireValidPasswordForUser
@@ -13,7 +13,7 @@ import {
     getLogout
 } from '../../controllers/admin/index.js'
 
-router.route('/').get(requireAuth, asyncHandler(getIndex))
+router.route('/').get(requireAdminAuth, asyncHandler(getIndex))
 router.route('/login').get(getLogin).post([ requireValidEmail, requireValidPasswordForUser ], asyncHandler(postLogin))
 router.route('/logout').get(getLogout)
 

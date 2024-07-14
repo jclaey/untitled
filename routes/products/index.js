@@ -3,7 +3,7 @@ const router = express.Router()
 import multer from 'multer'
 const upload = multer()
 import asyncHandler from '../../middleware/async.js'
-import { requireAuth } from '../../middleware/auth.js'
+import { requireAdminAuth } from '../../middleware/auth.js'
 import {
     validateTitle,
     validateProductType,
@@ -23,7 +23,7 @@ import {
 router.route('/').get(asyncHandler(getIndex))
 
 router.route('/new')
-    .get(requireAuth, getNew)
+    .get(requireAdminAuth, getNew)
     .post(upload.fields([{ name: 'image' }, { name: 'product' }]), [
         validateTitle,
         validateProductType,
@@ -35,7 +35,7 @@ router.route('/new')
 router.route('/product/:id').get(asyncHandler(getShow))
 
 router.route('/product/:id/edit')
-    .get(requireAuth, asyncHandler(getEdit))
+    .get(requireAdminAuth, asyncHandler(getEdit))
     .patch(upload.fields([{ name: 'image' }, { name: 'product' }]), asyncHandler(patchEdit))
 
 export default router

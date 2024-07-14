@@ -1,7 +1,6 @@
 import express from 'express'
 const router = express.Router()
 import asyncHandler from '../../middleware/async.js'
-import { requireAuth } from '../../middleware/auth.js'
 import {
     validateFirstName,
     validateLastName,
