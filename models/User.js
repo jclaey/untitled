@@ -1,3 +1,4 @@
+import crypto from 'crypto'
 import mongoose from "mongoose"
 import { ProductSchema } from "./Product.js"
 const Schema = mongoose.Schema
@@ -37,6 +38,9 @@ UserSchema.methods.comparePasswords = function(suppliedPassword) {
     const [hashed, salt] = this.password.split('.')
   
     const hashedSupplied = crypto.createHash('sha256').update(suppliedPassword + salt).digest('hex')
+
+    console.log(hashedSupplied)
+    console.log(hashed)
   
     return hashedSupplied === hashed
 }

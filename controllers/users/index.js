@@ -49,9 +49,9 @@ export const postRegister = async (req, res, next) => {
         const { firstName, lastName, email } = req.body
 
         const salt = crypto.randomBytes(8).toString('hex')
-        const buf = await scrypt(req.body.password, salt, 64)
+        const hashedPassword = crypto.createHash('sha256').update(req.body.password + salt).digest('hex')
 
-        let password = `${buf.toString('hex')}.${salt}`
+        let password = `${hashedPassword}.${salt}`
 
         const user = new User({
             firstName,
