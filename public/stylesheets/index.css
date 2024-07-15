@@ -241,3 +241,7 @@ header {
 .resource-form {
     width: 60%;
 }
+
+.fa-circle-user {
+    color: #333;
+}
