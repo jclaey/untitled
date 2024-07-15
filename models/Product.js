@@ -22,7 +22,7 @@ const ReviewSchema = new Schema({
     timestamps: true
 })
 
-const ProductSchema = new Schema({
+export const ProductSchema = new Schema({
     user: {
         type: Schema.Types.ObjectId,
         ref: 'Admin'
@@ -67,6 +67,4 @@ const ProductSchema = new Schema({
     }
 })
 
-const Product = mongoose.model('Product', ProductSchema)
-
-export default Product
+export const Product = mongoose.model('Product', ProductSchema)

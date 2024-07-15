@@ -1,4 +1,5 @@
 import mongoose from "mongoose"
+import { ProductSchema } from "./Product.js"
 const Schema = mongoose.Schema
 
 const UserSchema = new Schema({
@@ -25,6 +26,7 @@ const UserSchema = new Schema({
         postalCode: String,
         country: String
     },
+    cart: [ProductSchema],
     createdAt: {
         type: Date,
         default: Date.now
