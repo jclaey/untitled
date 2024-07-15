@@ -38,7 +38,11 @@ const productsIndexPage = ({ products }, req) => {
                         </div>
                         <div class="buttons">
                             <a href="/products/product/${product._id}" class="button">View More</a>
-                            <a href="/cart/add/${product._id}" class="button">Add To Cart</a>
+                            ${req && req.session && req.session.userId ? `
+                                <form action="/users/user/${req.session.userId}/cart/${product._id}/add" method="POST">
+                                    <button type="submit" class="button">Add To Cart</button>
+                                </form>
+                            ` : ''}
                         </div>
                     </div>
                 </div>

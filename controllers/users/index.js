@@ -4,7 +4,9 @@ import util from 'util'
 import userLoginPage from '../../views/users/login.js'
 import userRegisterPage from '../../views/users/register.js'
 import userProfilePage from "../../views/users/profile.js"
+import userCartPage from "../../views/users/cart.js"
 import User from "../../models/User.js"
+import { Product } from "../../models/Product.js"
 
 const scrypt = util.promisify(crypto.scrypt)
 
@@ -92,5 +94,34 @@ export const getUserProfile = async (req, res, next) => {
         } else {
             res.redirect('/failure')
         }
+    }
+}
+
+export const getCart = async (req, res, next) => {
+    const user = await User.findById(req.params.id)
+
+    console.log(user)
+
+    if (user) {
+        res.send(userCartPage({ cartItems: user.cart, firstName: user.firstName }, req))
+    } else {
+        if (process.env.NODE_ENV === 'development') {
+            throw new Error('Resource not found')
+        } else {
+            res.redirect('/failure')
+        }
+    }
+}
+
+export const postCartItem = async (req, res, next) => {
+    const user = await User.findById(req.params.userId)
+    const product = await Product.findById(req.params.productId)
+
+    if (user && product) {
+        user.cart.push(product)
+        await user.save()
+        res.redirect('/success')
+    } else {
+        throw new Error('Could not find user or product')
     }
 }

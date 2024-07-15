@@ -13,7 +13,9 @@ import {
     postLogin,
     postRegister,
     getLogout,
-    getUserProfile
+    getUserProfile,
+    getCart,
+    postCartItem
 } from '../../controllers/users/index.js'
 
 router.route('/login')
@@ -32,5 +34,7 @@ router.route('/register')
 ], asyncHandler(postRegister))
 router.route('/logout').get(getLogout)
 router.route('/user/:id/profile').get(asyncHandler(getUserProfile))
+router.route('/user/:id/cart').get(asyncHandler(getCart))
+router.route('/user/:userId/cart/:productId/add').post(asyncHandler(postCartItem))
 
 export default router
