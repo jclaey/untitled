@@ -60,8 +60,11 @@ const header = (req = null) => {
                     }
                     ${req && req.session && req.session.userId ? `
                         <div class="navbar-item">
-                            <div class="buttons">
-                                <a href="/users/logout" class="button is-primary">Logout</a>
+                            <div class="buttons level">
+                                <a href="/users/logout" class="button is-primary mr-5">Logout</a>
+                                <a href="/users/user/${req.session.userId}/profile">
+                                    <i class="fa-solid fa-circle-user fa-2x"></i>
+                                </a>
                             </div>
                         </div>
                     ` : ''
