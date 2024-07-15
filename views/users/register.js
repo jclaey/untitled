@@ -29,7 +29,7 @@ const userRegisterPage = ({ errors, values = {} }, req) => {
                             <strong>First Name*</strong>
                         </label>
                         <div class="control">
-                            <input type="text" id="firstName" name="firstName" placeholder="Enter first name..." class="input" value="${errors && values.firstName && values.firstName !== '' ? values.firstName : ''}" />
+                            <input type="text" id="firstName" name="firstName" placeholder="Enter first name..." class="input" value="${errors && values.firstName && values.firstName !== '' ? values.firstName : ''}" required />
                         </div>
                     </div>
                     <div class="field mb-5">
@@ -37,7 +37,7 @@ const userRegisterPage = ({ errors, values = {} }, req) => {
                             <strong>Last Name*</strong>
                         </label>
                         <div class="control">
-                            <input type="email" id="lastName" name="lastName" placeholder="Enter last name..." class="input" value="${errors && values.lastName && values.lastName !== '' ? values.lastName : ''}" />
+                            <input type="text" id="lastName" name="lastName" placeholder="Enter last name..." class="input" value="${errors && values.lastName && values.lastName !== '' ? values.lastName : ''}" required />
                         </div>
                     </div>
                     <div class="field mb-5">
@@ -45,7 +45,7 @@ const userRegisterPage = ({ errors, values = {} }, req) => {
                             <strong>Email*</strong>
                         </label>
                         <div class="control">
-                            <input type="email" id="email" name="email" placeholder="Enter email..." class="input" value="${errors && values.email && values.email !== '' ? values.email : ''}" />
+                            <input type="email" id="email" name="email" placeholder="Enter email..." class="input" value="${errors && values.email && values.email !== '' ? values.email : ''}" required />
                         </div>
                     </div>
                     <div class="field mb-5">
@@ -53,7 +53,7 @@ const userRegisterPage = ({ errors, values = {} }, req) => {
                             <strong id="password-label">Password*</strong>
                         </label>
                         <div class="control">
-                            <input type="password" id="password" name="password" placeholder="Enter password..." class="input" value="${errors && values.password && values.password !== '' ? values.password : ''}" />
+                            <input type="password" id="password" name="password" placeholder="Enter password..." class="input" minLength="8" value="${errors && values.password && values.password !== '' ? values.password : ''}" required />
                             <small class="password-match"></small>
                         </div>
                     </div>
@@ -62,7 +62,7 @@ const userRegisterPage = ({ errors, values = {} }, req) => {
                             <strong id="confirmPassword-label">Confirm Password*</strong>
                         </label>
                         <div class="control">
-                            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm password..." class="input" />
+                            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm password..." class="input" minLength="8" required />
                             <small class="password-match"></small>
                         </div>
                     </div>
