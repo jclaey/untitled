@@ -1,6 +1,6 @@
 import layout from "../../views/layout.js"
 
-const userCheckoutPage = ({ total, errors, values = {} }, req) => {
+const userCheckoutPage = ({ cart, errors, values = {} }, req) => {
     return layout({ template: `
         <main class="container">
             <div class="mb-6 page-title-div">
@@ -20,7 +20,7 @@ const userCheckoutPage = ({ total, errors, values = {} }, req) => {
                 : ''}
             </div>
             <section>
-                ${total}
+                ${cart}
             </section>
         </main>    
     ` }, req)

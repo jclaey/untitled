@@ -124,14 +124,18 @@ export const postCartItem = async (req, res, next) => {
     }
 }
 
-export const getCheckout = (req, res, next) => {
-    const errors = validationResult(req)
+export const getCheckout = async (req, res, next) => {
+    const user = await User.findById(req.session.userId)
 
-    if (!errors.isEmpty()) {
-        res.send(userCheckoutPage({ errors, values: req.body }, req))
+    if (user) {
+        res.send(userCheckoutPage({ cart: user.cart, values: {} }, req))
+    } else {
+        if (process.env.NODE_ENV === 'development') {
+            throw new Error('User not found')
+        } else {
+            res.redirect('/failure')
+        }
     }
-
-    res.send(userCheckoutPage({ total: req.params.total, values: {} }, req))
 }
 
 export const postCheckout = (req, res, next) => {
@@ -141,5 +145,5 @@ export const postCheckout = (req, res, next) => {
         res.send(userCheckoutPage({ total: req.params.total, errors, values: req.body }, req))
     }
 
-    
+
 }
