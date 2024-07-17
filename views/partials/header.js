@@ -45,11 +45,13 @@ const header = (req = null) => {
             </div>
             <div class="nav-right mt-2">
                 <div class="navbar-end">
-                    <div class="navbar-item">
-                        <div class="buttons">
-                            <a href="/users/user/${req.session.userId}/cart" class="button is-success"><i class="fa-solid fa-cart-shopping pr-2"></i> Cart</a>
-                        </div>
-                    </div>
+                    ${!req.session.userId && !req.session.adminId ? `
+                        <div class="navbar-item">
+                            <div class="buttons">
+                                <a href="/users/login" class="button is-primary">Sign In</a>
+                            </div>
+                        </div>    
+                    ` : ''}
                     ${req && req.session && req.session.adminId ? `
                         <div class="navbar-item">
                             <div class="buttons">
@@ -61,7 +63,8 @@ const header = (req = null) => {
                     ${req && req.session && req.session.userId ? `
                         <div class="navbar-item">
                             <div class="buttons level">
-                                <a href="/users/logout" class="button is-primary mr-5">Logout</a>
+                                <a href="/users/user/${req.session.userId}/cart" class="button is-success"><i class="fa-solid fa-cart-shopping pr-2"></i> Cart</a>
+                                <a href="/users/logout" class="button is-primary mr-4">Logout</a>
                                 <a href="/users/user/${req.session.userId}/profile">
                                     <i class="fa-solid fa-circle-user fa-2x"></i>
                                 </a>

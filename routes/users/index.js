@@ -15,7 +15,8 @@ import {
     getLogout,
     getUserProfile,
     getCart,
-    postCartItem
+    postCartItem,
+    getCheckout
 } from '../../controllers/users/index.js'
 
 router.route('/login')
@@ -36,5 +37,6 @@ router.route('/logout').get(getLogout)
 router.route('/user/:id/profile').get(asyncHandler(getUserProfile))
 router.route('/user/:id/cart').get(asyncHandler(getCart))
 router.route('/user/:userId/cart/:productId/add').post(asyncHandler(postCartItem))
+router.route('/user/:userId/cart/checkout/:total').get(getCheckout)
 
 export default router

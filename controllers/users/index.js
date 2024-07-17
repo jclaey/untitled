@@ -5,10 +5,10 @@ import userLoginPage from '../../views/users/login.js'
 import userRegisterPage from '../../views/users/register.js'
 import userProfilePage from "../../views/users/profile.js"
 import userCartPage from "../../views/users/cart.js"
+import userCheckoutPage from '../../views/users/checkout.js'
 import User from "../../models/User.js"
+import Order from '../../models/Order.js'
 import { Product } from "../../models/Product.js"
-
-const scrypt = util.promisify(crypto.scrypt)
 
 export const getLogin = (req, res, next) => {
     res.send(userLoginPage({}, req))
@@ -100,8 +100,6 @@ export const getUserProfile = async (req, res, next) => {
 export const getCart = async (req, res, next) => {
     const user = await User.findById(req.params.id)
 
-    console.log(user)
-
     if (user) {
         res.send(userCartPage({ cartItems: user.cart, firstName: user.firstName }, req))
     } else {
@@ -124,4 +122,24 @@ export const postCartItem = async (req, res, next) => {
     } else {
         throw new Error('Could not find user or product')
     }
+}
+
+export const getCheckout = (req, res, next) => {
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+        res.send(userCheckoutPage({ errors, values: req.body }, req))
+    }
+
+    res.send(userCheckoutPage({ total: req.params.total, values: {} }, req))
+}
+
+export const postCheckout = (req, res, next) => {
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+        res.send(userCheckoutPage({ total: req.params.total, errors, values: req.body }, req))
+    }
+
+    
 }

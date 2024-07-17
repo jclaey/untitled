@@ -245,3 +245,7 @@ header {
 .fa-circle-user {
     color: #333;
 }
+
+#user-cart-form {
+    width: 20%;
+}
