@@ -249,3 +249,8 @@ header {
 #user-cart-form {
     width: 20%;
 }
+
+.register-menu-btn {
+    background-color: #595959;
+    color: #fff;
+}

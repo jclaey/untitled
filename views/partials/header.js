@@ -45,10 +45,11 @@ const header = (req = null) => {
             </div>
             <div class="nav-right mt-2">
                 <div class="navbar-end">
-                    ${!req.session.userId && !req.session.adminId ? `
+                    ${!req || !req.session || !req.session.userId && !req.session.adminId ? `
                         <div class="navbar-item">
                             <div class="buttons">
                                 <a href="/users/login" class="button is-primary">Sign In</a>
+                                <a href="/users/register" class="button register-menu-btn">Register</a>
                             </div>
                         </div>    
                     ` : ''}

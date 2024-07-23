@@ -1,5 +1,5 @@
 export const requireUserAuth = (req, res, next) => {
-    if (!req.session.userId) {
+    if (!req || !req.session || !req.session.userId) {
         return res.redirect('/users/login')
     }
 
@@ -7,7 +7,7 @@ export const requireUserAuth = (req, res, next) => {
 }
 
 export const requireAdminAuth = (req, res, next) => {
-    if (!req.session.adminId) {
+    if (!req || !req.session || !req.session.adminId) {
         return res.redirect('/admin/login')
     }
 

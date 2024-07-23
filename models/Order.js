@@ -16,6 +16,14 @@ const OrderSchema = new Schema({
         }
     ],
     shippingAddress: {
+        streetAddressOne: String,
+        streetAddressTwo: String,
+        city: String,
+        postalCode: String,
+        state: String,
+        country: String
+    },
+    billingAddress: {
         streetAddressOne: {
             type: String,
             required: true
@@ -29,10 +37,11 @@ const OrderSchema = new Schema({
             type: String,
             required: true
         },
-        country: {
+        state: {
             type: String,
             required: true
-        }
+        },
+        country: String
     },
     paymentMethod: {
         type: String,
@@ -44,16 +53,12 @@ const OrderSchema = new Schema({
         updateTime: String,
         emailAddress: String
     },
-    itemsPrice: {
+    subtotalPrice: {
         type: Number,
         required: true,
         default: 0.0
     },
-    shippingPrice: {
-        type: Number,
-        required: true,
-        default: 0.0
-    },
+    shippingPrice: Number,
     totalPrice: {
         type: Number,
         required: true,

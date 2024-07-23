@@ -1,6 +1,9 @@
 import { validationResult } from "express-validator"
 import crypto from 'crypto'
-import util from 'util'
+import { google } from 'googleapis'
+import path from 'path'
+import process from 'process'
+import Stripe from 'stripe'
 import userLoginPage from '../../views/users/login.js'
 import userRegisterPage from '../../views/users/register.js'
 import userProfilePage from "../../views/users/profile.js"
@@ -9,6 +12,20 @@ import userCheckoutPage from '../../views/users/checkout.js'
 import User from "../../models/User.js"
 import Order from '../../models/Order.js'
 import { Product } from "../../models/Product.js"
+
+const CREDENTIALS_PATH = path.join(process.cwd(), 'credentials.json')
+
+const auth = new google.auth.GoogleAuth({
+    keyFile: CREDENTIALS_PATH,
+    scopes: ['https://www.googleapis.com/auth/drive']
+})
+
+const drive = google.drive({ version: 'v3', auth })
+
+const productsFolderId = process.env.DRIVE_PRODUCTS_FOLDER_ID
+const imagesFolderId = process.env.DRIVE_IMAGES_FOLDER_ID
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
 export const getLogin = (req, res, next) => {
     res.send(userLoginPage({}, req))
@@ -125,10 +142,39 @@ export const postCartItem = async (req, res, next) => {
 }
 
 export const getCheckout = async (req, res, next) => {
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+        res.send(userCheckoutPage({ errors, values: req.body }))
+    }
+
     const user = await User.findById(req.session.userId)
 
     if (user) {
-        res.send(userCheckoutPage({ cart: user.cart, values: {} }, req))
+        const cartItems = []
+        let needsShipping = false
+        let subtotal = 0
+
+        user.cart.forEach(item => {
+            console.log(item)
+            if (item.type.toLowerCase() === 'physical') {
+                needsShipping = true
+            }
+
+            subtotal += item.price
+
+            // let image = await drive.files.get(item.imageId)
+
+            // console.log(image)
+
+            cartItems.push({
+                title: item.title,
+                description: item.description,
+                price: item.price
+            })
+        })
+
+        res.send(userCheckoutPage({ cart: { cartItems, needsShipping, subtotal } }, req))
     } else {
         if (process.env.NODE_ENV === 'development') {
             throw new Error('User not found')
@@ -138,12 +184,39 @@ export const getCheckout = async (req, res, next) => {
     }
 }
 
-export const postCheckout = (req, res, next) => {
-    const errors = validationResult(req)
+export const postCheckout = async (req, res, next) => {
+    const user = await User.findById(req.params.id)
 
-    if (!errors.isEmpty()) {
-        res.send(userCheckoutPage({ total: req.params.total, errors, values: req.body }, req))
+    if (user) {
+        const errors = validationResult(req)
+
+        if (!errors.isEmpty()) {
+            res.send(userCheckoutPage({ cart: user.cart, errors, values: req.body }, req))
+        }
+
+        let items = []
+        let amount = 0
+
+        user.cart.forEach(item => {
+            items.push(item)
+            amount += item.price
+        })
+
+        // Payment processing?
+        const paymentIntent = await stripe.paymentIntents.create({
+            amount,
+            currency: 'USD',
+            automatic_payment_methods: {
+                enabled: true
+            }
+        })
+
+        // Order creation
+        const order = new Order({
+            orderItems: user.cart,
+
+        })
+    } else {
+
     }
-
-
 }

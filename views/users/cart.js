@@ -79,7 +79,7 @@ const userCartPage = ({ cartItems, firstName }, req) => {
                                                 $${updateDetails().total}
                                             </div>
                                             <div id="checkout-btn" class="mt-4">
-                                                <a href="/users/user/${req.session.userId}/cart/checkout/${updateDetails().total.toString().replace('.', '')}" class="button is-success is-medium">Proceed to Checkout</a>
+                                                <a href="/users/user/${req.session.userId}/cart/checkout" class="button is-success is-medium">Proceed to Checkout</a>
                                             </div>
                                         </div>
                                     </div>
