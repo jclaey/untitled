@@ -254,3 +254,10 @@ header {
     background-color: #595959;
     color: #fff;
 }
+
+#index-rendered-products-div {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    grid-column-gap: 20px;
+}
