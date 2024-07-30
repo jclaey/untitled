@@ -3,7 +3,7 @@ import layout from "../../views/layout.js"
 const userCheckoutPage = ({ cart, errors, values = {} }, req) => {
     const renderedItems = cart.cartItems.map(item => {
         return `
-            <div>
+            <div class="box">
                 <h4>${item.title}</h4>
                 <p>
                     Price: $${parseFloat(item.price, 2)}
@@ -31,7 +31,7 @@ const userCheckoutPage = ({ cart, errors, values = {} }, req) => {
                 : ''}
             </div>
             <div>
-                <form action="" method="POST">
+                <form action="/users/user/${req.session.userId}/cart/checkout" method="POST" id="payment-form">
                     <div class="columns">
                         <section id="billing-info-section" class="column is-two-thirds">
                             <h3 class="is-size-3 mb-3">Billing Address</h3>
@@ -248,6 +248,34 @@ const userCheckoutPage = ({ cart, errors, values = {} }, req) => {
                                 </div>
                             </div>
                         </section>
+                    </div>
+                    <div class="columns">
+                        <div class="column is-two-thirds">
+                            <div class="mb-4">
+                                <h4 class="is-size-4 mb-3">Payment Type</h4>
+                                <div class="control mb-5">
+                                    <label class="label" for="cardPayRadio">
+                                        <input type="radio" name="paymentType" id="cardPayRadio" checked />
+                                        Credit/Debit
+                                        <i class="fa-solid fa-credit-card"></i>
+                                    </label>
+                                    <label class="label" for="paypalPayRadio">
+                                        <input type="radio" name="paymentType" id="paypalPayRadio" disabled />
+                                        Paypal
+                                        <i class="fa-brands fa-paypal"></i>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="mb-3 box">
+                                <h4 class="is-size-4 mb-3">Enter Payment Details</h4>
+                                <div id="payment-element" class="mb-3"></div>
+                                <button id="submit" class="button mb-3">
+                                    <div class="spinner hidden" id="spinner"></div>
+                                    <span id="button-text">Pay now</span>
+                                </button>
+                                <div id="payment-message" class="hidden"></div>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
