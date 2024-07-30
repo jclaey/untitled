@@ -156,7 +156,6 @@ export const getCheckout = async (req, res, next) => {
         let subtotal = 0
 
         user.cart.forEach(item => {
-            console.log(item)
             if (item.type.toLowerCase() === 'physical') {
                 needsShipping = true
             }
@@ -196,27 +195,87 @@ export const postCheckout = async (req, res, next) => {
 
         let items = []
         let amount = 0
+        let needsShipping = false
 
         user.cart.forEach(item => {
-            items.push(item)
-            amount += item.price
-        })
+            if (item.type.toLowerCase() === 'physical') {
+                needsShipping = true
+            }
 
-        // Payment processing?
-        const paymentIntent = await stripe.paymentIntents.create({
-            amount,
-            currency: 'USD',
-            automatic_payment_methods: {
-                enabled: true
+            if (orderItems.find(el => el._id === item._id) !== undefined) {
+                item.qty += 1
+                amount += item.price
+            } else {
+                orderItems.push(item)
+                amount += item.price
             }
         })
 
-        // Order creation
-        const order = new Order({
-            orderItems: user.cart,
-
-        })
     } else {
 
     }
+}
+
+export const getCartItems = async (req, res, next) => {
+    if (req && req.session && req.session.userId) {
+        const user = await User.findById(req.session.userId)
+
+        if (user) {
+            // Send client secret by creating payment intent here instead of checkout route
+            let subtotal = 0
+
+            if (user.cart.length > 0) {
+                user.cart.forEach(item => {
+                    subtotal += item.price
+                })
+
+                // Calculate tax?
+
+                subtotal *= 100
+
+                // Payment processing?
+                const paymentIntent = await stripe.paymentIntents.create({
+                    amount: `${subtotal}`,
+                    currency: 'USD'
+                })
+
+                const client_secret = paymentIntent.client_secret 
+    
+                res.json({ items: user.cart, total: subtotal, client_secret })
+            } else {
+                // Do something else
+                console.log("The user's cart is empty")
+            }
+        } else {
+            if (process.env.NODE_ENV === 'development') {
+                throw new Error('Could not find user')
+            } else {
+                res.redirect('/failure')
+            }
+        }
+    }
+
+}
+
+export const getConfirm = (req, res, next) => {
+    // Order creation
+    const order = new Order({
+        orderItems,
+        billingAddress: {
+            streetAddressOne: req.body.streetAddressOne,
+            streetAddressTwo: req.body.streetAddressTwo ? req.body.streetAddressTwo : '',
+            city: req.body.city,
+            state: req.body.state,
+            postalCode: req.body.postalCode,
+            country: req.body.country ? req.body.country : ''
+        },
+        paymentMethod: req.body.paymentType,
+        subtotalPrice: amount,
+        // change shipping price
+        shippingPrice: req.body.shippingPrice ? req.body.shippingPrice : 0,
+        // change total price calculation
+        totalPrice: req.body.totalPrice ? req.body.totalPrice : 0,
+        // change isPaid calculation
+        isPaid: true
+    })
 }
