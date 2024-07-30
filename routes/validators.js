@@ -98,10 +98,6 @@ export const validatePrice =
 export const validateCountInStock =
     body('countInStock')
     .trim()
-    .notEmpty()
-    .withMessage('Please enter a count in stock')
-    .isNumeric()
-    .withMessage('Count in stock must be a number')
     .escape()
 
 export const validateProductType =

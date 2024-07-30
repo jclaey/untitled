@@ -17,7 +17,9 @@ import {
     getUserProfile,
     getCart,
     postCartItem,
-    getCheckout
+    getCheckout,
+    getConfirm,
+    getCartItems
 } from '../../controllers/users/index.js'
 
 router.route('/login')
@@ -38,6 +40,8 @@ router.route('/logout').get(getLogout)
 router.route('/user/:id/profile').get(asyncHandler(getUserProfile))
 router.route('/user/:id/cart').get(asyncHandler(getCart))
 router.route('/user/:userId/cart/:productId/add').post(asyncHandler(postCartItem))
-router.route('/user/:userId/cart/checkout').get(requireUserAuth, getCheckout)
+router.route('/user/:id/cart/checkout').get(requireUserAuth, getCheckout)
+router.route('/user/:id/cart/checkout/confirm').get(getConfirm)
+router.route('/user/getCartItems').get(getCartItems)
 
 export default router
