@@ -58,7 +58,7 @@ const productsIndexPage = ({ products }, req) => {
                         <span class="pipe">|</span> All Products <span class="pipe">|</span>
                     </h1>
                 </div>
-                <div>
+                <div id="index-rendered-products-div">
                     ${renderedProducts}
                 </div>
             </section>
