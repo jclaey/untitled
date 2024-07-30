@@ -56,11 +56,7 @@ export const ProductSchema = new Schema({
         required: true,
         default: 0
     },
-    countInStock: {
-        type: Number,
-        required: true,
-        default: 0
-    },
+    countInStock: Number,
     created_at: {
         type: Date,
         default: Date.now
