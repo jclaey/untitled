@@ -14,7 +14,8 @@ import {
     postContact,
     getSuccess,
     getFailure,
-    getDemo
+    getDemo,
+    getPaymentSuccessful
 } from '../controllers/index.js'
 
 router.route('/').get(getIndex)
@@ -23,5 +24,6 @@ router.route('/contact').get(getContact).post([ validateName, requireValidEmail,
 router.route('/success').get(getSuccess)
 router.route('/failure').get(getFailure)
 router.route('/demos').get(getDemo)
+router.route('/payment-successful').get(getPaymentSuccessful)
 
 export default router

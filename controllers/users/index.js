@@ -12,6 +12,7 @@ import userCheckoutPage from '../../views/users/checkout.js'
 import User from "../../models/User.js"
 import Order from '../../models/Order.js'
 import { Product } from "../../models/Product.js"
+import { handlePaymentIntentSucceeded } from "../../utils/handleStripeEvents.js"
 
 const CREDENTIALS_PATH = path.join(process.cwd(), 'credentials.json')
 
@@ -183,39 +184,6 @@ export const getCheckout = async (req, res, next) => {
     }
 }
 
-export const postCheckout = async (req, res, next) => {
-    const user = await User.findById(req.params.id)
-
-    if (user) {
-        const errors = validationResult(req)
-
-        if (!errors.isEmpty()) {
-            res.send(userCheckoutPage({ cart: user.cart, errors, values: req.body }, req))
-        }
-
-        let items = []
-        let amount = 0
-        let needsShipping = false
-
-        user.cart.forEach(item => {
-            if (item.type.toLowerCase() === 'physical') {
-                needsShipping = true
-            }
-
-            if (orderItems.find(el => el._id === item._id) !== undefined) {
-                item.qty += 1
-                amount += item.price
-            } else {
-                orderItems.push(item)
-                amount += item.price
-            }
-        })
-
-    } else {
-
-    }
-}
-
 export const getCartItems = async (req, res, next) => {
     if (req && req.session && req.session.userId) {
         const user = await User.findById(req.session.userId)
@@ -254,28 +222,67 @@ export const getCartItems = async (req, res, next) => {
             }
         }
     }
-
 }
 
-export const getConfirm = (req, res, next) => {
-    // Order creation
-    const order = new Order({
-        orderItems,
-        billingAddress: {
-            streetAddressOne: req.body.streetAddressOne,
-            streetAddressTwo: req.body.streetAddressTwo ? req.body.streetAddressTwo : '',
-            city: req.body.city,
-            state: req.body.state,
-            postalCode: req.body.postalCode,
-            country: req.body.country ? req.body.country : ''
-        },
-        paymentMethod: req.body.paymentType,
-        subtotalPrice: amount,
-        // change shipping price
-        shippingPrice: req.body.shippingPrice ? req.body.shippingPrice : 0,
-        // change total price calculation
-        totalPrice: req.body.totalPrice ? req.body.totalPrice : 0,
-        // change isPaid calculation
-        isPaid: true
-    })
+export const postCheckout = async (req, res, next) => {
+    const user = await User.findById(req.params.id)
+
+    if (user) {
+        const errors = validationResult(req)
+
+        if (!errors.isEmpty()) {
+            res.send(userCheckoutPage({ cart: user.cart, errors, values: req.body }, req))
+        }
+
+    } else {
+        if (process.env.NODE_ENV === 'development') {
+            throw new Error('User not found')
+        } else {
+            res.redirect('/failure')
+        }
+    }
+}
+
+export const handleStripeEvents = async (req, res, next) => {
+    const user = await User.findById(req.session.userId)
+
+    // Replace with endpoint secret from Stripe dashboard after registering endpoint
+    const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET
+
+    let event = req.body
+
+    if (endpointSecret) {
+        const signature = req.headers['stripe-signature']
+
+        try {
+            event = stripe.webhooks.constructEvent(
+                req.body,
+                signature,
+                endpointSecret
+            )
+        } catch (err) {
+            console.log('Verification failed: ', err.message)
+            return res.sendStatus(400)
+        }
+    }
+
+    // Handle the event
+    switch (event.type) {
+        case 'payment_intent.succeeded':
+        const paymentIntent = event.data.object
+        console.log(`PaymentIntent for ${paymentIntent.amount} was successful!`)
+        // Then define and call a method to handle the successful payment intent.
+        await handlePaymentIntentSucceeded(paymentIntent, user, req)
+        break
+        case 'payment_method.attached':
+        const paymentMethod = event.data.object
+        // Then define and call a method to handle the successful attachment of a PaymentMethod.
+        // handlePaymentMethodAttached(paymentMethod)
+        break
+        default:
+        // Unexpected event type
+        console.log(`Unhandled event type ${event.type}.`)
+    }
+
+    res.sendStatus(200)
 }

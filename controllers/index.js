@@ -6,6 +6,7 @@ import contactPage from "../views/contact.js"
 import successPage from '../views/success.js'
 import failurePage from "../views/failure.js"
 import demoPage from "../views/demos.js"
+import paymentSuccessfulPage from '../views/payment-successful.js'
 import sendEmail from "../utils/sendEmail.js"
 
 export const getIndex = (req, res, next) => {
@@ -42,4 +43,8 @@ export const getDemo = (req, res, next) => {
 
 export const getFailure = (req, res, next) => {
     res.send(failurePage(req))
+}
+
+export const getPaymentSuccessful = (req, res, next) => {
+    res.send(paymentSuccessfulPage(req))
 }

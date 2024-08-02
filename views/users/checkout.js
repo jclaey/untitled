@@ -31,7 +31,7 @@ const userCheckoutPage = ({ cart, errors, values = {} }, req) => {
                 : ''}
             </div>
             <div>
-                <form action="/users/user/${req.session.userId}/cart/checkout" method="POST" id="payment-form">
+                <form action="/users/stripe/events" method="POST" id="payment-form">
                     <div class="columns">
                         <section id="billing-info-section" class="column is-two-thirds">
                             <h3 class="is-size-3 mb-3">Billing Address</h3>
