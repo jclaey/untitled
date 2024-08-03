@@ -40,8 +40,8 @@ router.route('/logout').get(getLogout)
 router.route('/user/:id/profile').get(asyncHandler(getUserProfile))
 router.route('/user/:id/cart').get(asyncHandler(getCart))
 router.route('/user/:userId/cart/:productId/add').post(asyncHandler(postCartItem))
-router.route('/user/:id/cart/checkout').get(requireUserAuth, getCheckout)
-router.route('/user/getCartItems').get(getCartItems)
-router.route('/stripe/events').post(handleStripeEvents)
+router.route('/user/:id/cart/checkout').get(requireUserAuth, asyncHandler(getCheckout))
+router.route('/user/getCartItems').get(asyncHandler(getCartItems))
+router.route('/stripe/events').post(asyncHandler(handleStripeEvents))
 
 export default router

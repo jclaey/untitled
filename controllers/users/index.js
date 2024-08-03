@@ -224,29 +224,9 @@ export const getCartItems = async (req, res, next) => {
     }
 }
 
-export const postCheckout = async (req, res, next) => {
-    const user = await User.findById(req.params.id)
-
-    if (user) {
-        const errors = validationResult(req)
-
-        if (!errors.isEmpty()) {
-            res.send(userCheckoutPage({ cart: user.cart, errors, values: req.body }, req))
-        }
-
-    } else {
-        if (process.env.NODE_ENV === 'development') {
-            throw new Error('User not found')
-        } else {
-            res.redirect('/failure')
-        }
-    }
-}
-
 export const handleStripeEvents = async (req, res, next) => {
     const user = await User.findById(req.session.userId)
 
-    // Replace with endpoint secret from Stripe dashboard after registering endpoint
     const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET
 
     let event = req.body

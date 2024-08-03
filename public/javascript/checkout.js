@@ -34,7 +34,7 @@ const handleSubmit = async e => {
     const { error } = await stripe.confirmPayment({
         elements,
         confirmParams: {
-            return_url: `/payment-successful`
+            return_url: `http://127.0.0/payment-successful`
         }
     })
 

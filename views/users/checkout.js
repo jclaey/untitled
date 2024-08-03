@@ -266,15 +266,15 @@ const userCheckoutPage = ({ cart, errors, values = {} }, req) => {
                                     </label>
                                 </div>
                             </div>
-                            <div class="mb-3 box">
+                            <div class="mb-5 box">
                                 <h4 class="is-size-4 mb-3">Enter Payment Details</h4>
                                 <div id="payment-element" class="mb-3"></div>
-                                <button id="submit" class="button mb-3">
-                                    <div class="spinner hidden" id="spinner"></div>
-                                    <span id="button-text">Pay now</span>
-                                </button>
                                 <div id="payment-message" class="hidden"></div>
                             </div>
+                            <button id="submit" type="submit" class="button mb-3 is-medium is-success">
+                                <div class="spinner hidden" id="spinner"></div>
+                                <span id="button-text">Pay now</span>
+                            </button>
                         </div>
                     </div>
                 </form>
