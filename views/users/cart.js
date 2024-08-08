@@ -72,14 +72,18 @@ const userCartPage = ({ cartItems, firstName }, req) => {
                                         <div class="content">
                                             <div id="subtotal" class="is-size-4">
                                                 <strong>Subtotal:</strong>
-                                                $${updateDetails().subtotal}
+                                                $${updateDetails().subtotal.toFixed(2)}
+                                            </div>
+                                            <div id="tax" class="is-size-4">
+                                                <strong>Tax:</strong>
+                                                $${(updateDetails().total.toFixed(2) - updateDetails().subtotal.toFixed(2)).toFixed(2)}
                                             </div>
                                             <div id="total" class="is-size-4">
                                                 <strong>Total:</strong>
-                                                $${updateDetails().total}
+                                                $${updateDetails().total.toFixed(2)}
                                             </div>
                                             <div id="checkout-btn" class="mt-4">
-                                                <a href="/users/user/${req.session.userId}/cart/checkout" class="button is-success is-medium">Proceed to Checkout</a>
+                                                <a href="/users/user/billing-shipping" class="button is-success is-medium">Proceed to Checkout</a>
                                             </div>
                                         </div>
                                     </div>

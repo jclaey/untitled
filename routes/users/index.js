@@ -6,7 +6,12 @@ import {
     validateFirstName,
     validateLastName,
     requireValidEmail,
-    requireValidPasswordForUser
+    requireValidPasswordForUser,
+    validateStreetAddressOne,
+    validateStreetAddressTwo,
+    validateState,
+    validateZipcode,
+    validateCity
 } from '../validators.js'
 import {
     getLogin,
@@ -19,7 +24,9 @@ import {
     postCartItem,
     getCheckout,
     getCartItems,
-    handleStripeEvents
+    handleStripeEvents,
+    getBillingShipping,
+    postBillingShipping
 } from '../../controllers/users/index.js'
 
 router.route('/login')
@@ -34,7 +41,12 @@ router.route('/register')
         validateFirstName,
         validateLastName,
         requireValidEmail,
-        requireValidPasswordForUser
+        requireValidPasswordForUser,
+        validateStreetAddressOne,
+        validateStreetAddressTwo,
+        validateState,
+        validateCity,
+        validateZipcode
 ], asyncHandler(postRegister))
 router.route('/logout').get(getLogout)
 router.route('/user/:id/profile').get(asyncHandler(getUserProfile))
@@ -42,6 +54,13 @@ router.route('/user/:id/cart').get(asyncHandler(getCart))
 router.route('/user/:userId/cart/:productId/add').post(asyncHandler(postCartItem))
 router.route('/user/:id/cart/checkout').get(requireUserAuth, asyncHandler(getCheckout))
 router.route('/user/getCartItems').get(asyncHandler(getCartItems))
-router.route('/stripe/events').post(asyncHandler(handleStripeEvents))
+router.route('/stripe/events').post(express.raw({ type: 'application/json' }), asyncHandler(handleStripeEvents))
+router.route('/user/billing-shipping').get(asyncHandler(getBillingShipping)).post([
+    validateStreetAddressOne,
+    validateStreetAddressTwo,
+    validateState,
+    validateCity,
+    validateZipcode
+], asyncHandler(postBillingShipping))
 
 export default router

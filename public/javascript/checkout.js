@@ -26,27 +26,6 @@ const initialize = async () => {
     }
 }   
 
-const handleSubmit = async e => {
-    e.preventDefault()
-
-    setLoading(true)
-
-    const { error } = await stripe.confirmPayment({
-        elements,
-        confirmParams: {
-            return_url: `http://127.0.0/payment-successful`
-        }
-    })
-
-    if (error.type === "card_error" || error.type === "validation_error") {
-        showMessage(error.message)
-    } else {
-        showMessage("An unexpected error occurred.")
-    }
-    
-    setLoading(false)
-}
-
 const checkStatus = async () => {
     const clientSecret = new URLSearchParams(window.location.search).get(
         "payment_intent_client_secret"
@@ -104,7 +83,26 @@ function setLoading(isLoading) {
 
 document
   .querySelector("#payment-form")
-  .addEventListener("submit", handleSubmit)
+  .addEventListener("submit", async () => {
+        e.preventDefault()
+    
+        setLoading(true)
+    
+        const { error } = await stripe.confirmPayment({
+            elements,
+            confirmParams: {
+                return_url: `http://127.0.0/payment-successful`
+            }
+        })
+    
+        if (error.type === "card_error" || error.type === "validation_error") {
+            showMessage(error.message)
+        } else {
+            showMessage("An unexpected error occurred.")
+        }
+        
+        setLoading(false)
+  })
 
 initialize()
 checkStatus()

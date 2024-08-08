@@ -49,8 +49,7 @@ const OrderSchema = new Schema({
         country: String
     },
     paymentMethod: {
-        type: String,
-        required: true
+        type: String
     },
     paymentResult: {
         id: String,
@@ -64,6 +63,7 @@ const OrderSchema = new Schema({
         default: 0.0
     },
     shippingPrice: Number,
+    taxRate: Number,
     totalPrice: {
         type: Number,
         required: true,

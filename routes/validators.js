@@ -108,7 +108,7 @@ export const validateProductType =
     .escape()
 
 export const validateZipcode =
-    body('zipcode')
+    body('postalCode')
     .trim()
     .notEmpty()
     .withMessage('Please enter a zipcode')

@@ -9,8 +9,9 @@ import userRegisterPage from '../../views/users/register.js'
 import userProfilePage from "../../views/users/profile.js"
 import userCartPage from "../../views/users/cart.js"
 import userCheckoutPage from '../../views/users/checkout.js'
+import userBillingShippingPage from '../../views/users/billingShipping.js'
 import User from "../../models/User.js"
-import Order from '../../models/Order.js'
+import Order from "../../models/Order.js"
 import { Product } from "../../models/Product.js"
 import { handlePaymentIntentSucceeded } from "../../utils/handleStripeEvents.js"
 
@@ -27,6 +28,8 @@ const productsFolderId = process.env.DRIVE_PRODUCTS_FOLDER_ID
 const imagesFolderId = process.env.DRIVE_IMAGES_FOLDER_ID
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
+
+const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET
 
 export const getLogin = (req, res, next) => {
     res.send(userLoginPage({}, req))
@@ -225,25 +228,22 @@ export const getCartItems = async (req, res, next) => {
 }
 
 export const handleStripeEvents = async (req, res, next) => {
-    const user = await User.findById(req.session.userId)
-
-    const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET
-
     let event = req.body
 
     if (endpointSecret) {
-        const signature = req.headers['stripe-signature']
+        console.log(req.headers)
+        const signature = req.get('stripe-signature')
 
         try {
             event = stripe.webhooks.constructEvent(
-                req.body,
+                event,
                 signature,
                 endpointSecret
             )
         } catch (err) {
             console.log('Verification failed: ', err.message)
             return res.sendStatus(400)
-        }
+        }    
     }
 
     // Handle the event
@@ -254,15 +254,128 @@ export const handleStripeEvents = async (req, res, next) => {
         // Then define and call a method to handle the successful payment intent.
         await handlePaymentIntentSucceeded(paymentIntent, user, req)
         break
-        case 'payment_method.attached':
-        const paymentMethod = event.data.object
+        // case 'payment_method.attached':
+        // const paymentMethod = event.data.object
         // Then define and call a method to handle the successful attachment of a PaymentMethod.
         // handlePaymentMethodAttached(paymentMethod)
-        break
+        // break
         default:
         // Unexpected event type
         console.log(`Unhandled event type ${event.type}.`)
     }
 
     res.sendStatus(200)
+}
+
+export const getBillingShipping = async (req, res, next) => {
+    const user = await User.findById(req.session.userId)
+
+    if (user) {
+        let subtotal = 0
+
+        user.cart.forEach(item => subtotal += item.price)
+
+        res.send(userBillingShippingPage({ cart: { cartItems: user.cart, subtotal: subtotal.toFixed(2) } }, req))
+    } else {
+        if (process.env.NODE_ENV === 'development') {
+            throw new Error('Could not find user')
+        } else {
+            res.redirect('/failure')
+        }
+    }
+}
+
+export const postBillingShipping = async (req, res, next) => {
+    const user = await User.findById(req.session.userId)
+
+    if (user) {
+        const errors = validationResult(req)
+
+        if (!errors.isEmpty()) {
+            let subtotal = 0
+            let needsShipping = false
+
+            user.cart.forEach(item => {
+                subtotal += item.price
+
+                if (item.type.toLowerCase() === 'physical') {
+                    needsShipping = true
+                }
+            })
+
+            res.send(userBillingShippingPage({ cart: { cartItems: user.cart, needsShipping, subtotal }, errors, values: req.body }, req))
+        }
+
+        const orderItems = []
+        let subtotal = 0
+
+        user.cart.forEach(item => {
+            const dupIndex = orderItems.findIndex(el => item._id === el._id)
+
+            if (dupIndex !== -1) {
+                orderItems[dupIndex].qty += 1
+            } else {
+                orderItems.push({ qty: 1, product: item })
+            }
+
+            subtotal += item.price
+        })
+
+        Number.parseFloat(subtotal)
+        subtotal.toFixed(2)
+
+        const order = new Order({
+            user: user._id,
+            orderItems,
+            shippingAddress: {
+                streetAddressOne: req.body.shippingAddressOne ? req.body.shippingAddressOne : '',
+                streetAddressTwo: req.body.shippingAddressTwo ? req.body.shippingAddressTwo : '',
+                city: req.body.shippingCity ? req.body.shippingCity : '',
+                state: req.body.shippingState ? req.body.shippingState : '',
+                postalCode: req.body.shippingPostalCode ? req.body.shippingPostalCode : '',
+                country: req.body.shippingCountry ? req.body.shippingCountry : ''
+            },
+            billingAddress: {
+                streetAddressOne: req.body.streetAddressOne,
+                streetAddressTwo: req.body.streetAddressTwo ? req.body.streetAddressTwo : '',
+                city: req.body.city,
+                state: req.body.state,
+                postalCode: req.body.postalCode,
+                country: req.body.country ? req.body.country : ''
+            },
+            paymentMethod: '',
+            paymentResult: {
+                id: '',
+                status: '',
+                updateTime: '',
+                emailAddress: ''
+            },
+            subtotalPrice: subtotal,
+            // calculate shipping costs
+            shippingPrice: 0,
+            // calculate tax rate (percentage)
+            taxRate: 1,
+            // calculate total price
+            totalPrice: subtotal,
+            isPaid: false,
+            paidAt: null
+        })
+
+        if (order) {
+            await order.save()
+            res.redirect(`/users/user/${req.session.userId}/cart/checkout`)
+        } else {
+            if (process.env.NODE_ENV === 'development') {
+                throw new Error('Could not create user order')
+            } else {
+                res.redirect('/failure')
+            }
+        }
+    } else {
+        if (process.env.NODE_ENV === 'development') {
+            throw new Error('Could not find user')
+        } else {
+            res.redirect('/failure')
+        }
+    }
 }
