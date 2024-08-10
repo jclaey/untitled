@@ -228,7 +228,6 @@ export const getCartItems = async (req, res, next) => {
 }
 
 export const handleStripeEvents = async (req, res, next) => {
-    console.log(req.session)
     let event = req.body
 
     if (endpointSecret) {
@@ -251,12 +250,8 @@ export const handleStripeEvents = async (req, res, next) => {
         case 'payment_intent.succeeded':
         const paymentIntent = event.data.object
         console.log(`PaymentIntent for ${paymentIntent.amount} was successful!`)
-        const user = await User.findById(req.session.userId)
-        console.log(req.session.userId)
-        const order = await Order.findOneAndUpdate({ user: user._id }, { isPaid: true })
-        console.log(order)
         // Then define and call a method to handle the successful payment intent.
-        await handlePaymentIntentSucceeded(paymentIntent, user, order, req)
+        await handlePaymentIntentSucceeded(paymentIntent)
         break
         // case 'payment_method.attached':
         // const paymentMethod = event.data.object
@@ -293,25 +288,9 @@ export const postBillingShipping = async (req, res, next) => {
     const user = await User.findById(req.session.userId)
 
     if (user) {
-        const errors = validationResult(req)
-
-        if (!errors.isEmpty()) {
-            let subtotal = 0
-            let needsShipping = false
-
-            user.cart.forEach(item => {
-                subtotal += item.price
-
-                if (item.type.toLowerCase() === 'physical') {
-                    needsShipping = true
-                }
-            })
-
-            res.send(userBillingShippingPage({ cart: { cartItems: user.cart, needsShipping, subtotal }, errors, values: req.body }, req))
-        }
-
-        const orderItems = []
+        let orderItems = []
         let subtotal = 0
+        let needsShipping
 
         user.cart.forEach(item => {
             const dupIndex = orderItems.findIndex(el => item._id === el._id)
@@ -322,57 +301,108 @@ export const postBillingShipping = async (req, res, next) => {
                 orderItems.push({ qty: 1, product: item })
             }
 
+            if (item.type.toLowerCase() === 'physical') {
+                needsShipping = true
+            }
+
             subtotal += item.price
         })
 
         Number.parseFloat(subtotal)
         subtotal.toFixed(2)
 
-        const order = new Order({
-            user: user._id,
-            orderItems,
-            shippingAddress: {
+        const errors = validationResult(req)
+
+        if (!errors.isEmpty()) {
+            res.send(userBillingShippingPage({ cart: { cartItems: user.cart, needsShipping, subtotal }, errors, values: req.body }, req))
+        }
+
+        let existing = await Order.findOne({ user: user._id })
+
+        if (existing) {
+            existing.orderItems = orderItems,
+            needsShipping ? existing.shippingAddress = {
                 streetAddressOne: req.body.shippingAddressOne ? req.body.shippingAddressOne : '',
                 streetAddressTwo: req.body.shippingAddressTwo ? req.body.shippingAddressTwo : '',
                 city: req.body.shippingCity ? req.body.shippingCity : '',
                 state: req.body.shippingState ? req.body.shippingState : '',
                 postalCode: req.body.shippingPostalCode ? req.body.shippingPostalCode : '',
                 country: req.body.shippingCountry ? req.body.shippingCountry : ''
-            },
-            billingAddress: {
+            } : existing.shippingAddress = existing.shippingAddress
+            existing.billingAddress = {
                 streetAddressOne: req.body.streetAddressOne,
                 streetAddressTwo: req.body.streetAddressTwo ? req.body.streetAddressTwo : '',
                 city: req.body.city,
                 state: req.body.state,
                 postalCode: req.body.postalCode,
                 country: req.body.country ? req.body.country : ''
-            },
-            paymentMethod: '',
-            paymentResult: {
-                id: '',
-                status: '',
-                updateTime: '',
-                emailAddress: ''
-            },
-            subtotalPrice: subtotal,
+            }
+            existing.subtotalPrice = subtotal
             // calculate shipping costs
-            shippingPrice: 0,
-            // calculate tax rate (percentage)
-            taxRate: 1,
-            // calculate total price
-            totalPrice: subtotal,
-            isPaid: false,
-            paidAt: null
-        })
+            existing.shippingPrice = 0
+            // calculate tax rate
+            existing.taxRate = 1
+            // calculate total price of order
+            existing.totalPrice = subtotal
 
-        if (order) {
-            await order.save()
-            res.redirect(`/users/user/${req.session.userId}/cart/checkout`)
-        } else {
-            if (process.env.NODE_ENV === 'development') {
-                throw new Error('Could not create user order')
+            existing = await existing.save()
+
+            if (existing) {
+                res.redirect(`/users/user/${user._id}/cart/checkout`)
             } else {
-                res.redirect('/failure')
+                if (process.env.NODE_ENV === 'development') {
+                    throw new Error('Could not save existing order')
+                } else {
+                    res.redirect('/failure')
+                }
+            }
+        } else {
+            const order = new Order({
+                user: user._id,
+                orderItems,
+                shippingAddress: {
+                    streetAddressOne: req.body.shippingAddressOne ? req.body.shippingAddressOne : '',
+                    streetAddressTwo: req.body.shippingAddressTwo ? req.body.shippingAddressTwo : '',
+                    city: req.body.shippingCity ? req.body.shippingCity : '',
+                    state: req.body.shippingState ? req.body.shippingState : '',
+                    postalCode: req.body.shippingPostalCode ? req.body.shippingPostalCode : '',
+                    country: req.body.shippingCountry ? req.body.shippingCountry : ''
+                },
+                billingAddress: {
+                    streetAddressOne: req.body.streetAddressOne,
+                    streetAddressTwo: req.body.streetAddressTwo ? req.body.streetAddressTwo : '',
+                    city: req.body.city,
+                    state: req.body.state,
+                    postalCode: req.body.postalCode,
+                    country: req.body.country ? req.body.country : ''
+                },
+                paymentMethod: '',
+                paymentResult: {
+                    id: '',
+                    status: '',
+                    updateTime: '',
+                    emailAddress: ''
+                },
+                subtotalPrice: subtotal,
+                // calculate shipping costs
+                shippingPrice: 0,
+                // calculate tax rate (percentage)
+                taxRate: 1,
+                // calculate total price
+                totalPrice: subtotal,
+                isPaid: false,
+                paidAt: null
+            })
+
+            if (order) {
+                await order.save()
+                res.redirect(`/users/user/${user._id}/cart/checkout`)
+            } else {
+                if (process.env.NODE_ENV === 'development') {
+                    throw new Error('Could not create user order')
+                } else {
+                    res.redirect('/failure')
+                }
             }
         }
     } else {

@@ -6,7 +6,6 @@ import cookieSession from 'cookie-session'
 import methodOverride from 'method-override'
 import session from 'express-session'
 import MongoStore from 'connect-mongo'
-import ngrok from '@ngrok/ngrok'
 import process from 'node:process'
 import index from './routes/index.js'
 import admin from './routes/admin/index.js'
@@ -50,6 +49,13 @@ app.use(express.urlencoded({ extended: true }))
 //   resave: false,
 //   saveUninitialized: true
 // }))
+
+app.use((req, res, next) => {
+  if (req && req.session && req.session.userId) {
+    res.locals.user = req.session.userId
+  }
+  next()
+})
 
 // Mount routes
 app.use('/', index)

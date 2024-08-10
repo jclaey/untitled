@@ -8,6 +8,8 @@ import failurePage from "../views/failure.js"
 import demoPage from "../views/demos.js"
 import paymentSuccessfulPage from '../views/payment-successful.js'
 import sendEmail from "../utils/sendEmail.js"
+import User from '../models/User.js'
+import Order from '../models/Order.js'
 
 export const getIndex = (req, res, next) => {
     res.send(indexPage(req))
@@ -45,6 +47,28 @@ export const getFailure = (req, res, next) => {
     res.send(failurePage(req))
 }
 
-export const getPaymentSuccessful = (req, res, next) => {
-    res.send(paymentSuccessfulPage(req))
+export const getPaymentSuccessful = async (req, res, next) => {
+    const user = await User.findById(req.session.userId)
+
+    if (user) {
+        const order = await Order.findOneAndUpdate({ user: user._id }, { isPaid: true, paidAt: Date.now() })
+
+        if (order) {
+            await order.save()
+            console.log(order)
+            res.send(paymentSuccessfulPage(req))
+        } else {
+            if (process.env.NODE_ENV === 'development') {
+                throw new Error('Order not found')
+            } else {
+                res.redirect('/failure')
+            }
+        }
+    } else {
+        if (process.env.NODE_ENV === 'development') {
+            throw new Error('User not found')
+        } else {
+            res.redirect('/failure')
+        }
+    }
 }

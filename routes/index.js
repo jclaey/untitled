@@ -24,6 +24,6 @@ router.route('/contact').get(getContact).post([ validateName, requireValidEmail,
 router.route('/success').get(getSuccess)
 router.route('/failure').get(getFailure)
 router.route('/demos').get(getDemo)
-router.route('/payment-successful').get(getPaymentSuccessful)
+router.route('/payment-successful').get(asyncHandler(getPaymentSuccessful))
 
 export default router
