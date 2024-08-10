@@ -5,8 +5,8 @@ const paymentSuccessfulPage = (req) => {
         <main class="container">
             <section class="hero">
                 <div class="hero-body">
-                    <p class="title">Success! Thank you for your order!</p>
-                    <p class="subtitle">Order Confirmation Number: </p>
+                    <p class="title is-size-3">Success! Thank you for your order!</p>
+                    <p class="subtitle is-size-3">Order Confirmation Number: </p>
                 </div>
             </section>
         </main>    

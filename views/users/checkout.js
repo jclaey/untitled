@@ -30,8 +30,8 @@ const userCheckoutPage = ({ cart, errors, values = {} }, req) => {
                     `
                 : ''}
             </div>
-            <div>
-                <form action="/users/stripe/events" method="POST" id="payment-form">
+            <div class="mt-6">
+                <form id="payment-form">
                     <div class="columns">
                         <div class="column is-two-thirds">
                             <div class="mb-4">

@@ -36,6 +36,8 @@ const checkStatus = async () => {
     }
     
     const { paymentIntent } = await stripe.retrievePaymentIntent(clientSecret)
+
+    console.log(paymentIntent)
     
     switch (paymentIntent.status) {
         case "succeeded":
@@ -83,7 +85,7 @@ function setLoading(isLoading) {
 
 document
   .querySelector("#payment-form")
-  .addEventListener("submit", async () => {
+  .addEventListener("submit", async e => {
         e.preventDefault()
     
         setLoading(true)
@@ -91,7 +93,7 @@ document
         const { error } = await stripe.confirmPayment({
             elements,
             confirmParams: {
-                return_url: `http://127.0.0/payment-successful`
+                return_url: `https://74a8-173-175-236-109.ngrok-free.app/payment-successful`
             }
         })
     

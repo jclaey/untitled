@@ -47,7 +47,7 @@ export const postLogin = async (req, res, next) => {
 
     if (user && user.comparePasswords(password)) {
         req.session.userId = String(user._id)
-        res.redirect(`/users/user/${user._id}/profile`)
+        res.redirect(`/users/user/${req.session.userId}/profile`)
     } else {
         if (process.env.NODE_ENV === 'development') {
             throw new Error('Invalid credentials')
@@ -146,6 +146,7 @@ export const postCartItem = async (req, res, next) => {
 }
 
 export const getCheckout = async (req, res, next) => {
+    console.log(req.session)
     const errors = validationResult(req)
 
     if (!errors.isEmpty()) {
@@ -192,7 +193,6 @@ export const getCartItems = async (req, res, next) => {
         const user = await User.findById(req.session.userId)
 
         if (user) {
-            // Send client secret by creating payment intent here instead of checkout route
             let subtotal = 0
 
             if (user.cart.length > 0) {
@@ -228,10 +228,10 @@ export const getCartItems = async (req, res, next) => {
 }
 
 export const handleStripeEvents = async (req, res, next) => {
+    console.log(req.session)
     let event = req.body
 
     if (endpointSecret) {
-        console.log(req.headers)
         const signature = req.get('stripe-signature')
 
         try {
@@ -251,8 +251,12 @@ export const handleStripeEvents = async (req, res, next) => {
         case 'payment_intent.succeeded':
         const paymentIntent = event.data.object
         console.log(`PaymentIntent for ${paymentIntent.amount} was successful!`)
+        const user = await User.findById(req.session.userId)
+        console.log(req.session.userId)
+        const order = await Order.findOneAndUpdate({ user: user._id }, { isPaid: true })
+        console.log(order)
         // Then define and call a method to handle the successful payment intent.
-        await handlePaymentIntentSucceeded(paymentIntent, user, req)
+        await handlePaymentIntentSucceeded(paymentIntent, user, order, req)
         break
         // case 'payment_method.attached':
         // const paymentMethod = event.data.object

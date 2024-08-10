@@ -29,10 +29,6 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(methodOverride('_method'))
 
-// Use body parser for form data
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
-
 // Use cookie session for authentication
 app.use(cookieSession({
   secret: 'lklekaiudbfip32n48dpa3pihirgldnagf3qp3r09ieemviej',
@@ -42,12 +38,18 @@ app.use(cookieSession({
   sameSite: 'strict'
 }))
 
-app.use(session({
-  secret: 'lklekaiudbfip32n48dpa3pihirgldnagf3qp3r09ieemviej',
-  store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
-  resave: false,
-  saveUninitialized: true
-}))
+app.use('/users/stripe/events', express.raw({ type: 'application/json' }))
+
+// Use body parser for form data
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+
+// app.use(session({
+//   secret: 'lklekaiudbfip32n48dpa3pihirgldnagf3qp3r09ieemviej',
+//   store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
+//   resave: false,
+//   saveUninitialized: true
+// }))
 
 // Mount routes
 app.use('/', index)

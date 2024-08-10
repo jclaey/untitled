@@ -257,7 +257,7 @@ const userBillingShippingPage = ({ cart, errors, values = {} }, req) => {
                                 </div>
                             ` : ''}
                             <div>
-                                <button type="submit" class="button is-primary is-medium">Continue to Payment</button>
+                                <button type="submit" class="button is-success is-medium">Continue to Payment</button>
                             </div>
                         </form>
                 </section>
