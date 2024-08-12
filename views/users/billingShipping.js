@@ -5,9 +5,9 @@ const userBillingShippingPage = ({ cart, errors, values = {} }, req) => {
     const renderedItems = cart.cartItems.map(item => {
         return `
             <div class="box">
-                <h4>${item.title}</h4>
+                <h4>${item.product.title}</h4>
                 <p>
-                    Price: $${item.price}
+                    Price: $${item.product.price}
                 </p>
             </div>
         `

@@ -1,6 +1,6 @@
 import layout from "../layout.js"
 
-const userCartPage = ({ cartItems, firstName }, req) => {
+const userCartPage = ({ cartItems, user }, req) => {
     let updateDetails = () => {
         let details = { subtotal: 0, total: 0 }
         // Change depending on state where user is located
@@ -8,8 +8,8 @@ const userCartPage = ({ cartItems, firstName }, req) => {
         let taxIncluded
         
         cartItems.forEach(item => {
-            taxIncluded = item.price * salesTax + item.price
-            details.subtotal += item.price
+            taxIncluded = item.product.price * salesTax + item.product.price
+            details.subtotal += item.product.price
             details.total += taxIncluded
         })
 
@@ -20,8 +20,8 @@ const userCartPage = ({ cartItems, firstName }, req) => {
 
     if (!cartItems || cartItems.length === 0) {
         renderedItems = `
-            <div class="is-size-4">
-                No products yet.
+            <div class="is-size-4 box">
+                Your cart is currently empty.
             </div>
         `
     } else {
@@ -31,17 +31,30 @@ const userCartPage = ({ cartItems, firstName }, req) => {
                     <div class="card-content">
                         <div class="content">
                             <div class="mb-2">
-                                <strong><span class="is-size-4">${item.title}</span></strong><br />
-                                <strong>$${item.price}</strong><br />
+                                <div class="cart-item-div">
+                                    <div class="item-info">
+                                        <div>
+                                            <strong><span class="is-size-4">${item.product.title}</span></strong>
+                                        </div>
+                                        <div>
+                                            <strong>$${item.product.price}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="item-buttons">
+                                        <form action="/users/user/${user.id}/cart/${item._id}/remove" method="POST">
+                                            <button type="submit" class="button is-danger" id="cart-item-remove-btn">Remove</button>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
-                            ${item.countInStock ? `
-                                <form action="/users/user/${req.params.userId}/cart/checkout" method="POST" id="user-cart-form">
+                            ${item.product.countInStock ? `
+                                <form action="/users/user/${req.params.id}/cart/checkout" method="POST" id="user-cart-form">
                                     <div class="field level">
                                         <div class="label">
                                             <strong class="pr-2">Qty: </strong>
                                         </div>
                                         <div class="control">
-                                            <input class="input" type="number" name="qty" min="1" max="${item.countInStock}" value="1" />
+                                            <input class="input" type="number" name="qty" min="1" max="${item.product.countInStock}" value="1" />
                                         </div>
                                     </div>
                                 </form>
@@ -58,11 +71,14 @@ const userCartPage = ({ cartItems, firstName }, req) => {
                 <section>
                     <div class="mb-6 page-title-div">
                         <h1 class="title is-size-1 mb-6">
-                            <span class="pipe">|</span> ${firstName}'s Cart <span class="pipe">|</span>
+                            <span class="pipe">|</span> ${user.firstName}'s Cart <span class="pipe">|</span>
                         </h1>
                         <div class="columns">
                             <div class="column">
-                                <div id="items">
+                                <div id="cart-items-div" class="box">
+                                    <div class="mb-3">
+                                        <h3 class="is-size-4 ml-4">${user.firstName}'s Items</h3>
+                                    </div>
                                     ${renderedItems}
                                 </div>
                             </div>

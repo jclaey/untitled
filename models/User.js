@@ -27,7 +27,19 @@ const UserSchema = new Schema({
         postalCode: String,
         country: String
     },
-    cart: [ProductSchema],
+    cart: [
+        {
+            qty: {
+                type: Number,
+                required: true,
+                default: 1
+            },
+            product: {
+                type: Schema.Types.ObjectId,
+                ref: 'Product'
+            }
+        }
+    ],
     createdAt: {
         type: Date,
         default: Date.now

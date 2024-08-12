@@ -21,7 +21,8 @@ import {
     getLogout,
     getUserProfile,
     getCart,
-    postCartItem,
+    postAddCartItem,
+    postRemoveCartItem,
     getCheckout,
     getCartItems,
     handleStripeEvents,
@@ -41,17 +42,13 @@ router.route('/register')
         validateFirstName,
         validateLastName,
         requireValidEmail,
-        requireValidPasswordForUser,
-        validateStreetAddressOne,
-        validateStreetAddressTwo,
-        validateState,
-        validateCity,
-        validateZipcode
+        requireValidPasswordForUser
 ], asyncHandler(postRegister))
 router.route('/logout').get(getLogout)
 router.route('/user/:id/profile').get(asyncHandler(getUserProfile))
 router.route('/user/:id/cart').get(asyncHandler(getCart))
-router.route('/user/:userId/cart/:productId/add').post(asyncHandler(postCartItem))
+router.route('/user/:userId/cart/:productId/add').post(asyncHandler(postAddCartItem))
+router.route('/user/:userId/cart/:productId/remove').post(asyncHandler(postRemoveCartItem))
 router.route('/user/:id/cart/checkout').get(requireUserAuth, asyncHandler(getCheckout))
 router.route('/user/getCartItems').get(asyncHandler(getCartItems))
 router.route('/stripe/events').post(express.raw({ type: 'application/json' }), asyncHandler(handleStripeEvents))

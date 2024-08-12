@@ -261,3 +261,13 @@ header {
     grid-template-rows: auto;
     grid-column-gap: 20px;
 }
+
+.cart-item-div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#cart-item-remove-btn {
+    height: 40px;
+}

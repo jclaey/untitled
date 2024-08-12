@@ -119,10 +119,15 @@ export const getUserProfile = async (req, res, next) => {
 }
 
 export const getCart = async (req, res, next) => {
-    const user = await User.findById(req.params.id)
+    const user = await User.findById(req.params.id).populate({
+        path: 'cart',
+        populate: { path: 'product' }
+    }).exec()
+
+    console.log(user.cart)
 
     if (user) {
-        res.send(userCartPage({ cartItems: user.cart, firstName: user.firstName }, req))
+        res.send(userCartPage({ cartItems: user.cart, user: { id: user._id, firstName: user.firstName } }, req))
     } else {
         if (process.env.NODE_ENV === 'development') {
             throw new Error('Resource not found')
@@ -132,16 +137,43 @@ export const getCart = async (req, res, next) => {
     }
 }
 
-export const postCartItem = async (req, res, next) => {
+export const postAddCartItem = async (req, res, next) => {
     const user = await User.findById(req.params.userId)
     const product = await Product.findById(req.params.productId)
 
     if (user && product) {
-        user.cart.push(product)
+        // let existing = user.cart.find(item => item._id === product._id)
+        // if (existing)
+        user.cart.push({ qty: 1, product })
         await user.save()
-        res.redirect('/success')
+        res.redirect(`/users/user/${user._id}/cart`)
     } else {
         throw new Error('Could not find user or product')
+    }
+}
+
+export const postRemoveCartItem = async (req, res, next) => {
+    let user = await User.findById(req.params.userId)
+    const product = await Product.findById(req.params.productId)
+
+    if (user && product) {
+        const newCart = user.cart.filter(item => item.product._id !== product._id)
+        console.log(user.cart)
+        console.log(newCart)
+
+        user.cart = newCart
+
+        user = await user.save()
+
+        if (user) {
+            res.send(userCartPage({ cartItems: user.cart, user: { id: user._id, firstName: user.firstName } }, req))
+        }
+    } else {
+        if (process.env.NODE_ENV === 'development') {
+            throw new Error('Could not remove item from cart')
+        } else {
+            res.redirect('/failure')
+        }
     }
 }
 
@@ -153,7 +185,10 @@ export const getCheckout = async (req, res, next) => {
         res.send(userCheckoutPage({ errors, values: req.body }))
     }
 
-    const user = await User.findById(req.session.userId)
+    const user = await User.findById(req.session.userId).populate({
+        path: 'cart',
+        populate: { path: 'product' }
+    }).exec()
 
     if (user) {
         const cartItems = []
@@ -161,22 +196,24 @@ export const getCheckout = async (req, res, next) => {
         let subtotal = 0
 
         user.cart.forEach(item => {
-            if (item.type.toLowerCase() === 'physical') {
+            if (item.product.type.toLowerCase() === 'physical') {
                 needsShipping = true
             }
 
-            subtotal += item.price
+            subtotal += item.product.price
 
             // let image = await drive.files.get(item.imageId)
 
             // console.log(image)
 
             cartItems.push({
-                title: item.title,
-                description: item.description,
-                price: item.price
+                title: item.product.title,
+                description: item.product.description,
+                price: item.product.price
             })
         })
+
+        subtotal *= 100
 
         res.send(userCheckoutPage({ cart: { cartItems, needsShipping, subtotal } }, req))
     } else {
@@ -190,14 +227,17 @@ export const getCheckout = async (req, res, next) => {
 
 export const getCartItems = async (req, res, next) => {
     if (req && req.session && req.session.userId) {
-        const user = await User.findById(req.session.userId)
+        const user = await User.findById(req.session.userId).populate({
+            path: 'cart',
+            populate: { path: 'product' }
+        }).exec()
 
         if (user) {
             let subtotal = 0
 
             if (user.cart.length > 0) {
                 user.cart.forEach(item => {
-                    subtotal += item.price
+                    subtotal += item.product.price
                 })
 
                 // Calculate tax?
@@ -267,12 +307,22 @@ export const handleStripeEvents = async (req, res, next) => {
 }
 
 export const getBillingShipping = async (req, res, next) => {
-    const user = await User.findById(req.session.userId)
+    const user = await User.findById(req.session.userId).populate({
+        path: 'cart',
+        populate: { path: 'product' }
+    }).exec()
 
     if (user) {
         let subtotal = 0
+        let needsShipping = false
 
-        user.cart.forEach(item => subtotal += item.price)
+        user.cart.forEach(item => {
+            if (item.product.type.toLowerCase() === 'physical') {
+                needsShipping = true
+            }
+
+            subtotal += item.product.price
+        })
 
         res.send(userBillingShippingPage({ cart: { cartItems: user.cart, subtotal: subtotal.toFixed(2) } }, req))
     } else {
@@ -285,7 +335,10 @@ export const getBillingShipping = async (req, res, next) => {
 }
 
 export const postBillingShipping = async (req, res, next) => {
-    const user = await User.findById(req.session.userId)
+    const user = await User.findById(req.session.userId).populate({
+        path: 'cart',
+        populate: { path: 'product' }
+    }).exec()
 
     if (user) {
         let orderItems = []
@@ -293,19 +346,21 @@ export const postBillingShipping = async (req, res, next) => {
         let needsShipping
 
         user.cart.forEach(item => {
-            const dupIndex = orderItems.findIndex(el => item._id === el._id)
+            const dupIndex = orderItems.findIndex(el => item.product._id === el._id)
 
             if (dupIndex !== -1) {
                 orderItems[dupIndex].qty += 1
             } else {
-                orderItems.push({ qty: 1, product: item })
+                orderItems.push(item)
             }
 
-            if (item.type.toLowerCase() === 'physical') {
+            console.log(typeof item.product.type)
+
+            if (item.product.type.toLowerCase() === 'physical') {
                 needsShipping = true
             }
 
-            subtotal += item.price
+            subtotal += item.product.price
         })
 
         Number.parseFloat(subtotal)
