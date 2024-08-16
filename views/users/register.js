@@ -70,7 +70,7 @@ const userRegisterPage = ({ errors, values = {} }, req) => {
                     <button class="button is-medium mb-4 register-btn" id="form-btn" type="submit" disabled>Register</button>
                 </form>
             </section>
-        </main>    
+        </main>
     ` }, req)
 }
 
