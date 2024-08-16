@@ -43,7 +43,9 @@ const UserSchema = new Schema({
     createdAt: {
         type: Date,
         default: Date.now
-    }
+    },
+    resetPasswordToken: String,
+    resetPasswordExpires: Date
 })
 
 UserSchema.methods.comparePasswords = function(suppliedPassword) {

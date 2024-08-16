@@ -27,7 +27,9 @@ import {
     getCartItems,
     handleStripeEvents,
     getBillingShipping,
-    postBillingShipping
+    postBillingShipping,
+    getEditUserProfile,
+    postEditUserProfile
 } from '../../controllers/users/index.js'
 
 router.route('/login')
@@ -46,6 +48,7 @@ router.route('/register')
 ], asyncHandler(postRegister))
 router.route('/logout').get(getLogout)
 router.route('/user/:id/profile').get(asyncHandler(getUserProfile))
+router.route('/user/:id/profile/edit').get(requireUserAuth, asyncHandler(getEditUserProfile)).post(requireUserAuth, asyncHandler(postEditUserProfile))
 router.route('/user/:id/cart').get(asyncHandler(getCart))
 router.route('/user/:userId/cart/:productId/add').post(asyncHandler(postAddCartItem))
 router.route('/user/:userId/cart/:productId/remove').post(asyncHandler(postRemoveCartItem))

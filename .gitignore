@@ -1,2 +1,5 @@
 node_modules/
 .env
+public/resources/images/
+public/resources/videos/
+public/stylesheets/bulma/

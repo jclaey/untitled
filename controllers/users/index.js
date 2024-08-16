@@ -10,6 +10,7 @@ import userProfilePage from "../../views/users/profile.js"
 import userCartPage from "../../views/users/cart.js"
 import userCheckoutPage from '../../views/users/checkout.js'
 import userBillingShippingPage from '../../views/users/billingShipping.js'
+import userEditProfilePage from "../../views/users/editProfile.js"
 import User from "../../models/User.js"
 import Order from "../../models/Order.js"
 import { Product } from "../../models/Product.js"
@@ -112,6 +113,56 @@ export const getUserProfile = async (req, res, next) => {
     } else {
         if (process.env.NODE_ENV === 'development') {
             throw new Error('Could not find resource')
+        } else {
+            res.redirect('/failure')
+        }
+    }
+}
+
+export const getEditUserProfile = async (req, res, next) => {
+    const user = await User.findById(req.params.id)
+
+    if (user) {
+        res.send(userEditProfilePage({ userInfo: { id: user._id, firstName: user.firstName, lastName: user.lastName, email: user.email } }))
+    } else {
+        if (process.env.NODE_ENV === 'development') {
+            throw new Error('Could not get user')
+        } else {
+            res.redirect('/failure')
+        }
+    }
+}
+
+export const postEditUserProfile = async (req, res, next) => {
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+        res.send(userEditProfilePage({ errors, values: req.body }, req))
+    }
+
+    let user = await User.findById(req.params.id)
+
+    if (user) {
+        const userUpdate = {
+            firstName: req.body.firstName !== user.firstName ? req.body.firstName : user.firstName,
+            lastName: req.body.lastName !== user.lastName ? req.body.lastName : user.lastName,
+            email: req.body.email !== user.email ? req.body.email : user.email
+        }
+
+        user = await User.findByIdAndUpdate(req.params.id, userUpdate)
+
+        if (user) {
+            res.redirect(`/users/user/${user._id}/profile`)
+        } else {
+            if (process.env.NODE_ENV === 'development') {
+                throw new Error('Could not update user')
+            } else {
+                res.redirect('/failure')
+            }
+        }
+    } else {
+        if (process.env.NODE_ENV === 'development') {
+            throw new Error('Could not find user')
         } else {
             res.redirect('/failure')
         }
@@ -241,7 +292,6 @@ export const getCartItems = async (req, res, next) => {
                 })
 
                 // Calculate tax?
-
                 subtotal *= 100
 
                 // Payment processing?
