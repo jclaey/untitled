@@ -39,6 +39,9 @@ const userLoginPage = ({ errors, values = {} }, req) => {
                         </div>
                     </div>
                     <button class="button is-medium mb-4 login-btn" type="submit">Login</button>
+                    <div>
+                        <p class="has-text-centered">Forgot Password? Click <a href="/forgot-password">here</a>.</p>
+                    </div>
                 </form>
             </section>
         </main>   

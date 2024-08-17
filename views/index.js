@@ -61,8 +61,13 @@ const indexPage = (req) => {
                     </div>
                 </section>
                 <section>
-                    <div id="sub-showcase">
+                    <div id="sub-showcase" class="mb-6">
                         <p>We develop for the future.</p>
+                    </div>
+                    <div id="simple-website-package">
+                        <h2 class="is-size-2">$99 Websites!</h2>
+                        <p>Get a website, domain, and a basic hosting package for only $99!</p>
+                        <p>Click <a href="">here</a> for more details.</p>
                     </div>
                 </section>
             </main>

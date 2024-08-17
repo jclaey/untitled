@@ -15,7 +15,6 @@ export const getErrors = errors => {
             <div id="errors" class="has-text-danger is-size-5">
               ${renderedErrors()}
           </div>
-          </div>
         </article>
       `
 }

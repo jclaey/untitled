@@ -1,7 +1,7 @@
 import 'dotenv/config'
 import nodemailer from 'nodemailer'
 
-const sendEmail = async req => {
+const sendEmail = async (req) => {
     const transporter = nodemailer.createTransport({
         host: 'smtp-mail.outlook.com',
         port: 587,
