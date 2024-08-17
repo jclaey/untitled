@@ -50,11 +50,8 @@ export const postLogin = async (req, res, next) => {
         req.session.userId = String(user._id)
         res.redirect(`/users/user/${req.session.userId}/profile`)
     } else {
-        if (process.env.NODE_ENV === 'development') {
-            throw new Error('Invalid credentials')
-        } else {
-            res.redirect('/failure')
-        }
+        req.session.error = 'Invalid credentials'
+        res.send(userLoginPage({}, req))
     }
 }
 
@@ -175,8 +172,6 @@ export const getCart = async (req, res, next) => {
         populate: { path: 'product' }
     }).exec()
 
-    console.log(user.cart)
-
     if (user) {
         res.send(userCartPage({ cartItems: user.cart, user: { id: user._id, firstName: user.firstName } }, req))
     } else {
@@ -209,9 +204,6 @@ export const postRemoveCartItem = async (req, res, next) => {
 
     if (user && product) {
         const newCart = user.cart.filter(item => item.product._id !== product._id)
-        console.log(user.cart)
-        console.log(newCart)
-
         user.cart = newCart
 
         user = await user.save()
@@ -229,7 +221,6 @@ export const postRemoveCartItem = async (req, res, next) => {
 }
 
 export const getCheckout = async (req, res, next) => {
-    console.log(req.session)
     const errors = validationResult(req)
 
     if (!errors.isEmpty()) {
@@ -403,8 +394,6 @@ export const postBillingShipping = async (req, res, next) => {
             } else {
                 orderItems.push(item)
             }
-
-            console.log(typeof item.product.type)
 
             if (item.product.type.toLowerCase() === 'physical') {
                 needsShipping = true

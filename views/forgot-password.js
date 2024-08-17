@@ -33,7 +33,8 @@ const forgotPasswordPage = ({ errors, values = {} }, req) => {
                                         </div>
                                         <div class="message-body">
                                             <div id="errors" class="has-text-danger is-size-5">
-                                            ${req.session.error}
+                                                ${req.session.error}
+                                            </div>
                                         </div>
                                     </article>
                                 </div>

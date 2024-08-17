@@ -20,6 +20,26 @@ const userLoginPage = ({ errors, values = {} }, req) => {
                     `
                 : ''}
             </div>
+            <div>
+                ${req && req.session && req.session.error ? 
+                    `
+                        <div>
+                            <div>
+                                <article class="message" id="message">
+                                    <div class="message-header">
+                                        <p>Error</p>
+                                        <button id="msg-close-btn" class="delete" aria-label="delete"></button>
+                                    </div>
+                                    <div class="message-body">
+                                        <div id="errors" class="has-text-danger is-size-5">
+                                        ${req.session.error}
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    `
+                : ''}
+            </div>
             <section class="login-section">
                 <form action="/users/login" method="POST" class="mt-6 box login-form">
                     <div class="field mb-5">

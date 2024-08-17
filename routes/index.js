@@ -18,7 +18,8 @@ import {
     getPaymentSuccessful,
     getForgotPassword,
     patchForgotPassword,
-    getResetPassword
+    getResetPassword,
+    patchResetPassword
 } from '../controllers/index.js'
 
 router.route('/').get(getIndex)
@@ -34,6 +35,6 @@ router.route('/failure').get(getFailure)
 router.route('/demos').get(getDemo)
 router.route('/payment-successful').get(asyncHandler(getPaymentSuccessful))
 router.route('/forgot-password').get(getForgotPassword).patch(asyncHandler(patchForgotPassword))
-router.route('/reset-password/:token').get(asyncHandler(getResetPassword))
+router.route('/reset-password/:token').get(asyncHandler(getResetPassword)).patch(asyncHandler(patchResetPassword))
 
 export default router

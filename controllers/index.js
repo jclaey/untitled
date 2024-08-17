@@ -59,7 +59,6 @@ export const getPaymentSuccessful = async (req, res, next) => {
 
         if (order) {
             await order.save()
-            console.log(order)
             res.send(paymentSuccessfulPage(req))
         } else {
             if (process.env.NODE_ENV === 'development') {
@@ -118,7 +117,7 @@ export const patchForgotPassword = async (req, res, next) => {
         })
 
         const resetUrl = `http://${req.headers.host}/reset-password/${token}`
-        const content = `You are receiving this because you (or someone else) have requested the reset of the password for your account with Web Solutions. Please click on the following link to reset your password: ${resetUrl} If you did not request to reset your password, please ignore this email.`
+        const content = ``
 
         const info = await transporter.sendMail({
             from: `"Web Solutions by HandierMe" <${process.env.OUTLOOK_EMAIL}>`,
@@ -141,20 +140,40 @@ export const patchForgotPassword = async (req, res, next) => {
                                 <table width="600" cellpadding="0" cellspacing="0" border="0">
                                     <tr>
                                         <td>
-                                            <h1>A User Has Submitted a Question or Comment</h1>
+                                            <h1 style="font-size: 48px;">Reset Password</h1>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td><h3>From: <strong>Web Solutions by HandierMe</strong></h3></td>
+                                        <td>
+                                            <h3 style="font-size: 28px;">From: <strong>Web Solutions by HandierMe</strong></h3>
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td><h3>Email: <strong>${process.env.OUTLOOK_EMAIL}</strong></h3></td>
-                                    </tr>
-                                    <tr>
-                                        <td><h3>Subject: <strong>Reset Password</strong></h3></td>
-                                    </tr>
-                                    <tr>
-                                        <td><h3>Content: <strong>${content}</strong></h3></td>
+                                        <td>
+                                            <h3 style="font-size: 28px;">Subject: <strong>Reset Password</strong></h3>
+                                            <p style="font-size: 28px;">
+                                                <strong>
+                                                    You are receiving this because you (or someone else) have requested the reset of the password for your account with Web Solutions.
+                                                </strong>
+                                            </p>
+                                            <p style="font-size: 28px;">
+                                                <strong>
+                                                    Please click on the following link to reset your password: <br />
+                                                    ${resetUrl}
+                                                </strong>
+                                            </p>
+                                            <p style="font-size: 28px;">
+                                                <strong>
+                                                    If you did not request to reset your password, please ignore this email.
+                                                </strong>
+                                            </p>
+                                            <p style="font-size: 28px;">
+                                                <strong>
+                                                    Regards, <br />
+                                                    Web Solutions by HandierMe
+                                                </strong>
+                                            </p>
+                                        </td>
                                     </tr>
                                 </table>
                             </td>
@@ -224,7 +243,7 @@ export const patchResetPassword = async (req, res, next) => {
             const salt = crypto.randomBytes(8).toString('hex')
             const hashedPassword = crypto.createHash('sha256').update(req.body.password + salt).digest('hex')
 
-            let newPassword = `${hashedPassword}.${salt}`
+            const newPassword = `${hashedPassword}.${salt}`
 
             user.password = newPassword
             user.resetPasswordToken = null
@@ -232,7 +251,7 @@ export const patchResetPassword = async (req, res, next) => {
 
             await user.save()
 
-            req.session.userId = user._id
+            req.session.userId = String(user._id)
 
             res.redirect(`/users/user/${user._id}/profile`)
         } else {

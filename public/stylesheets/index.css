@@ -291,3 +291,8 @@ header {
 #forgot-password-page-title-div {
     margin-bottom: 100px;
 }
+
+#reset-password-form-div {
+    display: flex;
+    justify-content: center;
+}

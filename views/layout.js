@@ -29,15 +29,16 @@ const layout = ({ template }, req) => {
               ${footer()}
             </footer>
 
-
+            ${req && req.session && req.session.error ? delete req.session.error : req.session.error = req.session.error}
             ${req && req.originalUrl && req.originalUrl.includes('/checkout') ? '<script src="https://js.stripe.com/v3/"></script><br /><script src="/javascript/checkout.js"></script>' : ''}
             ${req && req.originalUrl && req.originalUrl === '/users/user/billing-shipping' ? '<script src="/javascript/toggleShipping.js"></script>' : ''}
             ${req && req.originalUrl && req.originalUrl === '/' ? '<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" integrity="sha512-A7AYk1fGKX6S2SsHywmPkrnzTZHrgiVT7GcQkLGDe2ev0aWb8zejytzS8wjo7PGEXKqJOrjQ4oORtnimIRZBtw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>' : ''}
             ${req && req.originalUrl && req.originalUrl.includes('/product') ? '<script src="/javascript/selectToggler.js"></script>' : ''}
             ${req && req.originalUrl && req.originalUrl === '/docs/new' || req && req.originalUrl && req.originalUrl.includes('/edit') ? '<script src="/javascript/tiny-admin-facing.js"></script>' : ''}
-            ${req && req.originalUrl && req.originalUrl === '/users/register' ? '<script src="/javascript/noMatch.js"></script>' : ''}
+            ${req && req.originalUrl && req.originalUrl === '/users/register' || req && req.originalUrl && req.originalUrl.includes('/reset-password') ? '<script src="/javascript/noMatch.js"></script>' : ''}
             ${req && req.originalUrl && req.originalUrl === '/contact' ? '<script src="/javascript/tiny-user-facing.js"></script><script src="/javascript/closeMessage.js"></script>"' : ''}
             ${req && req.originalUrl && req.originalUrl === '/' ? `<script>AOS.init()</script>` : ''}
+            ${template.includes('<form') ? '<script src="/javascript/closeMessage.js"></script>' : ''}
           </body>
         </html>
     `
