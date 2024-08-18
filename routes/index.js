@@ -20,7 +20,8 @@ import {
     getForgotPassword,
     patchForgotPassword,
     getResetPassword,
-    patchResetPassword
+    patchResetPassword,
+    getSuccessQuote
 } from '../controllers/index.js'
 
 router.route('/').get(getIndex)
@@ -32,6 +33,7 @@ router.route('/contact').get(getContact).post([
     validateSubject 
 ], asyncHandler(postContact))
 router.route('/success').get(getSuccess)
+router.route('/success-quote').get(getSuccessQuote)
 router.route('/failure').get(getFailure)
 router.route('/demos').get(getDemo)
 router.route('/payment-successful').get(asyncHandler(getPaymentSuccessful))

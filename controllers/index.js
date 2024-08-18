@@ -6,6 +6,7 @@ import indexPage from "../views/index.js"
 import aboutPage from "../views/about.js"
 import contactPage from "../views/contact.js"
 import successPage from '../views/success.js'
+import successQuotePage from '../views/success-quote.js'
 import failurePage from "../views/failure.js"
 import demoPage from "../views/demos.js"
 import paymentSuccessfulPage from '../views/payment-successful.js'
@@ -77,7 +78,7 @@ export const getPaymentSuccessful = async (req, res, next) => {
 }
 
 export const getForgotPassword = (req, res, next) => {
-    res.send(forgotPasswordPage(req))
+    res.send(forgotPasswordPage({}, req))
 }
 
 export const patchForgotPassword = async (req, res, next) => {
@@ -262,4 +263,8 @@ export const patchResetPassword = async (req, res, next) => {
         req.session.error = 'Password reset token is invalid or has expired';
         res.redirect('/forgot-password');
     }
+}
+
+export const getSuccessQuote = (req, res, next) => {
+    res.send(successQuotePage({}, req))
 }
