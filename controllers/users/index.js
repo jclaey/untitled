@@ -130,7 +130,7 @@ export const getEditUserProfile = async (req, res, next) => {
     }
 }
 
-export const postEditUserProfile = async (req, res, next) => {
+export const patchEditUserProfile = async (req, res, next) => {
     const errors = validationResult(req)
 
     if (!errors.isEmpty()) {

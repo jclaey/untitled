@@ -15,26 +15,28 @@ const userBillingShippingPage = ({ cart, errors, values = {} }, req) => {
 
     return layout({ template: `
             <main class="container">
-                <div class="mb-6 page-title-div">
-                    <h1 class="title is-size-1">
-                        ${cart.needsShipping ? `
-                            <span class="pipe">|</span> Billing and Shipping Info <span class="pipe">|</span>
-                        ` : `
-                            <span class="pipe">|</span> Billing Info <span class="pipe">|</span>
-                        `}
-                    </h1>
-                </div>
-                <div>
-                    ${errors ? 
-                        `
-                            <div>
+                <section>
+                    <div class="mb-6 page-title-div">
+                        <h1 class="title is-size-1">
+                            ${cart.needsShipping ? `
+                                <span class="pipe">|</span> Billing and Shipping Info <span class="pipe">|</span>
+                            ` : `
+                                <span class="pipe">|</span> Billing Info <span class="pipe">|</span>
+                            `}
+                        </h1>
+                    </div>
+                    <div>
+                        ${errors ? 
+                            `
                                 <div>
-                                    ${getErrors(errors)}
+                                    <div>
+                                        ${getErrors(errors)}
+                                    </div>
                                 </div>
-                            </div>
-                        `
-                    : ''}
-                </div>
+                            `
+                        : ''}
+                    </div>
+                </section>
                 <section>
                         <form action="/users/user/billing-shipping" method="POST">
                             <div class="columns">

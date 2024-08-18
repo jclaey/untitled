@@ -31,7 +31,7 @@ const QuoteInfoItemSchema = new Schema({
             type: String,
             required: true
         },
-        zipcode: {
+        postalCode: {
             type: String,
             required: true
         }

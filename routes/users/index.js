@@ -29,7 +29,7 @@ import {
     getBillingShipping,
     postBillingShipping,
     getEditUserProfile,
-    postEditUserProfile
+    patchEditUserProfile
 } from '../../controllers/users/index.js'
 
 router.route('/login')
@@ -48,19 +48,23 @@ router.route('/register')
 ], asyncHandler(postRegister))
 router.route('/logout').get(getLogout)
 router.route('/user/:id/profile').get(asyncHandler(getUserProfile))
-router.route('/user/:id/profile/edit').get(requireUserAuth, asyncHandler(getEditUserProfile)).post(requireUserAuth, asyncHandler(postEditUserProfile))
-router.route('/user/:id/cart').get(asyncHandler(getCart))
-router.route('/user/:userId/cart/:productId/add').post(asyncHandler(postAddCartItem))
-router.route('/user/:userId/cart/:productId/remove').post(asyncHandler(postRemoveCartItem))
+router.route('/user/:id/profile/edit').get(requireUserAuth, asyncHandler(getEditUserProfile)).post([
+    validateFirstName,
+    validateLastName,
+    requireValidEmail
+], requireUserAuth, asyncHandler(patchEditUserProfile))
+router.route('/user/:id/cart').get(requireUserAuth, asyncHandler(getCart))
+router.route('/user/:userId/cart/:productId/add').post(requireUserAuth, asyncHandler(postAddCartItem))
+router.route('/user/:userId/cart/:productId/remove').post(requireUserAuth, asyncHandler(postRemoveCartItem))
 router.route('/user/:id/cart/checkout').get(requireUserAuth, asyncHandler(getCheckout))
-router.route('/user/getCartItems').get(asyncHandler(getCartItems))
+router.route('/user/getCartItems').get(requireUserAuth, asyncHandler(getCartItems))
 router.route('/stripe/events').post(express.raw({ type: 'application/json' }), asyncHandler(handleStripeEvents))
-router.route('/user/billing-shipping').get(asyncHandler(getBillingShipping)).post([
+router.route('/user/billing-shipping').get(requireUserAuth, asyncHandler(getBillingShipping)).post([
     validateStreetAddressOne,
     validateStreetAddressTwo,
     validateState,
     validateCity,
     validateZipcode
-], asyncHandler(postBillingShipping))
+], requireUserAuth, asyncHandler(postBillingShipping))
 
 export default router

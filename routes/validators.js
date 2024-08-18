@@ -137,14 +137,17 @@ export const validateBudget =
     .escape()
 
 export const validatePhoneNumber =
-    body('phoneNumber', 'Please enter a valid phone number')
+    body('phoneNumber')
     .trim()
-    .isLength({ min: 10, max: 10 })
+    .notEmpty()
+    .withMessage('Please enter a phone number')
     .custom(value => {
         const phoneNumber = parsePhoneNumber(value, 'US')
-
+        
         if (!phoneNumber) {
             throw new Error('Please enter a valid phone number')
+        } else {
+            return true
         }
     })
 

@@ -47,7 +47,7 @@ const forgotPasswordPage = ({ errors, values = {} }, req) => {
                         <div class="field mb-4">
                             <label for="email" class="label">Enter Your Email</label>
                             <div class="control">
-                                <input class="input" type="email" name="email" id="email" value="${errors && values.email && values.email !== '' ? values.email : ''}" placeholder="Enter email" />
+                                <input class="input" type="email" name="email" id="email" value="${errors && values.email && values.email !== '' ? values.email : ''}" placeholder="Enter email" required />
                             </div>
                         </div>
                         <div class="mb-4">

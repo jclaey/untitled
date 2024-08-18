@@ -1,11 +1,18 @@
+import { validationResult } from 'express-validator'
 import newQuotePage from '../../views/quotes/index.js'
 import QuoteInfoItem from '../../models/QuoteInfoItem.js'
 
 export const getNewQuote = (req, res, next) => {
-    res.send(newQuotePage(req))
+    res.send(newQuotePage({}, req))
 }
 
 export const postNewQuote = async (req, res, next) => {
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+        return res.send(newQuotePage({ errors, values: req.body }, req))
+    }
+
     const quote = new QuoteInfoItem({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -15,7 +22,7 @@ export const postNewQuote = async (req, res, next) => {
             streetAddressTwo: req.body.streetAddressTwo ? req.body.streetAddressTwo : '',
             city: req.body.city,
             state: req.body.state,
-            zipcode: req.body.zipcode,
+            postalCode: req.body.postalCode
         },
         phoneNumber: req.body.phoneNumber,
         email: req.body.email,
@@ -26,8 +33,12 @@ export const postNewQuote = async (req, res, next) => {
 
     if (quote) {
         await quote.save()
-        res.redirect('/success')
+        res.redirect('/success-quote')
     } else {
-        throw new Error('Info could not be submitted successfully')
+        if (process.env.NODE_ENV === 'development') {
+            throw new Error('Info could not be submitted successfully')
+        } else {
+            res.redirect('/failure')
+        }
     }
 }
