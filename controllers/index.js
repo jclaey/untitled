@@ -56,7 +56,8 @@ export const getPaymentSuccessful = async (req, res, next) => {
     const user = await User.findById(req.session.userId)
 
     if (user) {
-        const order = await Order.findOneAndUpdate({ user: user._id }, { isPaid: true, paidAt: Date.now() })
+        const orderNumber = await crypto.randomBytes(10).toString('hex')
+        const order = await Order.findOneAndUpdate({ user: user._id }, { orderNumber, isPaid: true, paidAt: Date.now() })
 
         if (order) {
             await order.save()

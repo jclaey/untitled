@@ -58,6 +58,7 @@ const OrderSchema = new Schema({
         updateTime: String,
         emailAddress: String
     },
+    orderNumber: String,
     subtotalPrice: {
         type: Number,
         required: true,
