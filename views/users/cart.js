@@ -69,38 +69,38 @@ const userCartPage = ({ cartItems, user }, req) => {
     return layout({ template: `
             <main class="container">
                 <section>
-                    <div class="mb-6 page-title-div">
+                    <div class="page-title-div" id="cart-title-div">
                         <h1 class="title is-size-1 mb-6">
                             <span class="pipe">|</span> ${user.firstName}'s Cart <span class="pipe">|</span>
                         </h1>
-                        <div class="columns">
-                            <div class="column">
-                                <div id="cart-items-div" class="box">
-                                    <div class="mb-3">
-                                        <h3 class="is-size-4 ml-4">${user.firstName}'s Items</h3>
-                                    </div>
-                                    ${renderedItems}
+                    </div>
+                    <div class="columns">
+                        <div class="column">
+                            <div id="cart-items-div" class="box">
+                                <div class="mb-3">
+                                    <h3 class="is-size-4 ml-4">${user.firstName}'s Items</h3>
                                 </div>
+                                ${renderedItems}
                             </div>
-                            <div class="column">
-                                <div id="cart-details" class="card box">
-                                    <div class="card-content">
-                                        <div class="content">
-                                            <div id="subtotal" class="is-size-4">
-                                                <strong>Subtotal:</strong>
-                                                $${updateDetails().subtotal.toFixed(2)}
-                                            </div>
-                                            <div id="tax" class="is-size-4">
-                                                <strong>Tax:</strong>
-                                                $${(updateDetails().total.toFixed(2) - updateDetails().subtotal.toFixed(2)).toFixed(2)}
-                                            </div>
-                                            <div id="total" class="is-size-4">
-                                                <strong>Total:</strong>
-                                                $${updateDetails().total.toFixed(2)}
-                                            </div>
-                                            <div id="checkout-btn" class="mt-4">
-                                                <a href="/users/user/billing-shipping" class="button is-success is-medium">Proceed to Checkout</a>
-                                            </div>
+                        </div>
+                        <div class="column">
+                            <div id="cart-details" class="card box">
+                                <div class="card-content">
+                                    <div class="content">
+                                        <div id="subtotal" class="is-size-4">
+                                            <strong>Subtotal:</strong>
+                                            $${updateDetails().subtotal.toFixed(2)}
+                                        </div>
+                                        <div id="tax" class="is-size-4">
+                                            <strong>Tax:</strong>
+                                            $${(updateDetails().total.toFixed(2) - updateDetails().subtotal.toFixed(2)).toFixed(2)}
+                                        </div>
+                                        <div id="total" class="is-size-4">
+                                            <strong>Total:</strong>
+                                            $${updateDetails().total.toFixed(2)}
+                                        </div>
+                                        <div id="checkout-btn" class="mt-4">
+                                            <a href="/users/user/billing-shipping" class="button is-success is-medium">Proceed to Checkout</a>
                                         </div>
                                     </div>
                                 </div>

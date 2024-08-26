@@ -47,8 +47,8 @@ export const postLogin = async (req, res, next) => {
     const user = await User.findOne({ email })
 
     if (user && user.comparePasswords(password)) {
-        req.session.userId = String(user._id)
-        res.redirect(`/users/user/${req.session.userId}/profile`)
+        req.session.userId = user._id
+        res.redirect(`/users/user/${user._id}/profile`)
     } else {
         req.session.error = 'Invalid credentials'
         res.send(userLoginPage({}, req))
@@ -83,7 +83,7 @@ export const postRegister = async (req, res, next) => {
 
         if (user) {
             await user.save()
-            req.session.userId = String(user._id)
+            req.session.userId = user._id
             res.redirect(`/users/user/${user._id}/profile`)
         } else {
             if (process.env.NODE_ENV === 'development') {
@@ -411,7 +411,8 @@ export const postBillingShipping = async (req, res, next) => {
             res.send(userBillingShippingPage({ cart: { cartItems: user.cart, needsShipping, subtotal }, errors, values: req.body }, req))
         }
 
-        let existing = await Order.findOne({ user: user._id })
+        // add parameters to search for order where same user id and isPaid === false
+        let existing = await Order.find({ user: user._id, isPaid: false }).exec()
 
         if (existing) {
             existing.orderItems = orderItems,

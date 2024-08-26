@@ -51,9 +51,10 @@ app.use(express.urlencoded({ extended: true }))
 // }))
 
 app.use((req, res, next) => {
-  if (req && req.session && req.session.userId) {
-    res.locals.user = req.session.userId
-  }
+  res.locals.user = req.session.userId || ''
+  res.locals.success = req.session.success || ''
+  if (req && req.session && req.session.success) delete req.session.success
+  if (req && req.session && req.session.error) delete req.session.error
   next()
 })
 

@@ -296,3 +296,7 @@ header {
     display: flex;
     justify-content: center;
 }
+
+#cart-title-div {
+    margin-bottom: 8rem;
+}

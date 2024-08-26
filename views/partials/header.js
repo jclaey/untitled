@@ -1,4 +1,4 @@
-const header = (req = null) => {
+ const header = (req = null) => {
     return `
         <nav class="navbar container">
             <div class="nav-left navbar-brand">
@@ -40,6 +40,7 @@ const header = (req = null) => {
                                     </div>
                                 </div>
                             </div>
+                        </div>
                     </div>
                 </div>
             </div>

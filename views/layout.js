@@ -29,7 +29,7 @@ const layout = ({ template }, req) => {
               ${footer()}
             </footer>
 
-            ${req && req.session && req.session.error ? delete req.session.error : req.session.error = req.session.error}
+            
             ${req && req.originalUrl && req.originalUrl.includes('/checkout') ? '<script src="https://js.stripe.com/v3/"></script><br /><script src="/javascript/checkout.js"></script>' : ''}
             ${req && req.originalUrl && req.originalUrl === '/users/user/billing-shipping' ? '<script src="/javascript/toggleShipping.js"></script>' : ''}
             ${req && req.originalUrl && req.originalUrl === '/' ? '<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" integrity="sha512-A7AYk1fGKX6S2SsHywmPkrnzTZHrgiVT7GcQkLGDe2ev0aWb8zejytzS8wjo7PGEXKqJOrjQ4oORtnimIRZBtw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>' : ''}

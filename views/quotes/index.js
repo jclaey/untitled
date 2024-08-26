@@ -187,7 +187,7 @@ const newQuotePage = ({ errors, values = {} }, req) => {
                                 Project Details*
                             </label>
                             <div class="control">
-                                <textarea class="textarea" id="projectDetails" name="projectDetails">${errors && values.projectDetails && values.projectDetails !== '' ? values.projectDetails : ''}</textarea>
+                                <textarea class="textarea" id="projectDetails" maxlength="1000" name="projectDetails">${errors && values.projectDetails && values.projectDetails !== '' ? values.projectDetails : ''}</textarea>
                             </div>
                         </div>
                         <div class="field mb-6">

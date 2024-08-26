@@ -14,6 +14,13 @@ const userCheckoutPage = ({ cart, errors, values = {} }, req) => {
 
     return layout({ template: `
         <main class="container">
+            <nav class="breadcrumb" aria-label="breadcrumbs">
+                <ul>
+                    <li><a href="/users/user/${req.session.userId}/cart">Cart</a></li>
+                    <li><a href="/users/user/billingShipping">Billing and Shipping</a></li>
+                    <li class="is-active"><a href="/users/user/${req.session.userId}/cart/checkout" aria-current="page">Checkout</a></li>
+                </ul>
+            </nav>
             <div class="mb-6 page-title-div">
                 <h1 class="title is-size-1">
                     <span class="pipe">|</span> Finalize Purchase <span class="pipe">|</span>
