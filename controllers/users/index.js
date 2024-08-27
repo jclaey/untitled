@@ -184,7 +184,10 @@ export const getCart = async (req, res, next) => {
 }
 
 export const postAddCartItem = async (req, res, next) => {
-    const user = await User.findById(req.params.userId)
+    const user = await User.findById(req.params.userId).populate({
+        path: 'cart',
+        populate: { path: 'product' }
+    }).exec()
     const product = await Product.findById(req.params.productId)
 
     if (user && product) {
@@ -198,12 +201,17 @@ export const postAddCartItem = async (req, res, next) => {
     }
 }
 
-export const postRemoveCartItem = async (req, res, next) => {
-    let user = await User.findById(req.params.userId)
+export const putRemoveCartItem = async (req, res, next) => {
+    let user = await User.findById(req.params.userId).populate({
+        path: 'cart',
+        populate: { path: 'product' }
+    }).exec()
     const product = await Product.findById(req.params.productId)
+    console.log(product)
 
     if (user && product) {
-        const newCart = user.cart.filter(item => item.product._id !== product._id)
+        const newCart = user.cart.filter(item => String(item.product._id) !== String(product._id))
+        console.log(newCart)
         user.cart = newCart
 
         user = await user.save()
@@ -213,7 +221,13 @@ export const postRemoveCartItem = async (req, res, next) => {
         }
     } else {
         if (process.env.NODE_ENV === 'development') {
-            throw new Error('Could not remove item from cart')
+            if (!user) {
+                throw new Error('Could not get user')
+            } else if (!product) {
+                throw new Error('Could not get product')
+            } else {
+                throw new Error('Could not remove item from cart')
+            }
         } else {
             res.redirect('/failure')
         }

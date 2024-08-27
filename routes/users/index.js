@@ -22,7 +22,7 @@ import {
     getUserProfile,
     getCart,
     postAddCartItem,
-    postRemoveCartItem,
+    putRemoveCartItem,
     getCheckout,
     getCartItems,
     handleStripeEvents,
@@ -55,7 +55,7 @@ router.route('/user/:id/profile/edit').get(requireUserAuth, asyncHandler(getEdit
 ], requireUserAuth, asyncHandler(patchEditUserProfile))
 router.route('/user/:id/cart').get(requireUserAuth, asyncHandler(getCart))
 router.route('/user/:userId/cart/:productId/add').post(requireUserAuth, asyncHandler(postAddCartItem))
-router.route('/user/:userId/cart/:productId/remove').post(requireUserAuth, asyncHandler(postRemoveCartItem))
+router.route('/user/:userId/cart/:productId/remove').put(requireUserAuth, asyncHandler(putRemoveCartItem))
 router.route('/user/:id/cart/checkout').get(requireUserAuth, asyncHandler(getCheckout))
 router.route('/user/getCartItems').get(requireUserAuth, asyncHandler(getCartItems))
 router.route('/stripe/events').post(express.raw({ type: 'application/json' }), asyncHandler(handleStripeEvents))

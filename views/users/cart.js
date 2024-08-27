@@ -41,7 +41,7 @@ const userCartPage = ({ cartItems, user }, req) => {
                                         </div>
                                     </div>
                                     <div class="item-buttons">
-                                        <form action="/users/user/${user.id}/cart/${item._id}/remove" method="POST">
+                                        <form action="/users/user/${user.id}/cart/${item.product._id}/remove?_method=PUT" method="POST">
                                             <button type="submit" class="button is-danger" id="cart-item-remove-btn">Remove</button>
                                         </form>
                                     </div>
