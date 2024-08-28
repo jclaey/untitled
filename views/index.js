@@ -88,15 +88,9 @@ const indexPage = (req) => {
                         <a id="next"><i class="fa-solid fa-arrow-right"></i></a>
                     </div>
                     <div class="dot-container">
-                        <span class="dot">
-                            <i class="fa-solid fa-circle"></i>
-                        </span>
-                        <span class="dot">
-                            <i class="fa-regular fa-circle"></i>
-                        </span>
-                        <span class="dot">
-                            <i class="fa-regular fa-circle"></i>
-                        </span>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
                     </div>
                 </section>
             </main>

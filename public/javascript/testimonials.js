@@ -5,6 +5,7 @@ const slides = document.querySelectorAll('.slides')
 let slideId = 1
 
 slides[slideId - 1].style.display = 'block'
+dots[slideId - 1].style.backgroundColor = '#717171'
 
 const showSlides = () => {
     if (slideId > slides.length) {
@@ -22,6 +23,14 @@ const showSlides = () => {
             slide.style.display = 'none'
         }
     })
+
+    dots.forEach((dot, dotIndex) => {
+        if (slideId - 1 === dotIndex) {
+            dot.style.backgroundColor = '#717171'
+        } else {
+            dot.style.backgroundColor = '#bbb'
+        }
+    })
 }
 
 dots.forEach((dot, dotIndex) => {
@@ -29,16 +38,20 @@ dots.forEach((dot, dotIndex) => {
         slides.forEach((slide, slideIndex) => {
             if (dotIndex !== slideIndex) {
                 slide.style.display = 'none'
+                dots[dotIndex]
             } else {
                 slide.style.display = 'block'
+                slideId = slideIndex + 1
             }
         })
 
         dots.forEach(dot => {
-            dot.style.backgroundColor = '#bbb'
+            if (dot === dots[dotIndex]) {
+                dot.style.backgroundColor = '#717171'
+            } else {
+                dot.style.backgroundColor = '#bbb'
+            }
         })
-
-        e.target.style.backgroundColor = '#717171'
     })
 })
 
