@@ -37,7 +37,7 @@ const layout = ({ template }, req) => {
             ${req && req.originalUrl && req.originalUrl === '/docs/new' || req && req.originalUrl && req.originalUrl.includes('/edit') ? '<script src="/javascript/tiny-admin-facing.js"></script>' : ''}
             ${req && req.originalUrl && req.originalUrl === '/users/register' || req && req.originalUrl && req.originalUrl.includes('/reset-password') ? '<script src="/javascript/noMatch.js"></script>' : ''}
             ${req && req.originalUrl && req.originalUrl === '/contact' ? '<script src="/javascript/tiny-user-facing.js"></script><script src="/javascript/closeMessage.js"></script>"' : ''}
-            ${req && req.originalUrl && req.originalUrl === '/' ? `<script>AOS.init()</script>` : ''}
+            ${req && req.originalUrl && req.originalUrl === '/' ? `<script src="/javascript/testimonials.js"></script><br /><script>AOS.init()</script>` : ''}
             ${template.includes('<form') ? '<script src="/javascript/closeMessage.js"></script>' : ''}
           </body>
         </html>

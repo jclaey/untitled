@@ -20,7 +20,7 @@ const userCartPage = ({ cartItems, user }, req) => {
 
     if (!cartItems || cartItems.length === 0) {
         renderedItems = `
-            <div class="is-size-4 box">
+            <div class="is-size-5 box">
                 Your cart is currently empty.
             </div>
         `
@@ -78,7 +78,7 @@ const userCartPage = ({ cartItems, user }, req) => {
                         <div class="column">
                             <div id="cart-items-div" class="box">
                                 <div class="mb-3">
-                                    <h3 class="is-size-4 ml-4">${user.firstName}'s Items</h3>
+                                    <h3 class="is-size-3 ml-4">${user.firstName}'s Items</h3>
                                 </div>
                                 ${renderedItems}
                             </div>

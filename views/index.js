@@ -60,7 +60,7 @@ const indexPage = (req) => {
                         </div>
                     </div>
                 </section>
-                <section>
+                <section class="mb-6">
                     <div id="sub-showcase" class="mb-6">
                         <p>We develop for the future.</p>
                     </div>
@@ -68,6 +68,35 @@ const indexPage = (req) => {
                         <h2 class="is-size-2">$99 Websites!</h2>
                         <p>Get a website, domain, and a basic hosting package for only $99!</p>
                         <p>Click <a href="">here</a> for more details.</p>
+                    </div>
+                </section>
+                <section id="testimonial-carousel">
+                    <div id="carousel-container">
+                        <div class="slides">
+                            <q>I like this. This is a good place.</q>
+                            <p class="author">- Some Person</p>
+                        </div>
+                        <div class="slides">
+                            <q>Keep up the good work.</q>
+                            <p class="author">- Someone Else</p>
+                        </div>
+                        <div class="slides">
+                            <q>Hell yes.</q>
+                            <p class="author">- My Neighbor</p>
+                        </div>
+                        <a id="prev"><i class="fa-solid fa-arrow-left"></i></a>
+                        <a id="next"><i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                    <div class="dot-container">
+                        <span class="dot">
+                            <i class="fa-solid fa-circle"></i>
+                        </span>
+                        <span class="dot">
+                            <i class="fa-regular fa-circle"></i>
+                        </span>
+                        <span class="dot">
+                            <i class="fa-regular fa-circle"></i>
+                        </span>
                     </div>
                 </section>
             </main>
