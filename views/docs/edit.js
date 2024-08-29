@@ -20,7 +20,7 @@ const docsEditPage = ({ doc, errors, values = {} }, req) => {
                 : ''}
             </div>
             <section class="form-section">
-                <form class="box resource-form" action="/docs/doc/${doc._id}/edit?_method=PATCH" method="POST" enctype="multipart/form-data">
+                <form action="/docs/doc/${doc._id}/edit?_method=PATCH" method="POST" enctype="multipart/form-data" class="box resource-form" >
                     <div class="field mb-4">
                         <label class="label" for="type">Type</label>
                         <div class="control">
@@ -69,7 +69,7 @@ const docsEditPage = ({ doc, errors, values = {} }, req) => {
                             <input type="file" class="input" id="image" name="image" accept="images/*" />
                         </div>
                     </div>
-                    <button class="button is-medium" type="submit">Edit Post</button>
+                    <button type="submit" class="button is-medium">Edit Post</button>
                 </form>
             </section>
         </main>    

@@ -15,18 +15,25 @@ import {
     getNew,
     postNew,
     getShow,
-    getEdit
+    getEdit,
+    patchEdit
 } from '../../controllers/docs/index.js'
 
 router.route('/').get(getIndex)
 router.route('/new')
     .get(requireAdminAuth, getNew)
-    .post(
-        upload.single('image'),
-        [validateTitle, validateContent, validateDescription], 
-        asyncHandler(postNew)
-    )
+    .post(requireAdminAuth, upload.single('image'), [
+        validateTitle, 
+        validateContent, 
+        validateDescription
+], asyncHandler(postNew))
 router.route('/doc/:id').get(asyncHandler(getShow))
-router.route('/doc/:id/edit').get(requireAdminAuth, asyncHandler(getEdit))
+router.route('/doc/:id/edit')
+    .get(requireAdminAuth, asyncHandler(getEdit))
+    .patch(requireAdminAuth, upload.single('image'), [
+        validateTitle, 
+        validateContent, 
+        validateDescription
+], asyncHandler(patchEdit))
 
 export default router

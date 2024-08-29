@@ -64,7 +64,7 @@ const indexPage = (req) => {
                     <div id="sub-showcase" class="mb-6">
                         <p>We develop for the future.</p>
                     </div>
-                    <div id="simple-website-package">
+                    <div id="simple-website-package-action">
                         <h2 class="is-size-2">$99 Websites!</h2>
                         <p>Get a website, domain, and a basic hosting package for only $99!</p>
                         <p>Click <a href="">here</a> for more details.</p>
@@ -74,14 +74,65 @@ const indexPage = (req) => {
                     <div id="carousel-container">
                         <div class="slides">
                             <q>I like this. This is a good place.</q>
+                            <div class="star-ratings mt-1 mb-1">
+                                <div>
+                                    <i class="fa-solid fa-star pr-1"></i>
+                                </div>
+                                <div>
+                                    <i class="fa-solid fa-star pr-1"></i>
+                                </div>
+                                <div>
+                                    <i class="fa-solid fa-star pr-1"></i>
+                                </div>
+                                <div>
+                                    <i class="fa-solid fa-star pr-1"></i>
+                                </div>
+                                <div>
+                                    <i class="fa-solid fa-star-half"></i>
+                                </div>
+                            </div>
                             <p class="author">- Some Person</p>
                         </div>
                         <div class="slides">
                             <q>Keep up the good work.</q>
+                            <div class="star-ratings mt-1 mb-1">
+                                <div>
+                                    <i class="fa-solid fa-star pr-1"></i>
+                                </div>
+                                <div>
+                                    <i class="fa-solid fa-star pr-1"></i>
+                                </div>
+                                <div>
+                                    <i class="fa-solid fa-star pr-1"></i>
+                                </div>
+                                <div>
+                                    <i class="fa-solid fa-star pr-1"></i>
+                                </div>
+                                <div>
+                                    <i class="fa-solid fa-star pr-1"></i>
+                                </div>
+                            </div>
                             <p class="author">- Someone Else</p>
                         </div>
                         <div class="slides">
                             <q>Hell yes.</q>
+                            <div class="star-ratings mt-1 mb-1">
+                                <div>
+                                    <i class="fa-solid fa-star pr-1"></i>
+                                </div>
+                                <div>
+                                    <i class="fa-solid fa-star pr-1"></i>
+                                </div>
+                                <div>
+                                    <i class="fa-solid fa-star pr-1"></i>
+                                </div>
+                                <div>
+                                    <i class="fa-solid fa-star pr-1"></i>
+                                </div>
+                                <div>
+                                    <i class="fa-solid fa-star pr-1"></i>
+                                </div>
+                            </div>
                             <p class="author">- My Neighbor</p>
                         </div>
                         <a id="prev"><i class="fa-solid fa-arrow-left"></i></a>

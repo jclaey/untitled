@@ -25,7 +25,7 @@ const showDocPage = ({ doc }, req) => {
                 </div>
             </section>
             <section class="section" id="doc-content-show">
-                <div class="mb-6">
+                <div class="mb-6" id="doc-content">
                     ${decode(doc.content)}
                 </div>
                 <div>
@@ -38,7 +38,7 @@ const showDocPage = ({ doc }, req) => {
                 </div>
             </section>
         </main>
-    ` })
+    ` }, req)
 }
 
 export default showDocPage

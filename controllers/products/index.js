@@ -107,12 +107,6 @@ export const getShow = async (req, res, next) => {
 }
 
 export const getEdit = async (req, res, next) => {
-    const errors = validationResult(req)
-
-    if (!errors.isEmpty()) {
-        res.send(productsEditPage({ errors, values: req.body }, req))
-    }
-
     const product = await Product.findById(req.params.id)
 
     if (product) {

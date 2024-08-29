@@ -50,13 +50,13 @@ app.use(express.urlencoded({ extended: true }))
 //   saveUninitialized: true
 // }))
 
-app.use((req, res, next) => {
-  res.locals.user = req.session.userId || ''
-  res.locals.success = req.session.success || ''
-  if (req && req.session && req.session.success) delete req.session.success
-  if (req && req.session && req.session.error) delete req.session.error
-  next()
-})
+// app.use((req, res, next) => {
+//   res.locals.user = req.session.userId || ''
+//   res.locals.success = req.session.success || ''
+//   if (req && req.session && req.session.success) delete req.session.success
+//   if (req && req.session && req.session.error) delete req.session.error
+//   next()
+// })
 
 // Mount routes
 app.use('/', index)

@@ -1,4 +1,3 @@
-/* Testimonials */
 #carousel-container {
     position: relative;
     background-color: #f1f1f1;
@@ -8,6 +7,7 @@
     display: none;
     padding: 80px;
     text-align: center;
+    font-size: 22px;
 }
 
 #prev, #next {
@@ -19,9 +19,10 @@
     padding: 16px;
     color: #888;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 28px;
     border-radius: 0 3px 3px 0;
     user-select: none;
+    transition: background-color 0.3s;
 }
 
 #next {
@@ -62,4 +63,13 @@ q {
 
 .author {
     color: cornflowerblue;
+}
+
+.star-ratings {
+    display: flex;
+    justify-content: center;
+}
+
+.star-ratings div i {
+    color: #e6e600;
 }

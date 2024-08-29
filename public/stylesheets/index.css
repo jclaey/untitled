@@ -77,7 +77,7 @@ header {
 }
 
 #sub-showcase {
-    height: 150px;
+    height: 180px;
     background-color: var(--primary-color);
 }
 
@@ -272,14 +272,15 @@ header {
     height: 40px;
 }
 
-#simple-website-package {
+#simple-website-package-action {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    height: 220px;
 }
 
-#simple-website-package p {
+#simple-website-package-action p {
     font-size: 20px;
 }
 
@@ -299,4 +300,13 @@ header {
 
 #cart-title-div {
     margin-bottom: 8rem;
+}
+
+#doc-content-show #doc-content h2 {
+    font-size: 36px;
+    margin: 2rem 0 0.75rem 0;
+}
+
+#doc-content-show #doc-content p {
+    margin: 0 0 0.5rem 0;
 }

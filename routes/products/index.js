@@ -36,6 +36,12 @@ router.route('/product/:id').get(asyncHandler(getShow))
 
 router.route('/product/:id/edit')
     .get(requireAdminAuth, asyncHandler(getEdit))
-    .patch(upload.fields([{ name: 'image' }, { name: 'product' }]), asyncHandler(patchEdit))
+    .patch(upload.fields([{ name: 'image' }, { name: 'product' }]), [
+        validateTitle, 
+        validateProductType, 
+        validateDescription, 
+        validatePrice, 
+        validateCountInStock
+    ], asyncHandler(patchEdit))
 
 export default router

@@ -5,6 +5,7 @@ import newDocPage from "../../views/docs/new.js"
 import showDocPage from '../../views/docs/show.js'
 import docsEditPage from '../../views/docs/edit.js'
 import DocItem from "../../models/Doc.js"
+import { decode } from 'html-entities'
 
 export const getIndex = async (req, res, next) => {
     const docs = await DocItem.find({}).populate('author').exec()
@@ -67,12 +68,6 @@ export const getShow = async (req, res, next) => {
 }
 
 export const getEdit = async (req, res, next) => {
-    const errors = validationResult(req)
-
-    if (!errors.isEmpty()) {
-        return res.send(newDocPage({ errors, values: req.body }, req))
-    }
-    
     const doc = await DocItem.findById(req.params.id)
 
     if (doc) {
@@ -87,6 +82,12 @@ export const getEdit = async (req, res, next) => {
 }
 
 export const patchEdit = async (req, res, next) => {
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+        return res.send(docsEditPage({ errors, values: req.body }, req))
+    }
+
     let doc = await DocItem.findById(req.params.id)
 
     if (!doc) {
