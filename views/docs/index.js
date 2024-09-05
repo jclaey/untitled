@@ -23,6 +23,9 @@ const docsIndexPage = ({ docs }, req) => {
                         <p>
                             ${article.description}
                         </p>
+                        <p>
+                            <small>Posted ${article.created_at.toLocaleDateString('en-US')} at ${article.created_at.toLocaleTimeString('en-US')}</small>
+                        </p>
                     </div>
                 </div>
             </article>
@@ -50,6 +53,9 @@ const docsIndexPage = ({ docs }, req) => {
                         </p>
                         <p>
                             ${post.description}
+                        </p>
+                        <p>
+                            <small>Posted ${post.created_at.toLocaleDateString('en-US')} at ${post.created_at.toLocaleTimeString('en-US')}</small>
                         </p>
                     </div>
                 </div>

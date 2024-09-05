@@ -27,9 +27,10 @@ const adminIndexPage = ({ docs }, req) => {
                     <div class="media-content">
                         <div class="content">
                             <p>
-                                <a href="/docs/doc/${doc._id}">${doc.title}</a> <br />
+                                <a href="/docs/doc/${doc._id}"><strong>${doc.title}</strong></a> <br />
                                 <small>${doc.type}</small> <strong>in</strong> <small>${doc.category}</small> <br />
-                                ${doc.description.slice(0, 50)}${doc.description.length > 50 ? '...' : ''}
+                                <strong>${doc.description.slice(0, 50)}${doc.description.length > 50 ? '...' : ''}</strong> <br />
+                                <small>Posted ${doc.created_at.toLocaleDateString('en-US')} at ${doc.created_at.toLocaleTimeString('en-US')}</small>
                             </p>
                         </div>
                     </div>
