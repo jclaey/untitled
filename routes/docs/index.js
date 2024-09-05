@@ -8,7 +8,8 @@ import { requireAdminAuth } from '../../middleware/auth.js'
 import {
     validateTitle,
     validateContent,
-    validateDescription
+    validateDescription,
+    validateImage
 } from '../validators.js'
 import {
     getIndex,
@@ -25,7 +26,8 @@ router.route('/new')
     .post(requireAdminAuth, upload.single('image'), [
         validateTitle, 
         validateContent, 
-        validateDescription
+        validateDescription,
+        validateImage
 ], asyncHandler(postNew))
 router.route('/doc/:id').get(asyncHandler(getShow))
 router.route('/doc/:id/edit')

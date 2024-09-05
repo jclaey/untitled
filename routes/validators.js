@@ -1,6 +1,5 @@
 import { body } from "express-validator"
 import { parsePhoneNumber } from "libphonenumber-js"
-import Admin from "../models/Admin.js"
 
 export const validateAuthorName = 
     body('author')
@@ -171,3 +170,23 @@ export const requireValidPasswordForUser =
     .trim()
     .isLength({ min: 8, max: 30 })
     .withMessage('Password must be between 8 and 30 characters')
+
+export const validateImage =
+    body('image', 'Please add an image file')
+    .custom((value, filename) => {
+        const originalName = filename.req.file.originalname.split('.')
+        const ext = originalName[originalname.length - 1]
+        
+        switch (ext) {
+            case 'jpg':
+                return true
+            case 'jpeg':
+                return true
+            case 'webp':
+                return true
+            case 'png':
+                return true
+        }
+
+        return false
+    })
