@@ -68,6 +68,9 @@ const userRegisterPage = ({ errors, values = {} }, req) => {
                         </div>
                     </div>
                     <button class="button is-medium mb-4 register-btn" id="form-btn" type="submit" disabled>Register</button>
+                    <div>
+                        <p class="has-text-centered">Already Registered? Click <a href="/users/login">here</a> to sign in.</p>
+                    </div>
                 </form>
             </section>
         </main>

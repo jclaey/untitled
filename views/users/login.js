@@ -62,6 +62,9 @@ const userLoginPage = ({ errors, values = {} }, req) => {
                     <div>
                         <p class="has-text-centered">Forgot Password? Click <a href="/forgot-password">here</a>.</p>
                     </div>
+                    <div>
+                        <p class="has-text-centered">Not a member? Click <a href="/users/register">here</a> to register.</p>
+                    </div>
                 </form>
             </section>
         </main>   

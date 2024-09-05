@@ -7,13 +7,17 @@ const indexPage = (req) => {
                     <div class="hero-body">
                         <div class="columns">
                             <div class="column">
-                                <h1 class="title" data-aos="fade-right" data-aos-anchor-placement="middle-middle" data-aos-duration="1000" data-aos-delay="50">Web Solutions</h1>
+                                <h1 class="title is-size-1" data-aos="fade-right" data-aos-anchor-placement="middle-middle" data-aos-duration="1000" data-aos-delay="50">
+                                    Web Solutions
+                                </h1>
                                 <hr id="title-hr">
-                                <p class="subtitle">Solutions for the web...</p>
+                                <p class="subtitle is-size-4">Solutions for the web...</p>
                             </div>
                             <div class="column mt-5">
-                                <div class="column-group">
-                                    <h3 class="is-size-3" data-aos="fade-left" data-aos-anchor-placement="middle-middle" data-aos-duration="1000" data-aos-delay="50">Platforms</h3>
+                                <div class="column-group mb-6">
+                                    <h3 class="is-size-3" data-aos="fade-left" data-aos-anchor-placement="middle-middle" data-aos-duration="1000" data-aos-delay="50">
+                                        Platforms
+                                    </h3>
                                     <hr>
                                     <div class="icon-group">
                                         <div class="icon icon-first">
@@ -35,7 +39,9 @@ const indexPage = (req) => {
                                     </div>
                                 </div>
                                 <div class="column-group">
-                                    <h3 class="is-size-3" data-aos="fade-left" data-aos-anchor-placement="middle-middle" data-aos-duration="1000" data-aos-delay="50">Fields</h3>
+                                    <h3 class="is-size-3" data-aos="fade-left" data-aos-anchor-placement="middle-middle" data-aos-duration="1000" data-aos-delay="50">
+                                        Fields
+                                    </h3>
                                     <hr>
                                     <div class="icon-group">
                                         <div class="icon icon-first">

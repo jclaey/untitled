@@ -25,8 +25,34 @@ main {
     margin-bottom: 5rem;
 }
 
-#title-item {
+.title-item {
     color: var(--primary-color);
+}
+
+.navbar-dropdown {
+    font-size: 1.15rem;
+}
+
+.nav-label {
+    font-size: 1.4rem;
+}
+
+#nav-btn-primary {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+#nav-btn-secondary {
+    background-color: var(--secondary-color);
+    color: #fff;
+}
+
+.nav-right .button {
+    transition: 0.3s;
+}
+
+.nav-right .button:hover {
+    transform: scale(1.05);
 }
 
 .navbar-brand {
@@ -65,7 +91,7 @@ main {
 }
 
 header {
-    margin-bottom: 2rem;
+    margin-bottom: 80px;
 }
 
 #contact-form {
@@ -309,4 +335,16 @@ header {
 
 #doc-content-show #doc-content p {
     margin: 0 0 0.5rem 0;
+}
+
+#services-title {
+    margin-bottom: 100px;
+}
+
+.is-theme-1 {
+    color: var(--primary-color);
+}
+
+.is-theme-2 {
+    color: var(--secondary-color);
 }
