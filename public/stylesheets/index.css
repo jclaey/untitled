@@ -59,6 +59,14 @@ main {
     color: var(--primary-color);
 }
 
+.fa-circle-user {
+    transition: 0.3s;
+}
+
+.fa-circle-user:hover {
+    transform: scale(1.10);
+}
+
 /*  */
 .icon {
     font-size: 32px;
@@ -347,4 +355,8 @@ header {
 
 .is-theme-2 {
     color: var(--secondary-color);
+}
+
+#company-introduction {
+    height: 500px;
 }

@@ -57,6 +57,12 @@
                     ${req && req.session && req.session.adminId ? `
                         <div class="navbar-item">
                             <div class="buttons">
+                                <a href="/products/new" class="button is-success">
+                                    <i class="fa-solid fa-store pr-2"></i> Create Product
+                                </a>
+                                <a href="/docs/new" class="button is-success">
+                                    <i class="fa-solid fa-scroll pr-2"></i> Create Doc
+                                </a>
                                 <a href="/admin/logout" class="button is-success" id="nav-btn-secondary">Logout</a>
                             </div>
                         </div>
@@ -66,8 +72,10 @@
                         <div class="navbar-item">
                             <div class="buttons level">
                                 <a href="/users/user/${req.session.userId}/cart" class="button is-success"><i class="fa-solid fa-cart-shopping pr-2"></i> Cart</a>
-                                <a href="/users/logout" class="button is-primary mr-4">Logout</a>
-                                <a href="/users/user/${req.session.userId}/profile">
+                                <a href="/users/logout" class="button is-primary mr-4" id="nav-btn-secondary">
+                                    <i class="fa-solid fa-right-from-bracket pr-2"></i> Logout
+                                </a>
+                                <a href="/users/user/${req.session.userId}/profile" title="User Profile">
                                     <i class="fa-solid fa-circle-user fa-2x"></i>
                                 </a>
                             </div>

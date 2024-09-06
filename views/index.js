@@ -70,6 +70,22 @@ const indexPage = (req) => {
                     <div id="sub-showcase" class="mb-6">
                         <p>We develop for the future.</p>
                     </div>
+                    <div id="company-introduction">
+                        <div class="columns">
+                            <div class="column">
+                                <figure class="image">
+                                    <img src="" />
+                                </figure>
+                            </div>
+                            <div class="column">
+                                <div>
+                                    <div class="block">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div id="simple-website-package-action">
                         <h2 class="is-size-2">$99 Websites!</h2>
                         <p>Get a website, domain, and a basic hosting package for only $99!</p>

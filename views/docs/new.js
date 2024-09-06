@@ -2,10 +2,6 @@ import layout from "../layout.js"
 import { getErrors } from "../../utils/getErrors.js"
 
 const newDocPage = ({ errors, values = {} }, req) => {
-    if (values) {
-        console.log(values)
-    }
-    
     return layout({ template: `
         <main class="container">
             <div class="mb-6 page-title-div">
