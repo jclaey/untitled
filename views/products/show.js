@@ -17,7 +17,7 @@ const productsShowPage = ({ product }, req) => {
                         <figure class="image ml-4 pt-3">
                             <img
                                 src="https://drive.google.com/thumbnail?id=${product.imageId}"
-                                alt="Placeholder image"
+                                alt="Product image"
                             />
                         </figure>
                     </div>

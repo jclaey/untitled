@@ -3,12 +3,14 @@ import DocItem from '../../models/Doc.js'
 import adminIndexPage from "../../views/admin/index.js"
 import adminLoginPage from "../../views/admin/login.js"
 import Admin from "../../models/Admin.js"
+import { Product } from '../../models/Product.js'
 
 export const getIndex = async (req, res, next) => {
     const docs = await DocItem.find({})
-
+    const products = await Product.find({ user: req.session.adminId })
+    
     if (docs) {
-        res.send(adminIndexPage({ docs }, req))
+        res.send(adminIndexPage({ docs, products }, req))
     } else {
         res.redirect('/failure')
     }

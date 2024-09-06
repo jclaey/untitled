@@ -60,6 +60,7 @@ export const postNew = async (req, res, next) => {
     })
 
     const product = new Product({
+        user: req.session.adminId,
         title: req.body.title,
         type: req.body.type,
         description: req.body.description,

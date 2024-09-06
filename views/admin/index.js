@@ -1,6 +1,6 @@
 import layout from "../layout.js"
 
-const adminIndexPage = ({ docs }, req) => {
+const adminIndexPage = ({ docs, products }, req) => {
     const recentDocs = []
     const myDocs = []
 
@@ -14,6 +14,31 @@ const adminIndexPage = ({ docs }, req) => {
             myDocs.push(doc)
         }
     })
+
+    const renderedProducts = products => {
+        return products.map(product => {
+            return `
+                <article class="media">
+                    <figure class="media-left">
+                        <p class="image is-128x128">
+                            <img src="https://drive.google.com/thumbnail?id=${product.imageId}" />
+                        </p>
+                    </figure>
+                    <div class="media-content">
+                        <div class="content">
+                            <p>
+                                <a href="/docs/doc/${product._id}"><strong>${product.title}</strong></a> <br />
+                                <small>${product.description}</small> <br />
+                                <strong>${product.description.slice(0, 50)}${product.description.length > 50 ? '...' : ''}</strong> <br />
+                                <small>Posted ${product.created_at.toLocaleDateString('en-US')} at ${product.created_at.toLocaleTimeString('en-US')}</small>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="media-right"></div>
+                </article>
+            `
+        })
+    }
 
     const renderedDocs = docs => {
         return docs.map(doc => {
@@ -34,7 +59,7 @@ const adminIndexPage = ({ docs }, req) => {
                             </p>
                         </div>
                     </div>
-                    <div class="media-righ"></div>
+                    <div class="media-right"></div>
                 </article>
             `
         }).join('')
@@ -43,7 +68,7 @@ const adminIndexPage = ({ docs }, req) => {
     return layout({ template: `
         <main>
             <section class="container">
-                <div class="mb-6 page-title-div">
+                <div class="page-title-div" id="admin-index-page-title">
                     <h1 class="title is-size-1">
                         <span class="pipe">|</span> Admin Area <span class="pipe">|</span>
                     </h1>
@@ -66,7 +91,14 @@ const adminIndexPage = ({ docs }, req) => {
                         </div>
                     </div>
                     <div class="column">
-
+                        <div id="admin-index-posts-area">
+                            <div class="box">
+                                <h3 class="is-size-4 mb-5">Your Products</h3>
+                                <div>
+                                    ${renderedProducts(products)}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>

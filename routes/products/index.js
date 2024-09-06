@@ -25,7 +25,7 @@ router.route('/').get(asyncHandler(getIndex))
 
 router.route('/new')
     .get(requireAdminAuth, getNew)
-    .post(upload.fields([{ name: 'image' }, { name: 'product' }]), [
+    .post(requireAdminAuth, upload.fields([{ name: 'image' }, { name: 'product' }]), [
         validateTitle,
         validateProductType,
         validateDescription,
@@ -38,7 +38,7 @@ router.route('/product/:id').get(asyncHandler(getShow))
 
 router.route('/product/:id/edit')
     .get(requireAdminAuth, asyncHandler(getEdit))
-    .patch(upload.fields([{ name: 'image' }, { name: 'product' }]), [
+    .patch(requireAdminAuth, upload.fields([{ name: 'image' }, { name: 'product' }]), [
         validateTitle, 
         validateProductType, 
         validateDescription, 

@@ -375,3 +375,7 @@ header {
 #company-introduction figure img {
     height: 500px;
 }
+
+#admin-index-page-title {
+    margin-bottom: 120px;
+}

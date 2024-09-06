@@ -86,13 +86,13 @@ export const getEdit = async (req, res, next) => {
 }
 
 export const patchEdit = async (req, res, next) => {
+    let doc = await DocItem.findById(req.params.id)
+
     const errors = validationResult(req)
 
     if (!errors.isEmpty()) {
-        return res.send(docsEditPage({ errors, values: req.body }, req))
+        return res.send(docsEditPage({ doc, errors, values: req.body }, req))
     }
-
-    let doc = await DocItem.findById(req.params.id)
 
     if (!doc) {
         if (process.env.NODE_ENV === 'development') {
