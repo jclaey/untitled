@@ -35,7 +35,8 @@ router.route('/doc/:id/edit')
     .patch(requireAdminAuth, upload.single('image'), [
         validateTitle, 
         validateContent, 
-        validateDescription
+        validateDescription,
+        validateImage
 ], asyncHandler(patchEdit))
 
 export default router

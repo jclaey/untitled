@@ -174,6 +174,10 @@ export const requireValidPasswordForUser =
 export const validateImage =
     body('image', 'Please add an image file')
     .custom((value, filename) => {
+        if (!filename || !filename.req || !filename.req.file) {
+            return false
+        }
+
         const originalName = filename.req.file.originalname.split('.')
         const ext = originalName[originalname.length - 1]
         

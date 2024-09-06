@@ -9,7 +9,8 @@ import {
     validateProductType,
     validateDescription,
     validatePrice,
-    validateCountInStock
+    validateCountInStock,
+    validateImage
 } from '../validators.js'
 import {
     getNew,
@@ -29,7 +30,8 @@ router.route('/new')
         validateProductType,
         validateDescription,
         validatePrice,
-        validateCountInStock
+        validateCountInStock,
+        validateImage
     ], asyncHandler(postNew))
 
 router.route('/product/:id').get(asyncHandler(getShow))
@@ -41,7 +43,8 @@ router.route('/product/:id/edit')
         validateProductType, 
         validateDescription, 
         validatePrice, 
-        validateCountInStock
+        validateCountInStock,
+        validateImage
     ], asyncHandler(patchEdit))
 
 export default router

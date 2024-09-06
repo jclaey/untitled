@@ -21,6 +21,10 @@ export const postNew = async (req, res, next) => {
     const errors = validationResult(req)
 
     if (!errors.isEmpty()) {
+        if (req.file) {
+            req.body.file = req.file
+        }
+        
         return res.send(newDocPage({ errors, values: req.body }, req))
     }
 
