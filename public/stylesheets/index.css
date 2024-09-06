@@ -27,6 +27,7 @@ main {
 
 .title-item {
     color: var(--primary-color);
+    font-size: 1.7rem;
 }
 
 .navbar-dropdown {
@@ -95,7 +96,17 @@ main {
 }
 
 #footer-built-by {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     font-size: 18px;
+}
+
+#footer-built-by hr {
+    border: 0;
+    height: 1px;
+    width: 50%;
 }
 
 header {
@@ -311,7 +322,7 @@ header {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 220px;
+    height: 250px;
 }
 
 #simple-website-package-action p {
@@ -358,5 +369,9 @@ header {
 }
 
 #company-introduction {
+    height: 500px;
+}
+
+#company-introduction figure img {
     height: 500px;
 }

@@ -66,30 +66,32 @@ const indexPage = (req) => {
                         </div>
                     </div>
                 </section>
-                <section class="mb-6">
+                <section>
                     <div id="sub-showcase" class="mb-6">
                         <p>We develop for the future.</p>
                     </div>
-                    <div id="company-introduction">
+                    <div id="company-introduction" class="mb-6">
                         <div class="columns">
                             <div class="column">
                                 <figure class="image">
-                                    <img src="" />
+                                    <img src="/resources/images/web_dev_firm_illustration.webp" alt="" />
                                 </figure>
                             </div>
-                            <div class="column">
-                                <div>
-                                    <div class="block">
-
-                                    </div>
+                            <div class="column pl-5 pr-5 mt-5">
+                                <div class="mb-4">
+                                    <h2 class="subtitle is-size-3">Welcome to Web Solutions</h2>
+                                </div>
+                                <div class="block is-size-5">
+                                    At Web Solutions, we develop with the future in mind. Everything we build is built to scale and built to work.
+                                </div>
+                                <div class="block is-size-5">
+                                    We excel at all things development. If you can dream it, we can build it. Our imaginations are our only limitations.
+                                </div>
+                                <div class="block is-size-5">
+                                    We build mobile apps, desktop apps, websites, Internet of Things apps, web apps, Web3 apps, apps using artificial intelligence, and so much more. We build more apps than a five star restaurant.
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div id="simple-website-package-action">
-                        <h2 class="is-size-2">$99 Websites!</h2>
-                        <p>Get a website, domain, and a basic hosting package for only $99!</p>
-                        <p>Click <a href="">here</a> for more details.</p>
                     </div>
                 </section>
                 <section id="testimonial-carousel">
@@ -164,6 +166,13 @@ const indexPage = (req) => {
                         <div class="dot"></div>
                         <div class="dot"></div>
                         <div class="dot"></div>
+                    </div>
+                </section>
+                <section>
+                    <div id="simple-website-package-action">
+                        <h2 class="is-size-2">$99 Websites!</h2>
+                        <p>Get a website, domain, and a basic hosting package for only $99!</p>
+                        <p>Click <a href="">here</a> for more details.</p>
                     </div>
                 </section>
             </main>
