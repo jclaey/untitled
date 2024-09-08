@@ -269,3 +269,17 @@ export const patchResetPassword = async (req, res, next) => {
 export const getSuccessQuote = (req, res, next) => {
     res.send(successQuotePage({}, req))
 }
+
+export const getStaySignedIn = (req, res, next) => {
+    console.log(req.session)
+    if (req.session.userId) {
+        req.session.userId = req.session.userId
+        req.session.expiration = Date.now() + 10800000
+    }
+
+    if (req.session.adminId) {
+        req.session.adminId = req.session.adminId
+        req.session.expiration = Date.now() + 10800000
+    }
+    console.log(req.session)
+}

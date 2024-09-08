@@ -379,3 +379,29 @@ header {
 #admin-index-page-title {
     margin-bottom: 120px;
 }
+
+body {
+    position: relative;
+}
+
+#session-modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0,0,0,0.6);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#session-modal #modal-btns {
+    display: flex;
+}
+
+#session-modal #modal-btns form {
+    margin-right: 1rem;
+}

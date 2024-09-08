@@ -21,7 +21,8 @@ import {
     patchForgotPassword,
     getResetPassword,
     patchResetPassword,
-    getSuccessQuote
+    getSuccessQuote,
+    getStaySignedIn
 } from '../controllers/index.js'
 
 router.route('/').get(getIndex)
@@ -30,7 +31,7 @@ router.route('/contact').get(getContact).post([
     validateName, 
     requireValidEmail, 
     validateContent, 
-    validateSubject 
+    validateSubject
 ], asyncHandler(postContact))
 router.route('/success').get(getSuccess)
 router.route('/success-quote').get(getSuccessQuote)
@@ -43,5 +44,6 @@ router.route('/forgot-password').get(getForgotPassword).patch([
 router.route('/reset-password/:token').get(asyncHandler(getResetPassword)).patch([
     requireValidPasswordForUser
 ], asyncHandler(patchResetPassword))
+router.route('/stay-signed-in').get(getStaySignedIn)
 
 export default router

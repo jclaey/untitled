@@ -48,6 +48,7 @@ export const postLogin = async (req, res, next) => {
 
     if (user && user.comparePasswords(password)) {
         req.session.userId = user._id
+        req.session.expiration = Date.now() + 10800000
         res.redirect(`/users/user/${user._id}/profile`)
     } else {
         req.session.error = 'Invalid credentials'
@@ -84,6 +85,7 @@ export const postRegister = async (req, res, next) => {
         if (user) {
             await user.save()
             req.session.userId = user._id
+            req.session.expiration = Date.now() + 10800000
             res.redirect(`/users/user/${user._id}/profile`)
         } else {
             if (process.env.NODE_ENV === 'development') {
@@ -98,7 +100,7 @@ export const postRegister = async (req, res, next) => {
 }
 
 export const getLogout = (req, res, next) => {
-    req.session.userId = null
+    req.session = {}
     res.redirect('/users/login')
 }
 

@@ -36,6 +36,7 @@ export const postLogin = async (req, res, next) => {
 
     if (admin && admin.comparePasswords(password)) {
         req.session.adminId = String(admin._id)
+        req.session.expiration = Date.now() + 10800000
         res.redirect('/admin')
     } else {
         if (process.env.NODE_ENV === 'development') {
@@ -48,6 +49,6 @@ export const postLogin = async (req, res, next) => {
 }
 
 export const getLogout = (req, res, next) => {
-    req.session.adminId = null
+    req.session = {}
     res.redirect('/admin/login')
 }

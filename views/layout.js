@@ -24,12 +24,33 @@ const layout = ({ template }, req) => {
             </header>
             <div class="mb-6">
               ${template}
-              <div id="session-modal"></div>
+              ${req && req.session && req.session.expiration && Date.now() >= req.session.expiration - 300000 ? `
+                <div id="session-modal">
+                  <article class="message is-info">
+                    <div class="message-header">
+                      Session Expiry
+                      <button class="delete" aria-label="delete"></button>
+                    </div>
+                    <div class="message-body">
+                      <div id="modal-text" class="mb-4">
+                        <p class="is-size-5">Your session is about to expire. Would you like to stay signed in?</p>
+                      </div>
+                      <div id="modal-btns">
+                        <form action="/stay-signed-in" method="GET">
+                          <button type="submit" class="button is-primary">Stay Signed In</button>
+                        </form>
+                        <button class="button is-danger"
+                          ${req.session.userId ? `data-type="user"` : req.session.adminId ? `data-type="admin"` : ''}
+                        >Sign Out</button>
+                      </div>
+                    </div>
+                  </article>  
+                </div>
+              ` : ''}
             </div>
             <footer class="page-footer footer">
               ${footer()}
             </footer>
-
             
             ${req && req.originalUrl && req.originalUrl.includes('/checkout') ? '<script src="https://js.stripe.com/v3/"></script><br /><script src="/javascript/checkout.js"></script>' : ''}
             ${req && req.originalUrl && req.originalUrl === '/users/user/billing-shipping' ? '<script src="/javascript/toggleShipping.js"></script>' : ''}
@@ -40,6 +61,7 @@ const layout = ({ template }, req) => {
             ${req && req.originalUrl && req.originalUrl === '/contact' ? '<script src="/javascript/tiny-user-facing.js"></script><script src="/javascript/closeMessage.js"></script>"' : ''}
             ${req && req.originalUrl && req.originalUrl === '/' ? `<script src="/javascript/testimonials.js"></script><br /><script>AOS.init()</script>` : ''}
             ${template.includes('<form') ? '<script src="/javascript/closeMessage.js"></script>' : ''}
+            <script src="/javascript/auth-modal.js"></script>
           </body>
         </html>
     `
