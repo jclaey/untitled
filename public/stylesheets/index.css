@@ -158,6 +158,10 @@ header {
     text-align: center;
 }
 
+.page-title-div {
+    margin-bottom: 100px;
+}
+
 .title-underline {
     margin: 0;
     width: 200px;
@@ -179,7 +183,9 @@ header {
 
 .login-section {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 
 .login-form {
@@ -332,17 +338,9 @@ header {
     justify-content: center;
 }
 
-#forgot-password-page-title-div {
-    margin-bottom: 100px;
-}
-
 #reset-password-form-div {
     display: flex;
     justify-content: center;
-}
-
-#cart-title-div {
-    margin-bottom: 8rem;
 }
 
 #doc-content-show #doc-content h2 {
@@ -368,10 +366,6 @@ header {
 
 #company-introduction img {
     height: 500px;
-}
-
-#admin-index-page-title {
-    margin-bottom: 120px;
 }
 
 body {

@@ -5,7 +5,7 @@ const forgotPasswordPage = ({ errors, values = {} }, req) => {
     return layout({ template: `
         <main class="container">
             <section>
-                <div class="page-title-div" id="forgot-password-page-title-div">
+                <div class="page-title-div">
                     <h1 class="title is-size-1">
                         <span class="pipe">|</span> Forgot Password <span class="pipe">|</span>
                     </h1>

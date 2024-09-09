@@ -122,7 +122,7 @@ export const getEditUserProfile = async (req, res, next) => {
     const user = await User.findById(req.params.id)
 
     if (user) {
-        res.send(userEditProfilePage({ userInfo: { id: user._id, firstName: user.firstName, lastName: user.lastName, email: user.email } }))
+        res.send(userEditProfilePage({ userInfo: { id: user._id, firstName: user.firstName, lastName: user.lastName, email: user.email } }, req))
     } else {
         if (process.env.NODE_ENV === 'development') {
             throw new Error('Could not get user')

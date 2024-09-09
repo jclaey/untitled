@@ -69,8 +69,8 @@ const userCartPage = ({ cartItems, user }, req) => {
     return layout({ template: `
             <main class="container">
                 <section>
-                    <div class="page-title-div" id="cart-title-div">
-                        <h1 class="title is-size-1 mb-6">
+                    <div class="page-title-div">
+                        <h1 class="title is-size-1">
                             <span class="pipe">|</span> ${user.firstName}'s Cart <span class="pipe">|</span>
                         </h1>
                     </div>

@@ -4,8 +4,8 @@ import { getErrors } from "../utils/getErrors.js"
 const contactPage = ({errors, values = {}}, req) => {
     return layout({ template: `
             <main class="container">
-                <section id="">
-                    <div class="mb-6 page-title-div">
+                <section class="login-section">
+                    <div class="page-title-div">
                         <h1 class="title is-size-1">
                             <span class="pipe">|</span> Contact Us <span class="pipe">|</span>
                         </h1>
@@ -21,7 +21,7 @@ const contactPage = ({errors, values = {}}, req) => {
                             `
                         : ''}
                     </div>
-                    <form class="box" id="contact-form" action="/contact" method="POST">
+                    <form class="box login-form" id="contact-form" action="/contact" method="POST">
                         <div class="field mb-4">
                             <label for="name" class="label">Name</label>
                             <div class="control">
