@@ -71,10 +71,10 @@ const indexPage = (req) => {
                         <p>We develop for the future.</p>
                     </div>
                     <div id="company-introduction" class="mb-6">
-                        <div class="columns">
+                        <div class="columns is-desktop">
                             <div class="column">
                                 <figure class="image">
-                                    <img src="/resources/images/web_dev_firm_illustration.webp" alt="" />
+                                    <img src="/resources/images/web_dev_firm_illustration.webp" alt="Illustration of the inside of a web development firm" />
                                 </figure>
                             </div>
                             <div class="column pl-5 pr-5 mt-5">

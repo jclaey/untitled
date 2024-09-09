@@ -16,6 +16,7 @@ const layout = ({ template }, req) => {
             <link rel="stylesheet" href="/stylesheets/bulma/css/bulma.min.css">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
             <link rel="stylesheet" href="/stylesheets/index.css">
+            <link rel="stylesheet" href="/stylesheets/mobile.css">
             <title>Untitled Business Project</title>
           </head>
           <body>
@@ -26,10 +27,10 @@ const layout = ({ template }, req) => {
               ${template}
               ${req && req.session && req.session.expiration && Date.now() >= req.session.expiration - 300000 ? `
                 <div id="session-modal">
-                  <article class="message is-info">
+                  <article class="message is-info" id="message">
                     <div class="message-header">
                       Session Expiry
-                      <button class="delete" aria-label="delete"></button>
+                      <button id="msg-close-btn" class="delete" aria-label="delete"></button>
                     </div>
                     <div class="message-body">
                       <div id="modal-text" class="mb-4">
@@ -60,7 +61,7 @@ const layout = ({ template }, req) => {
             ${req && req.originalUrl && req.originalUrl === '/users/register' || req && req.originalUrl && req.originalUrl.includes('/reset-password') ? '<script src="/javascript/noMatch.js"></script>' : ''}
             ${req && req.originalUrl && req.originalUrl === '/contact' ? '<script src="/javascript/tiny-user-facing.js"></script><script src="/javascript/closeMessage.js"></script>"' : ''}
             ${req && req.originalUrl && req.originalUrl === '/' ? `<script src="/javascript/testimonials.js"></script><br /><script>AOS.init()</script>` : ''}
-            ${template.includes('<form') ? '<script src="/javascript/closeMessage.js"></script>' : ''}
+            ${template.includes('id="message"') ? '<script src="/javascript/closeMessage.js"></script>' : ''}
             <script src="/javascript/auth-modal.js"></script>
           </body>
         </html>

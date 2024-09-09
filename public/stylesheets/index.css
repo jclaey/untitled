@@ -121,11 +121,6 @@ header {
     width: 80%;
 }
 
-#sub-showcase {
-    height: 180px;
-    background-color: var(--primary-color);
-}
-
 .navbar.container {
     font-size: 18px;
 }
@@ -137,6 +132,8 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 180px;
+    background-color: var(--primary-color);
 }
 
 #services-demos {
@@ -322,7 +319,8 @@ header {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 250px;
+    text-align: center;
+    min-height: 250px;
 }
 
 #simple-website-package-action p {
@@ -368,11 +366,7 @@ header {
     color: var(--secondary-color);
 }
 
-#company-introduction {
-    height: 500px;
-}
-
-#company-introduction figure img {
+#company-introduction img {
     height: 500px;
 }
 

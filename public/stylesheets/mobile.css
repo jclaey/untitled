@@ -1,0 +1,22 @@
+@media (max-width: 768px) {
+    #sub-showcase {
+        font-size: 56px;
+    }
+
+    #showcase-area .columns .column:nth-child(2) {
+        display: none;
+    }
+
+    #company-introduction .columns .column:nth-child(2) {
+        padding: 0;
+        margin: 0;
+    }
+
+    .login-form {
+        width: 100%;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1023px) {
+    
+}
