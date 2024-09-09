@@ -3,7 +3,7 @@ import layout from "../layout.js"
 const webApplicationServicesPage = (req) => {
     return layout({ template: `
         <main id="web-applications" class="services">
-            <div class="mb-6 page-title-div">
+            <div class="page-title-div">
                 <h1 class="title is-size-1">
                     <span class="pipe">|</span> Web Applications <span class="pipe">|</span>
                 </h1>

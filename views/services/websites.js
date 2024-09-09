@@ -3,7 +3,7 @@ import layout from "../layout.js"
 const websiteServicesPage = (req) => {
     return layout({ template: `
         <main id="websites" class="services">
-            <div class="mb-6 page-title-div">
+            <div class="page-title-div">
                 <h1 class="title is-size-1">
                     <span class="pipe">|</span> Websites <span class="pipe">|</span>
                 </h1>
@@ -13,14 +13,14 @@ const websiteServicesPage = (req) => {
                     <div class="column">
                         <div class="columns">
                             <div class="column logos">
-                                <i class="fa-brands fa-js"></i>
-                                <i class="fa-brands fa-html5"></i>
-                                <i class="fa-brands fa-css3"></i>
+                                <i class="fa-brands fa-js" title="JavaScript"></i>
+                                <i class="fa-brands fa-html5" title="HTML5"></i>
+                                <i class="fa-brands fa-css3" title="CSS3"></i>
                             </div>
                         </div>
                         <div class="columns">
                             <div class="column logos">
-                                <i class="fa-brands fa-wordpress"></i>
+                                <i class="fa-brands fa-wordpress" title="Wordpress"></i>
                             </div>
                         </div>
                     </div>

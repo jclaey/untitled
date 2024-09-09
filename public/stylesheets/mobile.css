@@ -21,7 +21,7 @@
     }
 
     .page-title-div h1 {
-        font-size: 2.75rem !important;
+        font-size: 2.5rem !important;
     }
 
     #about-section p, #about-section ul {
@@ -36,6 +36,39 @@
 
     .breadcrumb {
         padding-left: 2rem;
+    }
+
+    #full-system-section .columns {
+        margin-left: 0rem;
+        margin-right: 2rem;
+    }
+
+    #full-system-section .services .column i {
+        font-size: 4em;
+    }
+
+    #full-system-section .services .column .fa-plus {
+        font-size: 3rem;
+    }
+
+    #full-system-section .services .column .logo {
+        height: 4em;
+    }
+
+    #websites .column p {
+        padding-left: 2rem;
+    }
+
+    #demos-tag {
+        margin-left: 2rem;
+    }
+
+    #mobile-applications .column p {
+        margin-left: 2rem;
+    }
+
+    #web-applications .column p {
+        margin-left: 2rem;
     }
 }
 
@@ -52,5 +85,17 @@
 
     .breadcrumb {
         padding-left: 2rem;
+    }
+
+    #full-system-section .services .column i {
+        font-size: 4em;
+    }
+
+    #full-system-section .services .column .fa-plus {
+        font-size: 3rem;
+    }
+
+    #full-system-section .services .column .logo {
+        height: 4em;
     }
 }

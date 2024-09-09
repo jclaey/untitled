@@ -9,7 +9,7 @@ const indexPage = (req) => {
                 </h1>
             </div>
             <section id="services-page-links" class="pb-6">
-                <div class="columns">
+                <div class="columns is-desktop">
                     <div class="column">
                         <div class="columns">
                             <div class="column">
@@ -44,7 +44,9 @@ const indexPage = (req) => {
                                 <div class="card service">
                                     <div class="card-image">
                                         <figure class="image is-3by2">
-                                            <img src="/resources/images/services_full_systems.png" />
+                                            <a href="/services/fullSystem">
+                                                <img src="/resources/images/services_full_systems.png" />
+                                            </a>
                                         </figure>
                                     </div>
                                     <div class="card-content">
