@@ -48,7 +48,7 @@ const contactPage = ({errors, values = {}}, req) => {
                         </div>
                         <div class="field">
                             <div class="control">
-                                <button class="button is-medium" type="submit">Send Message</button>
+                                <button class="button is-medium is-info" type="submit">Send Message</button>
                             </div>
                         </div>
                     </form>

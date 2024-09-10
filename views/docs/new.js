@@ -4,7 +4,7 @@ import { getErrors } from "../../utils/getErrors.js"
 const newDocPage = ({ errors, values = {} }, req) => {
     return layout({ template: `
         <main class="container">
-            <div class="mb-6 page-title-div">
+            <div class="page-title-div">
                 <h1 class="title is-size-1">
                     <span class="pipe">|</span> Create A New Doc <span class="pipe">|</span>
                 </h1>
@@ -73,7 +73,7 @@ const newDocPage = ({ errors, values = {} }, req) => {
                             <input type="file" class="input" id="image" name="image" accept="images/*" />
                         </div>
                     </div>
-                    <button class="button is-medium" type="submit">Create Post</button>
+                    <button class="button is-medium is-info" type="submit">Create Post</button>
                 </form>
             </section>
         </main>

@@ -30,14 +30,16 @@ const productsIndexPage = ({ products }, req) => {
                             </div>
                         </div>
                         <div class="content">
-                            <p class="is-size-5">Description: ${product.description}</p>
-                            <p class="is=size-5">Rating: ${product.rating}</p>
-                            <p class="is-size-5">Number of Reviews: ${product.numReviews}</p>
-                            <p class="is-size-5">Price: $${product.price}</p>
-                            <p class="is-size-5">Number In Stock: ${product.countInStock}</p>
+                            <p class="is-size-5"><strong>Description:</strong> ${product.description}</p>
+                            <p class="is-size-5"><strong>Rating:</strong> ${product.rating}</p>
+                            <p class="is-size-5"><strong>Number of Reviews:</strong> ${product.numReviews}</p>
+                            <p class="is-size-5"><strong>Price:</strong> $${product.price}</p>
+                            ${product.countInStock && product.countInStock > 0 ? `
+                                <p class="is-size-5"><strong>Count In Stock:</strong> ${product.countInStock}</p>
+                            ` : ''}
                         </div>
                         <div class="buttons">
-                            <a href="/products/product/${product._id}" class="button">View More</a>
+                            <a href="/products/product/${product._id}" class="button is-info">View More</a>
                             ${req && req.session && req.session.userId ? `
                                 <form action="/users/user/${req.session.userId}/cart/${product._id}/add" method="POST">
                                     <button type="submit" class="button">Add To Cart</button>

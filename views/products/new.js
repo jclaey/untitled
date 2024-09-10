@@ -87,7 +87,7 @@ const newProductPage = ({ errors, values = {} }, req) => {
                                 <input class="input" type="number" min="0" step="1" id="countInStock" name="countInStock" value="${errors && values.countInStock && values.countInStock !== '' ? values.countInStock : ''}" />
                             </div>
                         </div>
-                        <button type="submit" class="button mb-3 is-medium">Add Product</button>
+                        <button type="submit" class="button mb-3 is-medium is-info">Add Product</button>
                     </form>
                 </div>
             </section>
