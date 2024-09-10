@@ -4,7 +4,7 @@ import { getErrors } from "../../utils/getErrors.js"
 const docsEditPage = ({ doc, errors, values = {} }, req) => {
     return layout({ template: `
         <main class="container">
-            <div class="mb-6 page-title-div">
+            <div class="page-title-div">
                 <h1 class="title is-size-1">
                     <span class="pipe">|</span> Edit ${doc.title} <span class="pipe">|</span>
                 </h1>
@@ -21,7 +21,7 @@ const docsEditPage = ({ doc, errors, values = {} }, req) => {
                 : ''}
             </div>
             <section class="form-section">
-                <form action="/docs/doc/${doc._id}/edit?_method=PATCH" method="POST" enctype="multipart/form-data" class="box resource-form" >
+                <form action="/docs/doc/${doc._id}/edit?_method=PATCH" method="POST" enctype="multipart/form-data" id="docs-form" class="box resource-form" >
                     <div class="field mb-4">
                         <label class="label" for="type">Type</label>
                         <div class="control">

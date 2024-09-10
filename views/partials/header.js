@@ -1,8 +1,10 @@
  const header = (req = null) => {
     return `
-        <nav class="navbar container">
+        <nav class="navbar container" role="navigation" aria-label="main navigation">
             <div class="nav-left navbar-brand nav-label">
-                <a href="/" class="navbar-item title-item">Web Solutions</a>
+                <a href="/" class="navbar-item title-item">
+                    Web Solutions
+                </a>
                 <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>

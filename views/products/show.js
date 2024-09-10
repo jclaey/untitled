@@ -7,7 +7,7 @@ const productsShowPage = ({ product }, req) => {
     return layout({ template: `
         <main>
             <section class="container">
-                <div class="mb-6 page-title-div">
+                <div class="page-title-div">
                     <h1 class="title is-size-1">
                         <span class="pipe">|</span> ${product.title} <span class="pipe">|</span>
                     </h1>
@@ -23,11 +23,13 @@ const productsShowPage = ({ product }, req) => {
                     </div>
                     <div>
                         <div class="mb-4">
-                            <p class="is-size-5">Description: ${product.description}</p>
-                            <p class="is=size-5">Rating: ${product.rating}</p>
-                            <p class="is-size-5">Number of Reviews: ${product.numReviews}</p>
-                            <p class="is-size-5">Price: $${product.price}</p>
-                            <p class="is-size-5">Number In Stock: ${product.countInStock}</p>
+                            <p class="is-size-5 mb-2"><strong>Description:</strong> ${product.description}</p>
+                            <p class="is-size-5 mb-2"><strong>Rating:</strong> ${product.rating}</p>
+                            <p class="is-size-5 mb-2"><strong>Number of Reviews:</strong> ${product.numReviews}</p>
+                            <p class="is-size-5 mb-2"><strong>Price:</strong> $${product.price}</p>
+                            ${product.countInStock && product.countInStock > 0 ? `
+                                <p class="is-size-5"><strong>Number In Stock:</strong> ${product.countInStock}</p>
+                            ` : ''}
                         </div>
 
                         ${req && req.session && req.session.adminId ? `

@@ -5,7 +5,7 @@ const newQuotePage = ({ errors, values = {} }, req) => {
     return layout({ template: `
         <main class="container">
             <section>
-                <div class="mb-6 page-title-div">
+                <div class="page-title-div">
                     <h1 class="title is-size-1">
                         <span class="pipe">|</span> Get A Free Quote <span class="pipe">|</span>
                     </h1>
@@ -21,7 +21,7 @@ const newQuotePage = ({ errors, values = {} }, req) => {
                         `
                     : ''}
                 </div>
-                <div class="mb-6">
+                <div class="mb-6" id="byline">
                     <p class="is-size-4">Free is the best, isn't it? Honestly, why would we charge you for this anyway? Fill out and submit the form below to get a personalized quote!</p>
                 </div>
                 <div>

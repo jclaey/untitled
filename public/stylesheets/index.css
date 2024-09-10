@@ -393,3 +393,16 @@ body {
 #session-modal #modal-btns form {
     margin-right: 1rem;
 }
+
+#product-image .image img {
+    width: 400px;
+    height: auto;
+}
+
+#product-show-area p {
+    text-align: center;
+}
+
+#admin-index-sub-nav {
+    display: none;
+}

@@ -73,16 +73,26 @@ const adminIndexPage = ({ docs, products }, req) => {
                         <span class="pipe">|</span> Admin Area <span class="pipe">|</span>
                     </h1>
                 </div>
+                <div id="admin-index-sub-nav">
+                    <div class="level ml-2">
+                        <button class="button is-link level-item">
+                            <a href="#my-docs" class="has-text-white">My Posts</a>
+                        </button>
+                        <button class="button is-link level-item">
+                            <a href="#my-products" class="has-text-white">My Products</a>
+                        </button>
+                    </div>
+                </div>
                 <div class="columns">
                     <div class="column">
                         <div id="admin-index-posts-area">
-                            <div class="box">
+                            <div class="box" id="recent-docs">
                                 <h3 class="is-size-4 mb-5">Most Recent Docs</h3>
                                 <div>
                                     ${renderedDocs(recentDocs)}
                                 </div>
                             </div>
-                            <div class="box">
+                            <div class="box" id="my-docs">
                                 <h3 class="is-size-4 mb-5">Your Docs</h3>
                                 <div>
                                     ${renderedDocs(myDocs)}
@@ -94,7 +104,7 @@ const adminIndexPage = ({ docs, products }, req) => {
                         <div id="admin-index-posts-area">
                             <div class="box">
                                 <h3 class="is-size-4 mb-5">Your Products</h3>
-                                <div>
+                                <div id="my-products">
                                     ${renderedProducts(products)}
                                 </div>
                             </div>

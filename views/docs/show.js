@@ -5,7 +5,7 @@ const showDocPage = ({ doc }, req) => {
     return layout({ template: `
         <main class="container">
             <section>
-                <div class="mb-6 page-title-div">
+                <div class="page-title-div">
                     <h1 class="title is-size-1">
                         <span class="pipe">|</span> ${doc.title} <span class="pipe">|</span>
                     </h1>

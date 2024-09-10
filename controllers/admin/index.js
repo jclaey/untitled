@@ -21,7 +21,7 @@ export const getLogin = (req, res, next) => {
         res.redirect('/admin')
     }
 
-    res.send(adminLoginPage(req))
+    res.send(adminLoginPage({}, req))
 }
 
 export const postLogin = async (req, res, next) => {
@@ -50,5 +50,5 @@ export const postLogin = async (req, res, next) => {
 
 export const getLogout = (req, res, next) => {
     req.session = {}
-    res.redirect('/admin/login')
+    res.send(adminLoginPage({}, req))
 }

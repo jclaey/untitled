@@ -70,6 +70,41 @@
     #web-applications .column p {
         margin-left: 2rem;
     }
+
+    .container section #byline {
+        margin-left: 2rem;
+    }
+
+    #index-rendered-products-div {
+        display: block;
+    }
+
+    #product-image .image img {
+        width: 200px;
+        height: auto;
+    }
+
+    #product-show-area p {
+        margin-left: 2rem;
+        text-align: left;
+    }
+
+    #admin-index-sub-nav {
+        display: block;
+    }
+
+    #docs-form {
+        width: 100%;
+    }
+
+    #docs-index-section .columns {
+        margin-left: 2rem;
+        margin-right: 2rem;
+    }
+
+    #doc-featured-image {
+        margin-bottom: 2rem;
+    }
 }
 
 @media (min-width: 769px) and (max-width: 1023px) {
@@ -97,5 +132,27 @@
 
     #full-system-section .services .column .logo {
         height: 4em;
+    }
+
+    .container section #byline {
+        margin-left: 2rem;
+    }
+
+    #index-rendered-products-div {
+        display: block;
+    }
+
+    #product-image .image img {
+        width: 300px;
+        height: auto;
+    }
+
+    #docs-index-section .columns {
+        display: block;
+    }
+
+    #docs-index-section .columns {
+        margin-left: 2rem;
+        margin-right: 2rem;
     }
 }

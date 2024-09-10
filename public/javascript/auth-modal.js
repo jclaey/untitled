@@ -1,4 +1,6 @@
 const signOut = document.querySelector('#modal-btns .is-warning')
+const navbarDropdown = document.querySelector('.navbar-dropdown')
+const navbarBurgers = document.querySelectorAll('.navbar-burger')
 
 if (signOut) {
     signOut.addEventListener('click', () => {
@@ -13,3 +15,12 @@ if (signOut) {
         }
     })
 }
+
+navbarBurgers.forEach(el => {
+    el.addEventListener('click', () => {
+        let target = el.dataset.target
+        target = document.querySelector(`#${target}`)
+        el.classList.toggle('is-active')
+        target.classList.toggle('is-active')
+    })
+})
