@@ -35,7 +35,7 @@ const websiteServicesPage = (req) => {
                                 libraries and APIs, we can build you something truly unique.
                             </p>
                             <div>
-                                <a href="/demos"><span class="tag has-text-white is-large" id="demos-tag">Demos</span></a>
+                                <a href="/websites-demos"><span class="tag has-text-white is-large" id="demos-tag">Demos</span></a>
                             </div>
                         </div>
                     </div>
