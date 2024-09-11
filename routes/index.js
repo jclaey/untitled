@@ -22,7 +22,8 @@ import {
     getResetPassword,
     patchResetPassword,
     getSuccessQuote,
-    getStaySignedIn
+    getStaySignedIn,
+    getWebsitesDemo
 } from '../controllers/index.js'
 
 router.route('/').get(getIndex)
@@ -45,5 +46,6 @@ router.route('/reset-password/:token').get(asyncHandler(getResetPassword)).patch
     requireValidPasswordForUser
 ], asyncHandler(patchResetPassword))
 router.route('/stay-signed-in').get(getStaySignedIn)
+router.route('/websites-demos').get(getWebsitesDemo)
 
 export default router

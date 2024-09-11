@@ -406,3 +406,13 @@ body {
 #admin-index-sub-nav {
     display: none;
 }
+
+.demo-card-image {
+    height: 250px;
+    width: auto;
+}
+
+.demo-card-image img {
+    height: 100%;
+    width: auto;
+}

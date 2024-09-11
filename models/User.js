@@ -27,6 +27,10 @@ const UserSchema = new Schema({
         postalCode: String,
         country: String
     },
+    // phoneNumber: {
+    //     type: String,
+    //     required: true
+    // },
     cart: [
         {
             qty: {

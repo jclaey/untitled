@@ -101,7 +101,7 @@ export const postRegister = async (req, res, next) => {
 
 export const getLogout = (req, res, next) => {
     req.session = {}
-    res.redirect('/users/login')
+    res.send(userLoginPage({}, req))
 }
 
 export const getUserProfile = async (req, res, next) => {

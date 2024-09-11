@@ -15,6 +15,7 @@ import resetPasswordPage from '../views/reset-password.js'
 import sendEmail from "../utils/sendEmail.js"
 import User from '../models/User.js'
 import Order from '../models/Order.js'
+import websitesDemoPage from '../views/demo_pages/websites.js'
 
 export const getIndex = (req, res, next) => {
     res.send(indexPage(req))
@@ -282,4 +283,8 @@ export const getStaySignedIn = (req, res, next) => {
         req.session.expiration = Date.now() + 10800000
     }
     console.log(req.session)
+}
+
+export const getWebsitesDemo = (req, res, next) => {
+    res.send(websitesDemoPage(req))
 }
