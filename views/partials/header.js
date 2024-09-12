@@ -3,7 +3,13 @@ import process from 'node:process'
 
  const header = (req = null) => {
     const key = process.env.ENCRYPTION_KEY
-    let userId = req && req.session && req.session.userId && req.session.userIv ? decryptStringData(req.session.userId, key, req.session.userIv) : null
+    let userId
+
+    if (req && req.session && req.session.userId && req.session.userIv) {
+        userId = decryptStringData(req.session.userId, key, req.session.userIv)
+    } else {
+        userId = null
+    }
 
     return `
         <nav class="navbar container" role="navigation" aria-label="main navigation">

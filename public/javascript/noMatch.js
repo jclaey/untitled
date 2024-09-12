@@ -8,19 +8,25 @@ const formBtn = document.querySelector('#form-btn')
 password.addEventListener('input', () => {
     if (password.value !== confirmPassword.value) {
         passwordLabel.style.color = 'red'
+        passwordLabel.style.transition = 'color 0.2s'
         confirmPasswordLabel.style.color = 'red'
+        confirmPasswordLabel.style.transition = 'color 0.2s'
         passwordMatch.forEach(el => {
             el.textContent = 'Passwords do not match'
             el.style.color = 'red'
+            el.style.transition = 'color 0.2s'
         })
         formBtn.setAttribute('disabled', '')
 
     } else {
         passwordLabel.style.color = 'green'
+        passwordLabel.style.transition = '0.2s'
         confirmPasswordLabel.style.color = 'green'
+        confirmPasswordLabel.style.transition = 'color 0.2s'
         passwordMatch.forEach(el => {
             el.textContent = 'Passwords match'
             el.style.color = 'green'
+            el.style.transition = 'color 0.2s'
         })
         formBtn.removeAttribute('disabled')
     }

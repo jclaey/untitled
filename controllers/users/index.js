@@ -75,12 +75,12 @@ export const postRegister = async (req, res, next) => {
     }
 
     let { 
-            password, 
-            confirmPassword, 
-            firstName, 
-            lastName, 
-            email 
-        } = req.body
+        password, 
+        confirmPassword, 
+        firstName, 
+        lastName, 
+        email 
+    } = req.body
 
     if (password === confirmPassword) {
         const salt = crypto.randomBytes(8).toString('hex')
@@ -92,7 +92,7 @@ export const postRegister = async (req, res, next) => {
         lastName = encryptStringData(lastName, key)
         email = encryptStringData(email, key)
 
-        const user = new User({
+        let user = new User({
             firstName: `${firstName.encryptedData}.${firstName.iv}`,
             lastName: `${lastName.encryptedData}.${lastName.iv}`,
             email: `${email.encryptedData}.${email.iv}`,
@@ -100,7 +100,7 @@ export const postRegister = async (req, res, next) => {
         })
 
         if (user) {
-            await user.save()
+            user = await user.save()
             let userId = encryptStringData(String(user._id), key)
             req.session.userId = userId.encryptedData
             req.session.userIv = userId.iv
@@ -119,7 +119,9 @@ export const postRegister = async (req, res, next) => {
 }
 
 export const getLogout = (req, res, next) => {
-    delete req.session
+    req.session.userId = null
+    req.session.userIv = null
+    req.session.expiration = null
     res.send(userLoginPage({}, req))
 }
 
@@ -190,7 +192,7 @@ export const patchEditUserProfile = async (req, res, next) => {
 
     if (user) {
         user = {
-            id: user._id,
+            id: user.id,
             firstName: req.body.firstName !== user.firstName ? req.body.firstName : user.firstName,
             lastName: req.body.lastName !== user.lastName ? req.body.lastName : user.lastName,
             email: req.body.email !== user.email ? req.body.email : user.email
@@ -206,7 +208,7 @@ export const patchEditUserProfile = async (req, res, next) => {
             email: `${email.encryptedData}.${email.iv}`
         }
 
-        user = await User.findByIdAndUpdate(req.params.userId, userUpdate)
+        user = await User.findByIdAndUpdate(req.params.id, userUpdate)
 
         if (user) {
             res.redirect(`/users/user/${user._id}/profile`)
@@ -432,7 +434,8 @@ export const handleStripeEvents = async (req, res, next) => {
 }
 
 export const getBillingShipping = async (req, res, next) => {
-    const user = await User.findById(req.session.userId).populate({
+    const userId = decryptStringData(req.session.userId, key, req.session.userIv)
+    const user = await User.findById(userId).populate({
         path: 'cart',
         populate: { path: 'product' }
     }).exec()
@@ -460,7 +463,9 @@ export const getBillingShipping = async (req, res, next) => {
 }
 
 export const postBillingShipping = async (req, res, next) => {
-    const user = await User.findById(req.session.userId).populate({
+    const userId = decryptStringData(req.session.userId, key, req.session.userIv)
+
+    const user = await User.findById(userId).populate({
         path: 'cart',
         populate: { path: 'product' }
     }).exec()
@@ -496,11 +501,11 @@ export const postBillingShipping = async (req, res, next) => {
         }
 
         // add parameters to search for order where same user id and isPaid === false
-        let existing = await Order.find({ user: user._id, isPaid: false }).exec()
+        let existing = await Order.find({ user: user._id, isPaid: false })
 
-        if (existing) {
-            existing.orderItems = orderItems,
-            needsShipping ? existing.shippingAddress = {
+        if (existing.length > 0) {
+            existing[existing.length - 1].orderItems = orderItems,
+            needsShipping ? existing[existing.length - 1].shippingAddress = {
                 streetAddressOne: req.body.shippingAddressOne ? encryptStringData(req.body.shippingAddressOne, key) : '',
                 streetAddressTwo: req.body.shippingAddressTwo ? encryptStringData(req.body.shippingAddressTwo, key) : '',
                 city: req.body.shippingCity ? encryptStringData(req.body.shippingCity, key) : '',
@@ -508,7 +513,7 @@ export const postBillingShipping = async (req, res, next) => {
                 postalCode: req.body.shippingPostalCode ? encryptStringData(req.body.shippingPostalCode, key) : '',
                 country: req.body.shippingCountry ? encryptStringData(req.body.shippingCountry, key) : ''
             } : existing.shippingAddress = existing.shippingAddress
-            existing.billingAddress = {
+            existing[existing.length - 1].billingAddress = {
                 streetAddressOne: encryptStringData(req.body.streetAddressOne, key),
                 streetAddressTwo: req.body.streetAddressTwo ? encryptStringData(req.body.streetAddressTwo, key) : '',
                 city: encryptStringData(req.body.city, key),
@@ -516,15 +521,19 @@ export const postBillingShipping = async (req, res, next) => {
                 postalCode: encryptStringData(req.body.postalCode, key),
                 country: req.body.country ? encryptStringData(req.body.country, key) : ''
             }
-            existing.subtotalPrice = subtotal
+            existing[existing.length - 1].subtotalPrice = subtotal
             // calculate shipping costs
-            existing.shippingPrice = 0
+            existing[existing.length - 1].shippingPrice = 0
             // calculate tax rate
-            existing.taxRate = 1
+            existing[existing.length - 1].taxRate = 1
             // calculate total price of order
-            existing.totalPrice = subtotal
+            existing[existing.length - 1].totalPrice = subtotal
 
-            existing = await existing.save()
+            if (existing.length > 1) {
+                existing = existing.slice(0, 1)
+            }
+
+            existing = await existing[0].save()
 
             if (existing) {
                 res.redirect(`/users/user/${user._id}/cart/checkout`)
@@ -536,24 +545,39 @@ export const postBillingShipping = async (req, res, next) => {
                 }
             }
         } else {
+            let shippingAddressOne = req.body.shippingAddressOne ? encryptStringData(req.body.shippingAddressOne, key) : ''
+            let shippingAddressTwo = req.body.shippingAddressTwo ? encryptStringData(req.body.shippingAddressTwo, key) : ''
+            let shippingCity = req.body.shippingCity ? encryptStringData(req.body.shippingCity, key) : ''
+            let shippingState = req.body.shippingState ? encryptStringData(req.body.shippingState, key) : ''
+            let shippingPostalCode = req.body.shippingPostalCode ? encryptStringData(req.body.shippingPostalCode, key) : ''
+            let shippingCountry = req.body.shippingCountry ? encryptStringData(req.body.shippingCountry) : ''
+
+            let streetAddressOne = encryptStringData(req.body.streetAddressOne, key)
+            let streetAddressTwo = req.body.streetAddressTwo ? encryptStringData(req.body.streetAddressTwo, key) : ''
+            let city = encryptStringData(req.body.city, key)
+            let state = encryptStringData(req.body.state, key)
+            let postalCode = encryptStringData(req.body.postalCode, key)
+            let country = req.body.country ? encryptStringData(req.body.country, key) : ''
+
             const order = new Order({
                 user: user._id,
                 orderItems,
                 shippingAddress: {
-                    streetAddressOne: req.body.shippingAddressOne ? encryptStringData(req.body.shippingAddressOne, key) : '',
-                    streetAddressTwo: req.body.shippingAddressTwo ? encryptStringData(req.body.shippingAddressTwo, key) : '',
-                    city: req.body.shippingCity ? encryptStringData(req.body.shippingCity, key) : '',
-                    state: req.body.shippingState ? encryptStringData(req.body.shippingState, key) : '',
-                    postalCode: req.body.shippingPostalCode ? encryptStringData(req.body.shippingPostalCode, key) : '',
-                    country: req.body.shippingCountry ? encryptStringData(req.body.shippingCountry) : ''
+                    // and finish this code
+                    streetAddressOne: req.body.shippingAddressOne ? `${shippingAddressOne.encryptedData}.${shippingAddressOne.iv}` : '',
+                    streetAddressTwo: req.body.shippingAddressTwo ? `${shippingAddressTwo.encryptedData}.${shippingAddressTwo.iv}` : '',
+                    city: req.body.shippingCity ? `${shippingCity.encryptedData}.${shippingCity.iv}` : '',
+                    state: req.body.shippingState ? `${shippingState.encryptedData}.${shippingState.iv}` : '',
+                    postalCode: req.body.shippingPostalCode ? `${shippingPostalCode.encryptedData}.${shippingPostalCode.iv}` : '',
+                    country: req.body.shippingCountry ? `${shippingCountry.encryptedData}.${shippingCountry.iv}` : ''
                 },
                 billingAddress: {
-                    streetAddressOne: encryptStringData(req.body.streetAddressOne, key),
-                    streetAddressTwo: req.body.streetAddressTwo ? encryptStringData(req.body.streetAddressTwo, key) : '',
-                    city: encryptStringData(req.body.city, key),
-                    state: encryptStringData(req.body.state, key),
-                    postalCode: encryptStringData(req.body.postalCode, key),
-                    country: req.body.country ? encryptStringData(req.body.country, key) : ''
+                    streetAddressOne: `${streetAddressOne.encryptedData}.${streetAddressOne.iv}`,
+                    streetAddressTwo: req.body.streetAddressTwo ? `${streetAddressTwo.encryptedData}.${streetAddressTwo.iv}` : '',
+                    city: `${city.encryptedData}.${city.iv}`,
+                    state: `${state.encryptedData}.${state.iv}`,
+                    postalCode: `${postalCode.encryptedData}.${postalCode.iv}`,
+                    country: req.body.country ? `${country.encryptedData}.${country.iv}` : ''
                 },
                 paymentMethod: '',
                 paymentResult: {

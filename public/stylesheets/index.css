@@ -259,10 +259,12 @@ header {
 #doc-featured-image {
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
-#doc-featured-image .image {
-    width: 80%;
+#doc-featured-image img {
+    height: 650px;
+    width: auto;
 }
 
 #doc-content-show {
@@ -345,11 +347,11 @@ header {
 
 #doc-content-show #doc-content h2 {
     font-size: 36px;
-    margin: 2rem 0 0.75rem 0;
+    margin: 2rem 0 1rem 0;
 }
 
 #doc-content-show #doc-content p {
-    margin: 0 0 0.5rem 0;
+    margin: 0 0 1rem 0;
 }
 
 #services-title {

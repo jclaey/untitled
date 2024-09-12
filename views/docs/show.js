@@ -20,7 +20,7 @@ const showDocPage = ({ doc }, req) => {
                 </div>
                 <div class="mb-6" id="doc-featured-image">
                     <figure class="image">
-                        <img src="${doc.image.path}" alt="" />
+                        <img src="${doc.image.path}" alt="Featured image" />
                     </figure>
                 </div>
             </section>

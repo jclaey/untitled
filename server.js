@@ -7,6 +7,7 @@ import methodOverride from 'method-override'
 import session from 'express-session'
 import MongoStore from 'connect-mongo'
 import process from 'node:process'
+import favicon from 'serve-favicon'
 import index from './routes/index.js'
 import admin from './routes/admin/index.js'
 import quotes from './routes/quotes/index.js'
@@ -27,6 +28,8 @@ const __dirname = path.dirname(__filename)
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(methodOverride('_method'))
+
+app.use(favicon(path.join(__dirname, 'public', 'favicon', 'favicon.ico')))
 
 // Use cookie session for authentication
 app.use(cookieSession({
