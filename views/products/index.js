@@ -1,6 +1,10 @@
+import { decryptStringData } from "../../utils/encrypt.js"
 import layout from "../layout.js"
 
 const productsIndexPage = ({ products }, req) => {
+    const key = process.env.ENCRYPTION_KEY
+    let userId = req && req.session && req.session.userId ? decryptStringData(req.session.userId, key, req.session.userIv) : null
+
     let renderedProducts
 
     if (!products || products.length === 0) {
@@ -40,8 +44,8 @@ const productsIndexPage = ({ products }, req) => {
                         </div>
                         <div class="buttons">
                             <a href="/products/product/${product._id}" class="button is-info">View More</a>
-                            ${req && req.session && req.session.userId ? `
-                                <form action="/users/user/${req.session.userId}/cart/${product._id}/add" method="POST">
+                            ${req && req.session && userId ? `
+                                <form action="/users/user/${userId}/cart/${product._id}/add" method="POST">
                                     <button type="submit" class="button">Add To Cart</button>
                                 </form>
                             ` : ''}

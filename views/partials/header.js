@@ -1,4 +1,10 @@
+import { decryptStringData } from "../../utils/encrypt.js"
+import process from 'node:process'
+
  const header = (req = null) => {
+    const key = process.env.ENCRYPTION_KEY
+    let userId = req && req.session && req.session.userId && req.session.userIv ? decryptStringData(req.session.userId, key, req.session.userIv) : null
+
     return `
         <nav class="navbar container" role="navigation" aria-label="main navigation">
             <div class="nav-left navbar-brand nav-label">
@@ -73,11 +79,11 @@
                     ${req && req.session && req.session.userId ? `
                         <div class="navbar-item">
                             <div class="buttons level">
-                                <a href="/users/user/${req.session.userId}/cart" class="button is-success"><i class="fa-solid fa-cart-shopping pr-2"></i> Cart</a>
+                                <a href="/users/user/${userId}/cart" class="button is-success"><i class="fa-solid fa-cart-shopping pr-2"></i> Cart</a>
                                 <a href="/users/logout" class="button is-primary mr-4" id="nav-btn-secondary">
                                     <i class="fa-solid fa-right-from-bracket pr-2"></i> Logout
                                 </a>
-                                <a href="/users/user/${req.session.userId}/profile" title="User Profile">
+                                <a href="/users/user/${userId}/profile" title="User Profile">
                                     <i class="fa-solid fa-circle-user fa-2x"></i>
                                 </a>
                             </div>

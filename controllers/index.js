@@ -16,6 +16,9 @@ import sendEmail from "../utils/sendEmail.js"
 import User from '../models/User.js'
 import Order from '../models/Order.js'
 import websitesDemoPage from '../views/demo_pages/websites.js'
+import { encryptStringData, decryptStringData } from '../utils/encrypt.js'
+
+const key = process.env.ENCRYPTION_KEY
 
 export const getIndex = (req, res, next) => {
     res.send(indexPage(req))
@@ -100,7 +103,7 @@ export const patchForgotPassword = async (req, res, next) => {
         }
     }
 
-    const { email } = req.body
+    const email = encryptStringData(req.body.email, key).encryptedData
 
     const user = await User.findOne({ email })
 
@@ -272,7 +275,6 @@ export const getSuccessQuote = (req, res, next) => {
 }
 
 export const getStaySignedIn = (req, res, next) => {
-    console.log(req.session)
     if (req.session.userId) {
         req.session.userId = req.session.userId
         req.session.expiration = Date.now() + 10800000
@@ -282,7 +284,6 @@ export const getStaySignedIn = (req, res, next) => {
         req.session.adminId = req.session.adminId
         req.session.expiration = Date.now() + 10800000
     }
-    console.log(req.session)
 }
 
 export const getWebsitesDemo = (req, res, next) => {

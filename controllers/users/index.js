@@ -2,7 +2,7 @@ import { validationResult } from "express-validator"
 import crypto from 'crypto'
 import { google } from 'googleapis'
 import path from 'path'
-import process from 'process'
+import process from 'node:process'
 import Stripe from 'stripe'
 import userLoginPage from '../../views/users/login.js'
 import userRegisterPage from '../../views/users/register.js'
@@ -15,6 +15,7 @@ import User from "../../models/User.js"
 import Order from "../../models/Order.js"
 import { Product } from "../../models/Product.js"
 import { handlePaymentIntentSucceeded } from "../../utils/handleStripeEvents.js"
+import { encryptStringData, decryptStringData } from "../../utils/encrypt.js"
 
 const CREDENTIALS_PATH = path.join(process.cwd(), 'credentials.json')
 
@@ -32,6 +33,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
 const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET
 
+const key = process.env.ENCRYPTION_KEY
+
 export const getLogin = (req, res, next) => {
     res.send(userLoginPage({}, req))
 }
@@ -43,11 +46,15 @@ export const postLogin = async (req, res, next) => {
         res.send(userLoginPage({ errors, values: req.body }, req))
     }
 
-    const { email, password } = req.body
+    const { password } = req.body
+    let email = encryptStringData(req.body.email, key)
+    email = email.encryptedData
     const user = await User.findOne({ email })
 
     if (user && user.comparePasswords(password)) {
-        req.session.userId = user._id
+        let userId = encryptStringData(String(user._id), key)
+        req.session.userId = userId.encryptedData
+        req.session.userIv = userId.iv
         req.session.expiration = Date.now() + 10800000
         res.redirect(`/users/user/${user._id}/profile`)
     } else {
@@ -67,29 +74,41 @@ export const postRegister = async (req, res, next) => {
         res.send(userRegisterPage({ errors, values: req.body }, req))
     }
 
-    if (req.body.password === req.body.confirmPassword) {
-        const { firstName, lastName, email } = req.body
+    let { 
+            password, 
+            confirmPassword, 
+            firstName, 
+            lastName, 
+            email 
+        } = req.body
 
+    if (password === confirmPassword) {
         const salt = crypto.randomBytes(8).toString('hex')
         const hashedPassword = crypto.createHash('sha256').update(req.body.password + salt).digest('hex')
 
-        let password = `${hashedPassword}.${salt}`
+        password = `${hashedPassword}.${salt}`
+
+        firstName = encryptStringData(firstName, key)
+        lastName = encryptStringData(lastName, key)
+        email = encryptStringData(email, key)
 
         const user = new User({
-            firstName,
-            lastName,
-            email,
+            firstName: `${firstName.encryptedData}.${firstName.iv}`,
+            lastName: `${lastName.encryptedData}.${lastName.iv}`,
+            email: `${email.encryptedData}.${email.iv}`,
             password
         })
 
         if (user) {
             await user.save()
-            req.session.userId = user._id
+            let userId = encryptStringData(String(user._id), key)
+            req.session.userId = userId.encryptedData
+            req.session.userIv = userId.iv
             req.session.expiration = Date.now() + 10800000
             res.redirect(`/users/user/${user._id}/profile`)
         } else {
             if (process.env.NODE_ENV === 'development') {
-                throw new Error('Could not create new user')
+                throw new Error('Could not create a new user')
             } else {
                 res.redirect('/failure')
             }
@@ -100,14 +119,24 @@ export const postRegister = async (req, res, next) => {
 }
 
 export const getLogout = (req, res, next) => {
-    req.session = {}
+    delete req.session
     res.send(userLoginPage({}, req))
 }
 
 export const getUserProfile = async (req, res, next) => {
-    const user = await User.findById(req.params.id)
+    let user = await User.findById(req.params.id)
 
     if (user) {
+        let firstName = user.firstName.split('.')
+        console.log(firstName)
+        firstName = decryptStringData(firstName[0], key, firstName[1])
+        let lastName = user.lastName.split('.')
+        lastName =  decryptStringData(lastName[0], key, lastName[1])
+        let email = user.email.split('.')
+        email = decryptStringData(email[0], key, email[1])
+
+        user = { id: user._id, createdAt: user.createdAt, firstName, lastName, email }
+
         res.send(userProfilePage({ user }, req))
     } else {
         if (process.env.NODE_ENV === 'development') {
@@ -122,7 +151,18 @@ export const getEditUserProfile = async (req, res, next) => {
     const user = await User.findById(req.params.id)
 
     if (user) {
-        res.send(userEditProfilePage({ userInfo: { id: user._id, firstName: user.firstName, lastName: user.lastName, email: user.email } }, req))
+        let firstName = user.firstName.split('.')
+        firstName = decryptStringData(firstName[0], key, firstName[1])
+        let lastName = user.lastName.split('.')
+        lastName =  decryptStringData(lastName[0], key, lastName[1])
+        let email = user.email.split('.')
+        email = decryptStringData(email[0], key, email[1])
+
+        const userInfo = { id: user._id, firstName, lastName, email }
+
+        res.send(userEditProfilePage({ 
+            userInfo 
+        }, req))
     } else {
         if (process.env.NODE_ENV === 'development') {
             throw new Error('Could not get user')
@@ -141,14 +181,32 @@ export const patchEditUserProfile = async (req, res, next) => {
 
     let user = await User.findById(req.params.id)
 
+    user = {
+        id: user._id,
+        firstName: decryptStringData(user.firstName.split('.')[0], key, user.firstName.split('.')[1]),
+        lastName: decryptStringData(user.lastName.split('.')[0], key, user.lastName.split('.')[1]),
+        email: decryptStringData(user.email.split('.')[0], key, user.email.split('.')[1])
+    }
+
     if (user) {
-        const userUpdate = {
+        user = {
+            id: user._id,
             firstName: req.body.firstName !== user.firstName ? req.body.firstName : user.firstName,
             lastName: req.body.lastName !== user.lastName ? req.body.lastName : user.lastName,
             email: req.body.email !== user.email ? req.body.email : user.email
         }
 
-        user = await User.findByIdAndUpdate(req.params.id, userUpdate)
+        let firstName = encryptStringData(user.firstName, key)
+        let lastName = encryptStringData(user.lastName, key)
+        let email = encryptStringData(user.email, key)
+
+        const userUpdate = {
+            firstName: `${firstName.encryptedData}.${firstName.iv}`,
+            lastName: `${lastName.encryptedData}.${lastName.iv}`,
+            email: `${email.encryptedData}.${email.iv}`
+        }
+
+        user = await User.findByIdAndUpdate(req.params.userId, userUpdate)
 
         if (user) {
             res.redirect(`/users/user/${user._id}/profile`)
@@ -169,13 +227,19 @@ export const patchEditUserProfile = async (req, res, next) => {
 }
 
 export const getCart = async (req, res, next) => {
-    const user = await User.findById(req.params.id).populate({
+    let user = await User.findById(req.params.id).populate({
         path: 'cart',
         populate: { path: 'product' }
     }).exec()
 
     if (user) {
-        res.send(userCartPage({ cartItems: user.cart, user: { id: user._id, firstName: user.firstName } }, req))
+        const cartItems = user.cart
+        user = {
+            id: user._id,
+            firstName: decryptStringData(user.firstName.split('.')[0], key, user.firstName.split('.')[1])
+        }
+
+        res.send(userCartPage({ cartItems, user }, req))
     } else {
         if (process.env.NODE_ENV === 'development') {
             throw new Error('Resource not found')
@@ -186,7 +250,7 @@ export const getCart = async (req, res, next) => {
 }
 
 export const postAddCartItem = async (req, res, next) => {
-    const user = await User.findById(req.params.userId).populate({
+    let user = await User.findById(req.params.userId).populate({
         path: 'cart',
         populate: { path: 'product' }
     }).exec()
@@ -209,17 +273,21 @@ export const putRemoveCartItem = async (req, res, next) => {
         populate: { path: 'product' }
     }).exec()
     const product = await Product.findById(req.params.productId)
-    console.log(product)
 
     if (user && product) {
         const newCart = user.cart.filter(item => String(item.product._id) !== String(product._id))
-        console.log(newCart)
         user.cart = newCart
 
         user = await user.save()
 
         if (user) {
-            res.send(userCartPage({ cartItems: user.cart, user: { id: user._id, firstName: user.firstName } }, req))
+            let cartItems = user.cart
+            user = {
+                id: user._id,
+                firstName: decryptStringData(user.firstName.split('.')[0], key, user.firstName.split('.')[1])
+            }
+
+            res.send(userCartPage({ cartItems, user }, req))
         }
     } else {
         if (process.env.NODE_ENV === 'development') {
@@ -433,20 +501,20 @@ export const postBillingShipping = async (req, res, next) => {
         if (existing) {
             existing.orderItems = orderItems,
             needsShipping ? existing.shippingAddress = {
-                streetAddressOne: req.body.shippingAddressOne ? req.body.shippingAddressOne : '',
-                streetAddressTwo: req.body.shippingAddressTwo ? req.body.shippingAddressTwo : '',
-                city: req.body.shippingCity ? req.body.shippingCity : '',
-                state: req.body.shippingState ? req.body.shippingState : '',
-                postalCode: req.body.shippingPostalCode ? req.body.shippingPostalCode : '',
-                country: req.body.shippingCountry ? req.body.shippingCountry : ''
+                streetAddressOne: req.body.shippingAddressOne ? encryptStringData(req.body.shippingAddressOne, key) : '',
+                streetAddressTwo: req.body.shippingAddressTwo ? encryptStringData(req.body.shippingAddressTwo, key) : '',
+                city: req.body.shippingCity ? encryptStringData(req.body.shippingCity, key) : '',
+                state: req.body.shippingState ? encryptStringData(req.body.shippingState, key) : '',
+                postalCode: req.body.shippingPostalCode ? encryptStringData(req.body.shippingPostalCode, key) : '',
+                country: req.body.shippingCountry ? encryptStringData(req.body.shippingCountry, key) : ''
             } : existing.shippingAddress = existing.shippingAddress
             existing.billingAddress = {
-                streetAddressOne: req.body.streetAddressOne,
-                streetAddressTwo: req.body.streetAddressTwo ? req.body.streetAddressTwo : '',
-                city: req.body.city,
-                state: req.body.state,
-                postalCode: req.body.postalCode,
-                country: req.body.country ? req.body.country : ''
+                streetAddressOne: encryptStringData(req.body.streetAddressOne, key),
+                streetAddressTwo: req.body.streetAddressTwo ? encryptStringData(req.body.streetAddressTwo, key) : '',
+                city: encryptStringData(req.body.city, key),
+                state: encryptStringData(req.body.state, key),
+                postalCode: encryptStringData(req.body.postalCode, key),
+                country: req.body.country ? encryptStringData(req.body.country, key) : ''
             }
             existing.subtotalPrice = subtotal
             // calculate shipping costs
@@ -472,20 +540,20 @@ export const postBillingShipping = async (req, res, next) => {
                 user: user._id,
                 orderItems,
                 shippingAddress: {
-                    streetAddressOne: req.body.shippingAddressOne ? req.body.shippingAddressOne : '',
-                    streetAddressTwo: req.body.shippingAddressTwo ? req.body.shippingAddressTwo : '',
-                    city: req.body.shippingCity ? req.body.shippingCity : '',
-                    state: req.body.shippingState ? req.body.shippingState : '',
-                    postalCode: req.body.shippingPostalCode ? req.body.shippingPostalCode : '',
-                    country: req.body.shippingCountry ? req.body.shippingCountry : ''
+                    streetAddressOne: req.body.shippingAddressOne ? encryptStringData(req.body.shippingAddressOne, key) : '',
+                    streetAddressTwo: req.body.shippingAddressTwo ? encryptStringData(req.body.shippingAddressTwo, key) : '',
+                    city: req.body.shippingCity ? encryptStringData(req.body.shippingCity, key) : '',
+                    state: req.body.shippingState ? encryptStringData(req.body.shippingState, key) : '',
+                    postalCode: req.body.shippingPostalCode ? encryptStringData(req.body.shippingPostalCode, key) : '',
+                    country: req.body.shippingCountry ? encryptStringData(req.body.shippingCountry) : ''
                 },
                 billingAddress: {
-                    streetAddressOne: req.body.streetAddressOne,
-                    streetAddressTwo: req.body.streetAddressTwo ? req.body.streetAddressTwo : '',
-                    city: req.body.city,
-                    state: req.body.state,
-                    postalCode: req.body.postalCode,
-                    country: req.body.country ? req.body.country : ''
+                    streetAddressOne: encryptStringData(req.body.streetAddressOne, key),
+                    streetAddressTwo: req.body.streetAddressTwo ? encryptStringData(req.body.streetAddressTwo, key) : '',
+                    city: encryptStringData(req.body.city, key),
+                    state: encryptStringData(req.body.state, key),
+                    postalCode: encryptStringData(req.body.postalCode, key),
+                    country: req.body.country ? encryptStringData(req.body.country, key) : ''
                 },
                 paymentMethod: '',
                 paymentResult: {

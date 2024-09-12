@@ -25,7 +25,7 @@ const layout = ({ template }, req) => {
             </header>
             <div class="mb-6">
               ${template}
-              ${req && req.session && req.session.expiration && Date.now() >= req.session.expiration - 300000 ? `
+              ${req && req.session && req.session.expiration && Date.now() >= req.session.expiration - 300000 && Date.now() <= req.session.expiration ? `
                 <div id="session-modal">
                   <article class="message is-info" id="message">
                     <div class="message-header">

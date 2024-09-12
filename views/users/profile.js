@@ -10,10 +10,10 @@ const userProfilePage = ({ user }, req) => {
                     <strong>Date Joined:</strong> ${user.createdAt.toLocaleDateString('en-US')} at ${user.createdAt.toLocaleTimeString('en-US')}
                 </div>
                 <div>
-                    <a href="/users/user/${user._id}/profile/edit" class="button is-warning">
+                    <a href="/users/user/${user.id}/profile/edit" class="button is-warning">
                         Edit Profile
                     </a>
-                    <a href="/users/user/${user._id}/profile/change-password" class="button is-warning">
+                    <a href="/users/user/${user.id}/profile/change-password" class="button is-warning">
                         Change Password
                     </a>
                 </div>

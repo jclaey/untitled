@@ -1,6 +1,9 @@
+import { decryptStringData } from "../../utils/encrypt.js"
 import layout from "../../views/layout.js"
 
 const userCheckoutPage = ({ cart, errors, values = {} }, req) => {
+    const key = process.env.ENCRYPTION_KEY
+
     const renderedItems = cart.cartItems.map(item => {
         return `
             <div class="box">
@@ -12,13 +15,15 @@ const userCheckoutPage = ({ cart, errors, values = {} }, req) => {
         `
     })
 
+    let userId = req && req.session && req.session.userId ? decryptStringData(req.session.userId, key, req.session.userIv) : null
+
     return layout({ template: `
         <main class="container">
             <nav class="breadcrumb" aria-label="breadcrumbs">
                 <ul>
-                    <li><a href="/users/user/${req.session.userId}/cart">Cart</a></li>
+                    <li><a href="/users/user/${userId}/cart">Cart</a></li>
                     <li><a href="/users/user/billingShipping">Billing and Shipping</a></li>
-                    <li class="is-active"><a href="/users/user/${req.session.userId}/cart/checkout" aria-current="page">Checkout</a></li>
+                    <li class="is-active"><a href="/users/user/${userId}/cart/checkout" aria-current="page">Checkout</a></li>
                 </ul>
             </nav>
             <div class="page-title-div">

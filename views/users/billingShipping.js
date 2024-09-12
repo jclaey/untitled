@@ -1,7 +1,10 @@
 import layout from "../layout.js"
 import { getErrors } from "../../utils/getErrors.js"
+import { decryptStringData } from "../../utils/encrypt.js"
 
 const userBillingShippingPage = ({ cart, errors, values = {} }, req) => {
+    const key = process.env.ENCRYPTION_KEY
+
     const renderedItems = cart.cartItems.map(item => {
         return `
             <div class="box">
@@ -13,11 +16,13 @@ const userBillingShippingPage = ({ cart, errors, values = {} }, req) => {
         `
     })
 
+    let userId = decryptStringData(req.session.userId, key, req.session.userIv)
+
     return layout({ template: `
             <main class="container">
                 <nav class="breadcrumb" aria-label="breadcrumbs">
                     <ul>
-                        <li><a href="/users/user/${req.session.userId}/cart">Cart</a></li>
+                        <li><a href="/users/user/${userId}/cart">Cart</a></li>
                         <li class="is-active"><a href="/users/user/billingShipping" aria-current="page">Billing and Shipping</a></li>
                     </ul>
                 </nav>

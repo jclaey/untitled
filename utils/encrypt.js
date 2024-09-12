@@ -1,18 +1,18 @@
 import crypto from 'node:crypto'
 
-const algorithm = 'aes256'
-const key = process.env.ENCRYPTION_KEY
+export const encryptStringData = (str, key) => {
+    const iv = crypto.randomBytes(16)
+    const cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(key, 'hex'), iv)
+    let encrypted = cipher.update(str, 'utf-8', 'hex')
+    encrypted += cipher.final('hex')
 
-export const encryptStringData = str => {
-    const cipher = crypto.createCipheriv(algorithm, key) + cipher.final('hex')
-    const encrypted = cipher.update(str, 'utf-8', 'hex')
-
-    return encrypted
+    return { encryptedData: encrypted, iv: iv.toString('hex') }
 }
 
-export const decryptStringData = str => {
-    const decipher = crypto.createDecipheriv(algorithm, key)
-    const decrypted = decipher.update(str, 'hex', 'utf-8') + decipher.final('utf-8')
+export const decryptStringData = (str, key, iv) => {
+    const decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(key, 'hex'), Buffer.from(iv, 'hex'))
+    let decrypted = decipher.update(str, 'hex', 'utf-8')
+    decrypted += decipher.final('utf-8')
 
     return decrypted
 }
