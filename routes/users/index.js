@@ -11,7 +11,8 @@ import {
     validateStreetAddressTwo,
     validateState,
     validateZipcode,
-    validateCity
+    validateCity,
+    validatePhoneNumber
 } from '../validators.js'
 import {
     getLogin,
@@ -44,7 +45,8 @@ router.route('/register')
         validateFirstName,
         validateLastName,
         requireValidEmail,
-        requireValidPasswordForUser
+        requireValidPasswordForUser,
+        validatePhoneNumber
 ], asyncHandler(postRegister))
 router.route('/logout').get(getLogout)
 router.route('/user/:id/profile').get(asyncHandler(getUserProfile))

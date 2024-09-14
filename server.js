@@ -61,6 +61,11 @@ app.use(express.urlencoded({ extended: true }))
 //   next()
 // })
 
+app.use((req, res, next) => {
+  if (req && req.session && req.session.error) delete req.session.error
+  next()
+})
+
 // Mount routes
 app.use('/', index)
 app.use('/admin', admin)

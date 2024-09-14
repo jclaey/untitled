@@ -50,6 +50,14 @@ const userRegisterPage = ({ errors, values = {} }, req) => {
                         </div>
                     </div>
                     <div class="field mb-5">
+                        <label class="label" for="phoneNumber">
+                            <strong>Phone Number*</strong>
+                        </label>
+                        <div class="control">
+                            <input type="text" id="phoneNumber" name="phoneNumber" placeholder="Enter phone number..." class="input" value="${errors && values.phoneNumber && values.phoneNumber !== '' ? values.phoneNumber : ''}" required />
+                        </div>
+                    </div>
+                    <div class="field mb-5">
                         <label class="label" for="password">
                             <strong id="password-label">Password*</strong>
                         </label>

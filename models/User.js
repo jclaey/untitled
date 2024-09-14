@@ -12,7 +12,21 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
-    email: {
+    emailEncrypted: {
+        encryptedData: {
+            type: String,
+            required: true
+        },
+        iv: {
+            type: String,
+            required: true
+        }
+    },
+    emailHashed: {
+        type: String,
+        required: true
+    },
+    phoneNumber: {
         type: String,
         required: true
     },

@@ -43,13 +43,13 @@ export const postLogin = async (req, res, next) => {
     const errors = validationResult(req)
 
     if (!errors.isEmpty()) {
-        res.send(userLoginPage({ errors, values: req.body }, req))
+        return res.send(userLoginPage({ errors, values: req.body }, req))
     }
 
     const { password } = req.body
-    let email = encryptStringData(req.body.email, key)
-    email = email.encryptedData
-    const user = await User.findOne({ email })
+    let email = crypto.createHash('sha256').update(req.body.email).digest('hex')
+        
+    const user = await User.findOne({ emailHashed: email })
 
     if (user && user.comparePasswords(password)) {
         let userId = encryptStringData(String(user._id), key)
@@ -59,7 +59,7 @@ export const postLogin = async (req, res, next) => {
         res.redirect(`/users/user/${user._id}/profile`)
     } else {
         req.session.error = 'Invalid credentials'
-        res.send(userLoginPage({}, req))
+        return res.send(userLoginPage({}, req))
     }
 }
 
@@ -71,14 +71,15 @@ export const postRegister = async (req, res, next) => {
     const errors = validationResult(req)
 
     if (!errors.isEmpty()) {
-        res.send(userRegisterPage({ errors, values: req.body }, req))
+        return res.send(userRegisterPage({ errors, values: req.body }, req))
     }
 
     let { 
         password, 
         confirmPassword, 
         firstName, 
-        lastName, 
+        lastName,
+        phoneNumber,
         email 
     } = req.body
 
@@ -88,14 +89,22 @@ export const postRegister = async (req, res, next) => {
 
         password = `${hashedPassword}.${salt}`
 
+        const encrypted = encryptStringData(email, key)
+        const hashed = crypto.createHash('sha256').update(email).digest('hex')
+
         firstName = encryptStringData(firstName, key)
         lastName = encryptStringData(lastName, key)
-        email = encryptStringData(email, key)
+        phoneNumber = encryptStringData(phoneNumber, key)
 
         let user = new User({
             firstName: `${firstName.encryptedData}.${firstName.iv}`,
             lastName: `${lastName.encryptedData}.${lastName.iv}`,
-            email: `${email.encryptedData}.${email.iv}`,
+            emailEncrypted: {
+                encryptedData: encrypted.encryptedData,
+                iv: encrypted.iv
+            },
+            emailHashed: hashed,
+            phoneNumber: `${phoneNumber.encryptedData}.${phoneNumber.iv}`,
             password
         })
 
@@ -130,12 +139,10 @@ export const getUserProfile = async (req, res, next) => {
 
     if (user) {
         let firstName = user.firstName.split('.')
-        console.log(firstName)
         firstName = decryptStringData(firstName[0], key, firstName[1])
         let lastName = user.lastName.split('.')
         lastName =  decryptStringData(lastName[0], key, lastName[1])
-        let email = user.email.split('.')
-        email = decryptStringData(email[0], key, email[1])
+        let email = decryptStringData(user.emailEncrypted.encryptedData, key, user.emailEncrypted.iv)
 
         user = { id: user._id, createdAt: user.createdAt, firstName, lastName, email }
 
@@ -157,8 +164,8 @@ export const getEditUserProfile = async (req, res, next) => {
         firstName = decryptStringData(firstName[0], key, firstName[1])
         let lastName = user.lastName.split('.')
         lastName =  decryptStringData(lastName[0], key, lastName[1])
-        let email = user.email.split('.')
-        email = decryptStringData(email[0], key, email[1])
+        let email = user.email
+        email = decryptStringData(email.encryptedData, key, email.iv)
 
         const userInfo = { id: user._id, firstName, lastName, email }
 
@@ -187,7 +194,7 @@ export const patchEditUserProfile = async (req, res, next) => {
         id: user._id,
         firstName: decryptStringData(user.firstName.split('.')[0], key, user.firstName.split('.')[1]),
         lastName: decryptStringData(user.lastName.split('.')[0], key, user.lastName.split('.')[1]),
-        email: decryptStringData(user.email.split('.')[0], key, user.email.split('.')[1])
+        email: decryptStringData(user.email.encryptedData, key, user.email.iv)
     }
 
     if (user) {
@@ -205,7 +212,10 @@ export const patchEditUserProfile = async (req, res, next) => {
         const userUpdate = {
             firstName: `${firstName.encryptedData}.${firstName.iv}`,
             lastName: `${lastName.encryptedData}.${lastName.iv}`,
-            email: `${email.encryptedData}.${email.iv}`
+            email: {
+                encryptedData: email.encryptedData,
+                iv: email.iv
+            }
         }
 
         user = await User.findByIdAndUpdate(req.params.id, userUpdate)
