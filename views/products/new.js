@@ -51,6 +51,7 @@ const newProductPage = ({ errors, values = {} }, req) => {
                                     <select type="text" id="type" name="type">
                                         <option>Physical</option>
                                         <option>Digital</option>
+                                        <option>Service</option>
                                     </select>
                                 </div>
                             </div>

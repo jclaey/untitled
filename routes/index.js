@@ -1,6 +1,7 @@
 import express from 'express'
 const router = express.Router()
 import asyncHandler from '../middleware/async.js'
+import { requireUserAuth } from '../middleware/auth.js'
 import {
     validateName,
     requireValidEmail,
@@ -38,7 +39,7 @@ router.route('/success').get(getSuccess)
 router.route('/success-quote').get(getSuccessQuote)
 router.route('/failure').get(getFailure)
 router.route('/demos').get(getDemo)
-router.route('/payment-successful').get(asyncHandler(getPaymentSuccessful))
+router.route('/payment-successful').get(requireUserAuth, asyncHandler(getPaymentSuccessful))
 router.route('/forgot-password').get(getForgotPassword).patch([
     requireValidEmail
 ], asyncHandler(patchForgotPassword))

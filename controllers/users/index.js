@@ -146,7 +146,9 @@ export const getUserProfile = async (req, res, next) => {
 
         user = { id: user._id, createdAt: user.createdAt, firstName, lastName, email }
 
-        res.send(userProfilePage({ user }, req))
+        let orders = await Order.find({ user: user.id })
+
+        res.send(userProfilePage({ user, orders }, req))
     } else {
         if (process.env.NODE_ENV === 'development') {
             throw new Error('Could not find resource')
@@ -323,7 +325,9 @@ export const getCheckout = async (req, res, next) => {
         res.send(userCheckoutPage({ errors, values: req.body }))
     }
 
-    const user = await User.findById(req.session.userId).populate({
+    let userId = decryptStringData(req.session.userId, key, req.session.userIv)
+
+    const user = await User.findById(userId).populate({
         path: 'cart',
         populate: { path: 'product' }
     }).exec()
@@ -365,7 +369,8 @@ export const getCheckout = async (req, res, next) => {
 
 export const getCartItems = async (req, res, next) => {
     if (req && req.session && req.session.userId) {
-        const user = await User.findById(req.session.userId).populate({
+        const userId = decryptStringData(req.session.userId, key, req.session.userIv)
+        const user = await User.findById(userId).populate({
             path: 'cart',
             populate: { path: 'product' }
         }).exec()
@@ -514,22 +519,35 @@ export const postBillingShipping = async (req, res, next) => {
         let existing = await Order.find({ user: user._id, isPaid: false })
 
         if (existing.length > 0) {
+            let shippingAddressOne = req.body.shippingAddressOne ? encryptStringData(req.body.shippingAddressOne, key) : ''
+            let shippingAddressTwo = req.body.shippingAddressTwo ? encryptStringData(req.body.shippingAddressTwo, key) : ''
+            let shippingCity = req.body.shippingCity ? encryptStringData(req.body.shippingCity, key) : ''
+            let shippingState = req.body.shippingState ? encryptStringData(req.body.shippingState, key) : ''
+            let shippingPostalCode = req.body.shippingPostalCode ? encryptStringData(req.body.shippingPostalCode, key) : ''
+            let shippingCountry = req.body.shippingCountry ? encryptStringData(req.body.shippingCountry, key) : ''
+            let streetAddressOne = req.body.streetAddressOne ? encryptStringData(req.body.streetAddressOne, key) : ''
+            let streetAddressTwo = req.body.streetAddressTwo ? encryptStringData(req.body.streetAddressTwo, key) : ''
+            let city = req.body.city ? encryptStringData(req.body.city, key) : ''
+            let state = req.body.state ? encryptStringData(req.body.state, key) : ''
+            let postalCode = req.body.postalCode ? encryptStringData(req.body.postalCode, key) : ''
+            let country = req.body.country ? encryptStringData(req.body.country, key) : ''
+
             existing[existing.length - 1].orderItems = orderItems,
             needsShipping ? existing[existing.length - 1].shippingAddress = {
-                streetAddressOne: req.body.shippingAddressOne ? encryptStringData(req.body.shippingAddressOne, key) : '',
-                streetAddressTwo: req.body.shippingAddressTwo ? encryptStringData(req.body.shippingAddressTwo, key) : '',
-                city: req.body.shippingCity ? encryptStringData(req.body.shippingCity, key) : '',
-                state: req.body.shippingState ? encryptStringData(req.body.shippingState, key) : '',
-                postalCode: req.body.shippingPostalCode ? encryptStringData(req.body.shippingPostalCode, key) : '',
-                country: req.body.shippingCountry ? encryptStringData(req.body.shippingCountry, key) : ''
+                streetAddressOne: shippingAddressOne !== '' ? `${shippingAddressOne.encryptedData}.${shippingAddressOne.iv}` : '',
+                streetAddressTwo: shippingAddressTwo !== '' ? `${shippingAddressTwo.encryptedData}.${shippingAddressTwo.iv}` : '',
+                city: shippingCity !== '' ? `${shippingCity.encryptedData}.${shippingCity.iv}` : '',
+                state: shippingState !== '' ? `${shippingState.encryptedData}.${shippingState.iv}` : '',
+                postalCode: shippingPostalCode !== '' ? `${shippingPostalCode.encryptedData}.${shippingPostalCode.iv}` : '',
+                country: shippingCountry !== '' ? `${shippingCountry.encryptedData}.${shippingCountry.iv}` : ''
             } : existing.shippingAddress = existing.shippingAddress
             existing[existing.length - 1].billingAddress = {
-                streetAddressOne: encryptStringData(req.body.streetAddressOne, key),
-                streetAddressTwo: req.body.streetAddressTwo ? encryptStringData(req.body.streetAddressTwo, key) : '',
-                city: encryptStringData(req.body.city, key),
-                state: encryptStringData(req.body.state, key),
-                postalCode: encryptStringData(req.body.postalCode, key),
-                country: req.body.country ? encryptStringData(req.body.country, key) : ''
+                streetAddressOne: `${streetAddressOne.encryptedData}.${streetAddressOne.iv}`,
+                streetAddressTwo: `${streetAddressTwo.encryptedData}.${streetAddressTwo.iv}`,
+                city:  `${city.encryptedData}.${city.iv}`,
+                state: `${state.encryptedData}.${state.iv}`,
+                postalCode: `${postalCode.encryptedData}.${postalCode.iv}`,
+                country: `${country.encryptedData}.${country.iv}`
             }
             existing[existing.length - 1].subtotalPrice = subtotal
             // calculate shipping costs

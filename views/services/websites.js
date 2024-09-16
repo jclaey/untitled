@@ -41,12 +41,84 @@ const websiteServicesPage = (req) => {
                     </div>
                 </div>
             </section>
-            <section>
+            <section class="mb-6">
                 <a href="/quotes">
                     <div id="services-demos">
                         <h2 class="subtitle is-size-2">Get A Free Quote</h2>
                     </div>
                 </a>
+            </section>
+            <section class="container" id="pricing">
+                <h2 class="is-size-2">Website Services</h2>
+                <hr>
+                <div class="columns">
+                    <div class="column">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="content">
+                                    <div>
+                                        <div class="table-price">
+                                            <strong><span class="is-size-2 has-text-info">$99</span></strong>
+                                            <br />
+                                            <span class="is-size-3 has-text-info">Informational Website</span>
+                                        </div>
+                                        <div class="has-text-center is-size-5 table-pricing-feature">
+                                            <i class="fa-solid fa-check pr-3 is-size-3 has-text-success"></i> Basic, informational website
+                                        </div>
+                                        <div class="has-text-center is-size-5 table-pricing-feature">
+                                            <i class="fa-solid fa-check pr-3 is-size-3 has-text-success"></i> 3 pages: Home, about, contact
+                                        </div>
+                                        <div class="has-text-center is-size-5 table-pricing-feature">
+                                            <i class="fa-solid fa-check pr-3 is-size-3 has-text-success"></i> Domain name of your choice*
+                                        </div>
+                                        <div class="has-text-center is-size-5 table-pricing-feature mb-5">
+                                            <i class="fa-solid fa-check pr-3 is-size-3 has-text-success"></i> Website published
+                                        </div>
+                                        <div class="pricing-btn mb-5">
+                                            <a href="" class="button is-info is-medium">Select Option</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="content">
+                                    <div>
+                                        <div class="table-price">
+                                            <strong><span class="is-size-2 has-text-info">$99</span></strong>
+                                            <br />
+                                            <span class="is-size-3 has-text-info">Informational Website</span>
+                                        </div>
+                                        <div class="has-text-center is-size-5 website-pricing-feature">
+                                            <i class="fa-solid fa-check pr-3 is-size-3 has-text-success"></i> Basic, informational site
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="content">
+                                    <div>
+                                        <div class="table-price">
+                                            <strong><span class="is-size-2 has-text-info">$99</span></strong>
+                                            <br />
+                                            <span class="is-size-3 has-text-info">Informational Website</span>
+                                        </div>
+                                        <div class="has-text-center is-size-5 website-pricing-feature">
+                                            <i class="fa-solid fa-check pr-3 is-size-3 has-text-success"></i> Basic, informational site
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
         </main>
     ` }, req)

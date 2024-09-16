@@ -4,6 +4,9 @@ import layout from "../../views/layout.js"
 
 const userCheckoutPage = ({ cart, errors, values = {} }, req) => {
     const key = process.env.ENCRYPTION_KEY
+    let subtotal = String(cart.subtotal)
+    let cents = String(cart.subtotal).slice(subtotal.length - 2)
+    let dollars = String(cart.subtotal).slice(0, subtotal.length - 2)
 
     const renderedItems = cart.cartItems.map(item => {
         return `
@@ -78,7 +81,7 @@ const userCheckoutPage = ({ cart, errors, values = {} }, req) => {
                                     <div class="content">
                                         ${renderedItems}
                                         <div>
-                                            Subtotal: $${cart.subtotal}
+                                            Subtotal: $${dollars}.${cents}
                                             Total: $...
                                         </div>
                                     </div>

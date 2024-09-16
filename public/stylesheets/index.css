@@ -418,3 +418,29 @@ body {
     height: 100%;
     width: auto;
 }
+
+.table-pricing-feature {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.table-price {
+    text-align: center;
+    padding: 0;
+    margin-bottom: 1.5rem;
+}
+
+#pricing .card {
+    border: 1px solid black;
+}
+
+#pricing .pricing-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#pricing .pricing-btn a {
+    width: 50%;
+}

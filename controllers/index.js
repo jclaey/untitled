@@ -57,15 +57,22 @@ export const getFailure = (req, res, next) => {
 }
 
 export const getPaymentSuccessful = async (req, res, next) => {
-    const user = await User.findById(req.session.userId)
+    let userId = decryptStringData(req.session.userId, key, req.session.userIv)
+    const user = await User.findById(userId)
 
     if (user) {
         const orderNumber = await crypto.randomBytes(10).toString('hex')
-        const order = await Order.findOneAndUpdate({ user: user._id }, { orderNumber, isPaid: true, paidAt: Date.now() })
+        const order = await Order.findOneAndUpdate({ user: user._id, isPaid: false })
+
+        if (order.orderNumber.length > 0) {
+            order.updateOne({ isPaid: true, paidAt: Date.now() })
+        } else {
+            order.updateOne({ orderNumber, isPaid: true, paidAt: Date.now() })
+        }
 
         if (order) {
             await order.save()
-            res.send(paymentSuccessfulPage(req))
+            res.send(paymentSuccessfulPage({ order }, req))
         } else {
             if (process.env.NODE_ENV === 'development') {
                 throw new Error('Order not found')
