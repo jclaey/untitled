@@ -63,21 +63,30 @@ import process from 'node:process'
                     ${!req || !req.session || !req.session.userId && !req.session.adminId ? `
                         <div class="navbar-item">
                             <div class="buttons">
-                                <a href="/users/login" class="button is-medium" id="nav-btn-primary">Sign In</a>
-                                <a href="/users/register" class="button register-menu-btn is-medium" id="nav-btn-secondary">Register</a>
+                                <a href="/users/login" class="button is-medium" id="nav-btn-primary">
+                                    <i class="fa-solid fa-right-to-bracket pr-2"></i> Sign In
+                                </a>
+                                <a href="/users/register" class="button register-menu-btn is-medium" id="nav-btn-secondary">
+                                    <i class="fa-solid fa-user-plus pr-2"></i> Register
+                                </a>
                             </div>
                         </div>    
                     ` : ''}
                     ${req && req.session && req.session.adminId ? `
                         <div class="navbar-item">
                             <div class="buttons">
+                                <a href="/admin/projects/new" class="button is-success">
+                                    <i class="fa-solid fa-diagram-project pr-2"></i> Create Project
+                                </a>
                                 <a href="/products/new" class="button is-success">
                                     <i class="fa-solid fa-store pr-2"></i> Create Product
                                 </a>
                                 <a href="/docs/new" class="button is-success">
                                     <i class="fa-solid fa-scroll pr-2"></i> Create Doc
                                 </a>
-                                <a href="/admin/logout" class="button is-success" id="nav-btn-secondary">Logout</a>
+                                <a href="/admin/logout" class="button is-success" id="nav-btn-secondary">
+                                    <i class="fa-solid fa-right-from-bracket pr-2"></i> Logout
+                                </a>
                             </div>
                         </div>
                     ` : ''

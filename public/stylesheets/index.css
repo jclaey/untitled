@@ -444,3 +444,9 @@ body {
 #pricing .pricing-btn a {
     width: 50%;
 }
+
+#dueDate {
+    width: 180px;
+    height: 45px;
+    font-size: 18px;
+}

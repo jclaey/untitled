@@ -1,13 +1,32 @@
 import layout from "../layout.js"
 import { getErrors } from "../../utils/getErrors.js"
 
-const userLoginPage = ({ errors, values = {} }, req) => {
+const userLoginPage = ({ errors, values = {}, fromQuotes = false }, req) => {
     return layout({ template: `
         <main class="container">
             <div class="mb-6 page-title-div">
                 <h1 class="title is-size-1">
                     <span class="pipe">|</span> User Login <span class="pipe">|</span>
                 </h1>
+            </div>
+            <div>
+                ${fromQuotes ? `
+                        <div>
+                            <div>
+                                <article class="message" id="message">
+                                    <div class="message-header">
+                                        <p>Error</p>
+                                        <button id="msg-close-btn" class="delete" aria-label="delete"></button>
+                                    </div>
+                                    <div class="message-body">
+                                        <div id="errors" class="has-text-danger is-size-5">
+                                            <p>You must be signed in to your account to get a free quote. No account yet? Register <a href="/users/register">here</a>. It's completely free!</p>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                ` : ''}
             </div>
             <div>
                 ${errors ? 
@@ -32,7 +51,8 @@ const userLoginPage = ({ errors, values = {} }, req) => {
                                     </div>
                                     <div class="message-body">
                                         <div id="errors" class="has-text-danger is-size-5">
-                                        ${req.session.error}
+                                            ${req.session.error}
+                                        </div>
                                     </div>
                                 </article>
                             </div>

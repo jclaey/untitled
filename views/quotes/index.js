@@ -2,6 +2,15 @@ import layout from "../layout.js"
 import { getErrors } from "../../utils/getErrors.js"
 
 const newQuotePage = ({ errors, values = {} }, req) => {
+    const date = new Date().toLocaleDateString().split('/')
+    let today = [date[2], date[0], date[1]]
+    today.forEach((part, index) => {
+        if (part.length === 1) {
+            today[index] = part.padStart(2, '0')
+        }
+    })
+    today = today.join('-')
+
     return layout({ template: `
         <main class="container">
             <section>
@@ -195,7 +204,15 @@ const newQuotePage = ({ errors, values = {} }, req) => {
                                 Budget* (USD, ballpark estimation, numbers only)
                             </label>
                             <div class="control">
-                                <input class="input" min="1" max="${Infinity}" step="1" type="number" id="budget" name="budget" value="${errors && values.budget && values.budget > 0 ? values.budget : ''}"" />
+                                <input class="input" min="1" max="${Infinity}" step="1" type="number" id="budget" name="budget" value="${errors && values.budget && values.budget >= 1 ? values.budget : ''}"" />
+                            </div>
+                        </div>
+                        <div class="field mb-6">
+                            <label for="dueDate" class="label">
+                                Due Date
+                            </label>
+                            <div class="control">
+                                <input type="date" id="dueDate" name="dueDate" min="${today}" class="input" value="${errors && values.dueDate ? values.dueDate : ''}"" />
                             </div>
                         </div>
                         <button type="submit" class="button mb-3 is-medium is-success">Get Your Free Quote!</button>

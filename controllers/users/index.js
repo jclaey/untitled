@@ -1,4 +1,5 @@
 import { validationResult } from "express-validator"
+import nodemailer from 'nodemailer'
 import crypto from 'crypto'
 import { google } from 'googleapis'
 import path from 'path'
@@ -11,10 +12,15 @@ import userCartPage from "../../views/users/cart.js"
 import userCheckoutPage from '../../views/users/checkout.js'
 import userBillingShippingPage from '../../views/users/billingShipping.js'
 import userEditProfilePage from "../../views/users/editProfile.js"
+import verifyMobilePage from "../../views/verify-mobile.js"
 import User from "../../models/User.js"
 import Order from "../../models/Order.js"
 import { Product } from "../../models/Product.js"
-import { handlePaymentIntentSucceeded } from "../../utils/handleStripeEvents.js"
+import { 
+    handlePaymentIntentSucceeded,
+    handlePaymentIntentCanceled,
+    handlePaymentIntentFailed
+} from "../../utils/handleStripeEvents.js"
 import { encryptStringData, decryptStringData } from "../../utils/encrypt.js"
 
 const CREDENTIALS_PATH = path.join(process.cwd(), 'credentials.json')
@@ -34,6 +40,11 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET
 
 const key = process.env.ENCRYPTION_KEY
+
+const accountSid = process.env.TWILIO_ACCOUNT_SID
+const authToken = process.env.TWILIO_ACCOUNT_AUTH_TOKEN;
+import twilio from 'twilio'
+const twilioClient = twilio(accountSid, authToken)
 
 export const getLogin = (req, res, next) => {
     res.send(userLoginPage({}, req))
@@ -109,12 +120,26 @@ export const postRegister = async (req, res, next) => {
         })
 
         if (user) {
-            user = await user.save()
-            let userId = encryptStringData(String(user._id), key)
-            req.session.userId = userId.encryptedData
-            req.session.userIv = userId.iv
-            req.session.expiration = Date.now() + 10800000
-            res.redirect(`/users/user/${user._id}/profile`)
+            const otp = await crypto.randomBytes(3).toString('hex')
+            user.mobileVerifyToken = otp
+            user.mobileVerifyTokenExpires = Date.now() + 3600000
+            await user.save()
+
+            const message = await twilioClient.messages.create({
+                body: `Here is your Untitled verification code: ${otp}`,
+                from: "+14697784806",
+                to: `+1${req.body.phoneNumber}`
+            })
+
+            // user = await user.save()
+            // let userId = encryptStringData(String(user._id), key)
+            // req.session.userId = userId.encryptedData
+            // req.session.userIv = userId.iv
+            // req.session.expiration = Date.now() + 10800000
+            // res.redirect(`/users/user/${user._id}/profile`)
+            if (message) {
+                res.send(verifyMobilePage({ userId: user._id }, req))
+            }
         } else {
             if (process.env.NODE_ENV === 'development') {
                 throw new Error('Could not create a new user')
@@ -128,9 +153,7 @@ export const postRegister = async (req, res, next) => {
 }
 
 export const getLogout = (req, res, next) => {
-    req.session.userId = null
-    req.session.userIv = null
-    req.session.expiration = null
+    req.session = null
     res.send(userLoginPage({}, req))
 }
 
@@ -247,13 +270,33 @@ export const getCart = async (req, res, next) => {
     }).exec()
 
     if (user) {
-        const cartItems = user.cart
-        user = {
-            id: user._id,
-            firstName: decryptStringData(user.firstName.split('.')[0], key, user.firstName.split('.')[1])
-        }
+        let order = await Order.findOne({ user: user._id, isPaid: false }).populate({
+            path: 'orderItems',
+            populate: { path: 'product' }
+        }).exec()
+    
+        let cartItems
 
-        res.send(userCartPage({ cartItems, user }, req))
+        if (order.length > 0) {
+            cartItems = order.orderItems
+
+            user = {
+                id: user._id,
+                firstName: decryptStringData(user.firstName.split('.')[0], key, user.firstName.split('.')[1])
+            }
+
+            res.send(userCartPage({ cartItems, user }, req))
+        } else {
+            cartItems = user.cart
+            console.log(cartItems)
+
+            user = {
+                id: user._id,
+                firstName: decryptStringData(user.firstName.split('.')[0], key, user.firstName.split('.')[1])
+            }
+
+            res.send(userCartPage({ cartItems, user }, req))
+        } 
     } else {
         if (process.env.NODE_ENV === 'development') {
             throw new Error('Resource not found')
@@ -277,7 +320,11 @@ export const postAddCartItem = async (req, res, next) => {
         await user.save()
         res.redirect(`/users/user/${user._id}/cart`)
     } else {
-        throw new Error('Could not find user or product')
+        if (process.env.NODE_ENV === 'development') {
+            throw new Error('Could not find user, product, or both')
+        } else {
+            res.redirect('/failure')
+        }
     }
 }
 
@@ -287,6 +334,16 @@ export const putRemoveCartItem = async (req, res, next) => {
         populate: { path: 'product' }
     }).exec()
     const product = await Product.findById(req.params.productId)
+    let order = await Order.find({ user: user._id, isPaid: false, orderItems: { $elemMatch: { product: product._id } } }).populate({
+        path: 'orderItems',
+        populate: { path: 'product' }
+    }).exec()
+
+    if (order.length > 0) {
+        order[0].orderItems = order[0].orderItems.filter(item => String(item.product._id) !== String(product._id))
+    }
+
+    await order[0].save()
 
     if (user && product) {
         const newCart = user.cart.filter(item => String(item.product._id) !== String(product._id))
@@ -336,25 +393,42 @@ export const getCheckout = async (req, res, next) => {
         const cartItems = []
         let needsShipping = false
         let subtotal = 0
+        let incompleteOrder = Order.find({ user: user._id, isPaid: false })
 
-        user.cart.forEach(item => {
-            if (item.product.type.toLowerCase() === 'physical') {
-                needsShipping = true
-            }
-
-            subtotal += item.product.price
-
-            // let image = await drive.files.get(item.imageId)
-
-            // console.log(image)
-
-            cartItems.push({
-                title: item.product.title,
-                description: item.product.description,
-                price: item.product.price
+        if (user.cart.length > 0) {
+            user.cart.forEach(item => {
+                if (item.product.type.toLowerCase() === 'physical') {
+                    needsShipping = true
+                }
+    
+                subtotal += item.product.price
+    
+                // let image = await drive.files.get(item.imageId)
+    
+                // console.log(image)
+    
+                cartItems.push({
+                    title: item.product.title,
+                    description: item.product.description,
+                    price: item.product.price
+                })
             })
-        })
+        } else if (user.cart.length === 0 && incompleteOrder.length > 0) {
+            incompleteOrder.orderItems.forEach(item => {
+                if (item.product.type.toLowerCase() === 'physical') {
+                    needsShipping = true
+                }
 
+                subtotal += item.product.price
+
+                cartItems.push({
+                    title: item.product.title,
+                    description: item.product.description,
+                    price: item.product.price
+                })
+            })
+        }
+        
         subtotal *= 100
 
         res.send(userCheckoutPage({ cart: { cartItems, needsShipping, subtotal } }, req))
@@ -410,6 +484,8 @@ export const getCartItems = async (req, res, next) => {
 }
 
 export const handleStripeEvents = async (req, res, next) => {
+    let userId = decryptStringData(req.session.userId, key, req.session.userIv)
+    let user = await User.findById(userId)
     let event = req.body
 
     if (endpointSecret) {
@@ -427,14 +503,23 @@ export const handleStripeEvents = async (req, res, next) => {
         }    
     }
 
+    let paymentIntent
+
     // Handle the event
     switch (event.type) {
+        case 'payment_intent.canceled':
+        paymentIntent = even.data.object
+        console.log(`PaymentIntent for ${paymentIntent.amount} was canceled. Reason: ${paymentIntent.cancellation_reason}`)
+        await handlePaymentIntentCanceled(paymentIntent)
         case 'payment_intent.succeeded':
-        const paymentIntent = event.data.object
+        paymentIntent = event.data.object
         console.log(`PaymentIntent for ${paymentIntent.amount} was successful!`)
-        // Then define and call a method to handle the successful payment intent.
         await handlePaymentIntentSucceeded(paymentIntent)
         break
+        case 'payment_intent.payment_failed':
+        paymentIntent = event.data.object
+        console.log(`PaymentIntent for ${paymentIntent.amount} has failed`)
+        await handlePaymentIntentFailed(paymentIntent)
         // case 'payment_method.attached':
         // const paymentMethod = event.data.object
         // Then define and call a method to handle the successful attachment of a PaymentMethod.
@@ -455,6 +540,31 @@ export const getBillingShipping = async (req, res, next) => {
         populate: { path: 'product' }
     }).exec()
 
+    let order = await Order.find({ user: user._id, isPaid: false })
+
+    if (order) {
+        order = order[0]
+        console.log(typeof order.billingAddress.streetAddressTwo)
+        order = {
+            billingAddress: {
+                streetAddressOne: decryptStringData(order.billingAddress.streetAddressOne.split('.')[0], key, order.billingAddress.streetAddressOne.split('.')[1]),
+                streetAddressTwo: order.billingAddress.streetAddressTwo && order.billingAddress.streetAddressTwo !== 'undefined.undefined' ? decryptStringData(order.billingAddress.streetAddressTwo.split('.')[0], key, order.billingAddress.streetAddressTwo.split('.')[1]) : '',
+                city: decryptStringData(order.billingAddress.city.split('.')[0], key, order.billingAddress.city.split('.')[1]),
+                postalCode: decryptStringData(order.billingAddress.postalCode.split('.')[0], key, order.billingAddress.postalCode.split('.')[1]),
+                state: decryptStringData(order.billingAddress.state.split('.')[0], key, order.billingAddress.state.split('.')[1]),
+                country: order.billingAddress.country && order.billingAddress.country !== 'undefined.undefined' ? decryptStringData(order.billingAddress.country.split('.')[0], key, order.billingAddress.country.split('.')[1]) : ''
+            },
+            shippingAddress: {
+                streetAddressOne: order.shippingAddress.streetAddressOne ? decryptStringData(order.shippingAddress.streetAddressOne.split('.')[0], key, order.shippingAddress.streetAddressOne.split('.')[1]) : '',
+                streetAddressTwo: order.shippingAddress.streetAddressTwo ? decryptStringData(order.shippingAddress.streetAddressTwo.split('.')[0], key, order.shippingAddress.streetAddressTwo.split('.')[1]) : '',
+                city: order.shippingAddress.city ? decryptStringData(order.shippingAddress.city.split('.')[0], key, order.shippingAddress.city.split('.')[1]) : '',
+                postalCode: order.shippingAddress.postalCode ? decryptStringData(order.shippingAddress.postalCode.split('.')[0], key, order.shippingAddress.split('.')[1]) : '',
+                state: order.shippingAddress.state ? decryptStringData(order.shippingAddress.state.split('.')[0], key, order.shippingAddress.state.split('.')[1]) : '',
+                country: order.shippingAddress.country ? decryptStringData(order.shippingAddress.country.split('.')[0], key, order.shippingAddress.country.split('.')[1]) : ''
+            }
+        }
+    }
+
     if (user) {
         let subtotal = 0
         let needsShipping = false
@@ -467,7 +577,7 @@ export const getBillingShipping = async (req, res, next) => {
             subtotal += item.product.price
         })
 
-        res.send(userBillingShippingPage({ cart: { cartItems: user.cart, subtotal: subtotal.toFixed(2) } }, req))
+        res.send(userBillingShippingPage({ cart: { cartItems: user.cart, subtotal: subtotal.toFixed(2) }, order }, req))
     } else {
         if (process.env.NODE_ENV === 'development') {
             throw new Error('Could not find user')
@@ -526,11 +636,11 @@ export const postBillingShipping = async (req, res, next) => {
             let shippingPostalCode = req.body.shippingPostalCode ? encryptStringData(req.body.shippingPostalCode, key) : ''
             let shippingCountry = req.body.shippingCountry ? encryptStringData(req.body.shippingCountry, key) : ''
             let streetAddressOne = req.body.streetAddressOne ? encryptStringData(req.body.streetAddressOne, key) : ''
-            let streetAddressTwo = req.body.streetAddressTwo ? encryptStringData(req.body.streetAddressTwo, key) : ''
+            let streetAddressTwo = req.body.streetAddressTwo != '' ? encryptStringData(req.body.streetAddressTwo, key) : ''
             let city = req.body.city ? encryptStringData(req.body.city, key) : ''
             let state = req.body.state ? encryptStringData(req.body.state, key) : ''
             let postalCode = req.body.postalCode ? encryptStringData(req.body.postalCode, key) : ''
-            let country = req.body.country ? encryptStringData(req.body.country, key) : ''
+            let country = req.body.country != '' ? encryptStringData(req.body.country, key) : ''
 
             existing[existing.length - 1].orderItems = orderItems,
             needsShipping ? existing[existing.length - 1].shippingAddress = {
@@ -627,6 +737,8 @@ export const postBillingShipping = async (req, res, next) => {
 
             if (order) {
                 await order.save()
+                user.cart = []
+                await user.save()
                 res.redirect(`/users/user/${user._id}/cart/checkout`)
             } else {
                 if (process.env.NODE_ENV === 'development') {

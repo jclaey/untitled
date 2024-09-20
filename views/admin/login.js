@@ -1,7 +1,8 @@
 import layout from "../layout.js"
 import { getErrors } from "../../utils/getErrors.js"
 
-const adminLoginPage = ({ errors, values = {} }, req) => {
+const adminLoginPage = ({ errors, values = {} }, req, res) => {
+    console.log(res)
     return layout({ template: `
         <main>
             <div class="page-title-div">

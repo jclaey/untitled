@@ -24,7 +24,9 @@ import {
     patchResetPassword,
     getSuccessQuote,
     getStaySignedIn,
-    getWebsitesDemo
+    getWebsitesDemo,
+    getVerifyMobile,
+    postVerifyMobile
 } from '../controllers/index.js'
 
 router.route('/').get(getIndex)
@@ -48,5 +50,6 @@ router.route('/reset-password/:token').get(asyncHandler(getResetPassword)).patch
 ], asyncHandler(patchResetPassword))
 router.route('/stay-signed-in').get(getStaySignedIn)
 router.route('/websites-demos').get(getWebsitesDemo)
+router.route('/verify-mobile/:code?').get(getVerifyMobile).post(postVerifyMobile)
 
 export default router

@@ -16,6 +16,7 @@ import sendEmail from "../utils/sendEmail.js"
 import User from '../models/User.js'
 import Order from '../models/Order.js'
 import websitesDemoPage from '../views/demo_pages/websites.js'
+import verifyMobilePage from '../views/verify-mobile.js'
 import { encryptStringData, decryptStringData } from '../utils/encrypt.js'
 
 const key = process.env.ENCRYPTION_KEY
@@ -295,4 +296,29 @@ export const getStaySignedIn = (req, res, next) => {
 
 export const getWebsitesDemo = (req, res, next) => {
     res.send(websitesDemoPage(req))
+}
+
+export const getVerifyMobile = (req, res, next) => {
+    res.send(verifyMobilePage({}, req))
+}
+
+export const postVerifyMobile = (req, res, next) => {
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+        res.send(verifyMobilePage({ errors, values: req.body }))
+    }
+
+    if (req.data.otp) {
+        const verifyCode = req.data.otp
+        const enteredCode = req.body.code.trim()
+
+        if (verifyCode !== '' && enteredCode !== '' && verifyCode === enteredCode) {
+            console.log('codes match!')
+        } else {
+            console.log('codes do not match :(')
+        }
+    } else {
+        console.log('data not available')
+    }
 }

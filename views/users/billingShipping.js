@@ -2,7 +2,7 @@ import layout from "../layout.js"
 import { getErrors } from "../../utils/getErrors.js"
 import { decryptStringData } from "../../utils/encrypt.js"
 
-const userBillingShippingPage = ({ cart, errors, values = {} }, req) => {
+const userBillingShippingPage = ({ cart, errors, values = {}, order }, req) => {
     const key = process.env.ENCRYPTION_KEY
 
     const renderedItems = cart.cartItems.map(item => {
@@ -58,7 +58,7 @@ const userBillingShippingPage = ({ cart, errors, values = {} }, req) => {
                                         Street Address One*
                                     </label>
                                     <div class="control">
-                                        <input class="input" type="text" id="streetAddressOne" name="streetAddressOne" value="${errors && values.streetAddressOne && values.streetAddressOne !== '' ? values.streetAddressOne : ''}" />
+                                        <input class="input" type="text" id="streetAddressOne" name="streetAddressOne" value="${errors && values.streetAddressOne && values.streetAddressOne !== '' ? values.streetAddressOne : order ? order.billingAddress.streetAddressOne : ''}" />
                                     </div>
                                 </div>
                                 <div class="field mb-4">
@@ -66,7 +66,7 @@ const userBillingShippingPage = ({ cart, errors, values = {} }, req) => {
                                         Street Address Two
                                     </label>
                                     <div class="control">
-                                        <input class="input" type="text" id="streetAddressTwo" name="streetAddressTwo" value="${errors && values.streetAddressTwo && values.streetAddressTwo !== '' ? values.streetAddressTwo : ''}" />
+                                        <input class="input" type="text" id="streetAddressTwo" name="streetAddressTwo" value="${errors && values.streetAddressTwo && values.streetAddressTwo !== '' ? values.streetAddressTwo : order && order.billingAddress.streetAddressTwo ? order.billingAddress.streetAddressTwo : ''}" />
                                     </div>
                                 </div>
                                 <div class="field mb-4">
@@ -74,7 +74,7 @@ const userBillingShippingPage = ({ cart, errors, values = {} }, req) => {
                                         City*
                                     </label>
                                     <div class="control">
-                                        <input class="input" type="text" id="city" name="city" value="${errors && values.city && values.city !== '' ? values.city : ''}" />
+                                        <input class="input" type="text" id="city" name="city" value="${errors && values.city && values.city !== '' ? values.city : order ? order.billingAddress.city : ''}" />
                                     </div>
                                 </div>
                                 <div class="field mb-4">
@@ -82,7 +82,7 @@ const userBillingShippingPage = ({ cart, errors, values = {} }, req) => {
                                         Zip Code*
                                     </label>
                                     <div class="control">
-                                        <input class="input" type="text" id="postalCode" name="postalCode" value="${errors && values.postalCode && values.postalCode !== '' ? values.postalCode : ''}" />
+                                        <input class="input" type="text" id="postalCode" name="postalCode" value="${errors && values.postalCode && values.postalCode !== '' ? values.postalCode : order ? order.billingAddress.postalCode : ''}" />
                                     </div>
                                 </div>
                                 <div class="field mb-4">
@@ -91,7 +91,7 @@ const userBillingShippingPage = ({ cart, errors, values = {} }, req) => {
                                     </label>
                                     <div class="control">
                                         <div class="select">
-                                            <select id="state" name="state" value="${errors && values.state && values.state !== '' ? values.state : ''}">
+                                            <select id="state" name="state" value="${errors && values.state && values.state !== '' ? values.state : order ? order.billingAddress.state : ''}">
                                                 <option>Alabama</option>
                                                 <option>Alaska</option>
                                                 <option>Arizona</option>
@@ -177,7 +177,7 @@ const userBillingShippingPage = ({ cart, errors, values = {} }, req) => {
                                                 Street Address One*
                                             </label>
                                             <div class="control">
-                                                <input class="input" type="text" id="shippingAddressOne" name="shippingAddressOne" value="${errors && values.shippingAddressOne && values.shippingAddressOne !== '' ? values.shippingAddressOne : ''}" />
+                                                <input class="input" type="text" id="shippingAddressOne" name="shippingAddressOne" value="${errors && values.shippingAddressOne && values.shippingAddressOne !== '' ? values.shippingAddressOne : order ? order.shippingAddress.shippingAddressOne : ''}" />
                                             </div>
                                         </div>
                                         <div class="field mb-4">
@@ -185,7 +185,7 @@ const userBillingShippingPage = ({ cart, errors, values = {} }, req) => {
                                                 Street Address Two
                                             </label>
                                             <div class="control">
-                                                <input class="input" type="text" id="shippingAddressTwo" name="shippingAddressTwo" value="${errors && values.shippingAddressTwo && values.shippingAddressTwo !== '' ? values.shippingAddressTwo : ''}" />
+                                                <input class="input" type="text" id="shippingAddressTwo" name="shippingAddressTwo" value="${errors && values.shippingAddressTwo && values.shippingAddressTwo !== '' ? values.shippingAddressTwo : order && order.shippingAdrress.shippingAddressTwo ? order.shippingAddress.shippingAddressTwo : ''}" />
                                             </div>
                                         </div>
                                         <div class="field mb-4">
@@ -193,7 +193,7 @@ const userBillingShippingPage = ({ cart, errors, values = {} }, req) => {
                                                 City*
                                             </label>
                                             <div class="control">
-                                                <input class="input" type="text" id="shippingCity" name="shippingCity" value="${errors && values.shippingCity && values.shippingCity !== '' ? values.shippingCity : ''}" />
+                                                <input class="input" type="text" id="shippingCity" name="shippingCity" value="${errors && values.shippingCity && values.shippingCity !== '' ? values.shippingCity : order ? order.shippingAdress.city : ''}" />
                                             </div>
                                         </div>
                                         <div class="field mb-4">
@@ -210,7 +210,7 @@ const userBillingShippingPage = ({ cart, errors, values = {} }, req) => {
                                             </label>
                                             <div class="control">
                                                 <div class="select">
-                                                    <select id="shippingState" name="shippingState" value="${errors && values.shippingState && values.shippingState !== '' ? values.shippingState : ''}">
+                                                    <select id="shippingState" name="shippingState" value="${errors && values.shippingState && values.shippingState !== '' ? values.shippingState : order ? order.shippingAddress.state : ''}">
                                                         <option>Alabama</option>
                                                         <option>Alaska</option>
                                                         <option>Arizona</option>

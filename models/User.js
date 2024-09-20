@@ -41,10 +41,10 @@ const UserSchema = new Schema({
         postalCode: String,
         country: String
     },
-    // phoneNumber: {
-    //     type: String,
-    //     required: true
-    // },
+    phoneNumber: {
+        type: String,
+        required: true
+    },
     cart: [
         {
             qty: {
@@ -63,7 +63,13 @@ const UserSchema = new Schema({
         default: Date.now
     },
     resetPasswordToken: String,
-    resetPasswordExpires: Date
+    resetPasswordExpires: Date,
+    mobileVerifyToken: String,
+    mobileVerifyTokenExpires: Date,
+    mobileVerified: {
+        type: String,
+        default: false
+    }
 })
 
 UserSchema.methods.comparePasswords = function(suppliedPassword) {

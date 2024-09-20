@@ -2,6 +2,10 @@ import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 
 const QuoteInfoItemSchema = new Schema({
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
     firstName: {
         type: String,
         required: true
@@ -56,6 +60,7 @@ const QuoteInfoItemSchema = new Schema({
         type: Number,
         required: true
     },
+    dueDate: Date,
     submitted_at: {
         type: Date,
         default: Date.now()

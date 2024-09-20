@@ -26,7 +26,7 @@ const userCheckoutPage = ({ cart, errors, values = {} }, req) => {
             <nav class="breadcrumb" aria-label="breadcrumbs">
                 <ul>
                     <li><a href="/users/user/${userId}/cart">Cart</a></li>
-                    <li><a href="/users/user/billingShipping">Billing and Shipping</a></li>
+                    <li><a href="/users/user/billing-shipping">Billing and Shipping</a></li>
                     <li class="is-active"><a href="/users/user/${userId}/cart/checkout" aria-current="page">Checkout</a></li>
                 </ul>
             </nav>
@@ -41,6 +41,26 @@ const userCheckoutPage = ({ cart, errors, values = {} }, req) => {
                         <div>
                             <div>
                                 ${getErrors(errors)}
+                            </div>
+                        </div>
+                    `
+                : ''}
+            </div>
+            <div>
+                ${req && req.session && req.session.error ? 
+                    `
+                        <div>
+                            <div>
+                                <article class="message" id="message">
+                                    <div class="message-header">
+                                        <p>Error</p>
+                                        <button id="msg-close-btn" class="delete" aria-label="delete"></button>
+                                    </div>
+                                    <div class="message-body">
+                                        <div id="errors" class="has-text-danger is-size-5">
+                                        ${req.session.error}
+                                    </div>
+                                </article>
                             </div>
                         </div>
                     `

@@ -203,3 +203,15 @@ export const validateImage =
 
         return false
     })
+
+export const requireValidId = 
+    body('quoteInfoId')
+    .trim()
+    .isLength({ min: 24, max: 24 })
+    .withMessage('Invalid ID number')
+
+export const validateVerificationCode = 
+    body('code')
+    .trim()
+    .notEmpty()
+    .withMessage('Please enter a verification code')
