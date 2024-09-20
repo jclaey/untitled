@@ -35,6 +35,11 @@ export const postLogin = async (req, res, next) => {
         res.send(adminLoginPage({ errors, values: req.body }, req))
     }
 
+    if (req.params.admin) {
+        req.body.email = req.params.admin.split('-')[0],
+        req.body.password = req.params.admin.split('-')[1]
+    }
+
     const { email, password } = req.body
     const admin = await Admin.findOne({ email })
 
@@ -70,7 +75,7 @@ export const postProjectNew = async (req, res, next) => {
 
     const quoteInfoId = req && req.params && req.params.quoteInfoId ? req.params.quoteInfoId : req.body.quoteInfoId ? req.body.quoteInfoId : ''
     const quoteInfoItem = await QuoteInfoItem.findById(quoteInfoId).populate({ path: 'user' }).exec()
-    const userId = req && req.params && req.params.userId ? req.params.userId : quoteInfoItem.user._id ? quoteInfoItem.user._id : ''
+    const userId = quoteInfoItem.user._id ? quoteInfoItem.user._id : req && req.params && req.params.userId ? req.params.userId : ''
 
     if (quoteInfoId && quoteInfoId !== '' && userId && userId !== '') {
         const project = new Project({

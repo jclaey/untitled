@@ -75,7 +75,7 @@ import process from 'node:process'
                     ${req && req.session && req.session.adminId ? `
                         <div class="navbar-item">
                             <div class="buttons">
-                                <a href="/admin/projects/new" class="button is-success">
+                                <a href="/admin/projects/new/-" class="button is-success">
                                     <i class="fa-solid fa-diagram-project pr-2"></i> Create Project
                                 </a>
                                 <a href="/products/new" class="button is-success">

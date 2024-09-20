@@ -19,7 +19,7 @@ import {
 router.route('/').get(requireAdminAuth, asyncHandler(getIndex))
 router.route('/login').get(getLogin).post([ requireValidEmail, requireValidPasswordForUser ], asyncHandler(postLogin))
 router.route('/logout').get(getLogout)
-router.route('/projects/new/:quoteInfoId?/:userId?').get(requireAdminAuth, asyncHandler(getProjectNew)).post([
+router.route('/projects/new/:quoteInfoId?/-/:userId?').get(requireAdminAuth, asyncHandler(getProjectNew)).post([
     requireValidId
 ], asyncHandler(postProjectNew))
 

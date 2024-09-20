@@ -288,7 +288,6 @@ export const getCart = async (req, res, next) => {
             res.send(userCartPage({ cartItems, user }, req))
         } else {
             cartItems = user.cart
-            console.log(cartItems)
 
             user = {
                 id: user._id,
@@ -544,7 +543,6 @@ export const getBillingShipping = async (req, res, next) => {
 
     if (order) {
         order = order[0]
-        console.log(typeof order.billingAddress.streetAddressTwo)
         order = {
             billingAddress: {
                 streetAddressOne: decryptStringData(order.billingAddress.streetAddressOne.split('.')[0], key, order.billingAddress.streetAddressOne.split('.')[1]),

@@ -3,6 +3,9 @@ import nodemailer from 'nodemailer'
 import newQuotePage from '../../views/quotes/index.js'
 import successQuotePage from '../../views/success-quote.js'
 import QuoteInfoItem from '../../models/QuoteInfoItem.js'
+import { decryptStringData } from '../../utils/encrypt.js'
+
+const key = process.env.ENCRYPTION_KEY
 
 export const getNewQuote = (req, res, next) => {
     res.send(newQuotePage({}, req))
@@ -36,6 +39,8 @@ export const postNewQuote = async (req, res, next) => {
 
     if (quote) {
         await quote.save()
+
+        let userId = decryptStringData(req.session.userId, key, req.session.userIv)
 
         const transporter = nodemailer.createTransport({
             host: 'smtp-mail.outlook.com',
@@ -97,7 +102,7 @@ export const postNewQuote = async (req, res, next) => {
                                                 <strong>Due date: ${req.body.dueDate}</strong>
                                                 <p>
                                                     Please click the button below to create a project for this quote<br />
-                                                    <a href="https://d5d9-173-175-236-109.ngrok-free.app/admin/projects/new/${quote._id}/${req.session.userId}">Create Project</a>
+                                                    <a href="https://d5d9-173-175-236-109.ngrok-free.app/admin/projects/new/${quote._id}/-/${req.session.userId}">Create Project</a>
                                                 </p>
                                             </div>
                                         </td>
