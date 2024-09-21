@@ -45,6 +45,21 @@ const userEditProfilePage = ({ userInfo, errors, values }, req) => {
                             <input type="text" id="email" name="email" placeholder="Enter email..." class="input" value="${userInfo.email && !errors ? userInfo.email : errors && values.email && values.email !== '' ? values.email : ''}" />
                         </div>
                     </div>
+                    <div class="mb-6" id="checkbox-area">
+                        <h3 class="is-size-5 mb-1">Account Verification Methods</h3>
+                        <label class="checkbox pr-3" for="verifyPassword">
+                            Password
+                            <input type="checkbox" id="verifyPassword" name="verifyPassword" value="" checked disabled />
+                        </label>
+                        <label class="checkbox pr-3" for="verifyEmail">
+                            Email
+                            <input type="checkbox" id="verifyEmail" name="verifyEmail" value="" />
+                        </label>
+                        <label class="checkbox" for="verifySMS">
+                            Text (SMS)
+                            <input type="checkbox" id="verifySMS" name="verifySMS" value="" />
+                        </label>
+                    </div>
                     <button class="button mb-4 is-warning" type="submit">Edit Profile</button>
                 </form>
             </section>

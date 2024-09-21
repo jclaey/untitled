@@ -3,7 +3,6 @@ import layout from "../layout.js"
 const userProfilePage = ({ user, orders = [] }, req) => {
     let renderedComplete
     let renderedIncomplete
-    console.log(orders.length)
 
     if (orders.length > 0) {
         renderedComplete = orders.map(order => {
@@ -93,14 +92,27 @@ const userProfilePage = ({ user, orders = [] }, req) => {
                                     </div>
                                 </div>
                             </div>
-                            <div class="column container" id="subscriptions">
-                                <div class="box">
-                                    <h3 class="is-size-3">
-                                        Subscriptions
-                                    </h3>
-                                    <hr>
-                                    <div class="subscription">
-                                        <p class="box">You have no current subscriptions</p>
+                            <div class="column container">
+                                <div id="subscriptions" class="mb-5">
+                                    <div class="box">
+                                        <h3 class="is-size-3">
+                                            Subscriptions
+                                        </h3>
+                                        <hr>
+                                        <div class="subscription">
+                                            <p class="box">You have no current subscriptions</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="quotes">
+                                    <div class="box">
+                                        <h3 class="is-size-3">
+                                            Quotes Under Review
+                                        </h3>
+                                        <hr>
+                                        <div class="quote">
+                                            <p class="box">You have no quotes under review</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

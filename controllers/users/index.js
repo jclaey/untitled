@@ -125,18 +125,17 @@ export const postRegister = async (req, res, next) => {
             user.mobileVerifyTokenExpires = Date.now() + 3600000
             await user.save()
 
-            const message = await twilioClient.messages.create({
-                body: `Here is your Untitled verification code: ${otp}`,
-                from: "+14697784806",
-                to: `+1${req.body.phoneNumber}`
-            })
+            // const message = await twilioClient.messages.create({
+            //     body: `Here is your Untitled verification code: ${otp}`,
+            //     from: "+14697784806",
+            //     to: `+1${req.body.phoneNumber}`
+            // })
 
-            // user = await user.save()
-            // let userId = encryptStringData(String(user._id), key)
-            // req.session.userId = userId.encryptedData
-            // req.session.userIv = userId.iv
-            // req.session.expiration = Date.now() + 10800000
-            // res.redirect(`/users/user/${user._id}/profile`)
+            let userId = encryptStringData(String(user._id), key)
+            req.session.userId = userId.encryptedData
+            req.session.userIv = userId.iv
+            req.session.expiration = Date.now() + 10800000
+            res.redirect(`/users/user/${user._id}/profile`)
             if (message) {
                 res.send(verifyMobilePage({ userId: user._id }, req))
             }
@@ -189,7 +188,7 @@ export const getEditUserProfile = async (req, res, next) => {
         firstName = decryptStringData(firstName[0], key, firstName[1])
         let lastName = user.lastName.split('.')
         lastName =  decryptStringData(lastName[0], key, lastName[1])
-        let email = user.email
+        let email = user.emailEncrypted
         email = decryptStringData(email.encryptedData, key, email.iv)
 
         const userInfo = { id: user._id, firstName, lastName, email }
