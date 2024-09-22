@@ -1,6 +1,7 @@
 import layout from "../layout.js"
+import crypto from 'node:crypto'
 
-const userProfilePage = ({ user, orders = [] }, req) => {
+const userProfilePage = ({ user, orders = [], token }, req) => {
     let renderedComplete
     let renderedIncomplete
 
@@ -65,7 +66,7 @@ const userProfilePage = ({ user, orders = [] }, req) => {
                             <a href="/users/user/${user.id}/profile/edit" class="button is-warning">
                                 Edit Profile
                             </a>
-                            <a href="/users/user/${user.id}/profile/change-password" class="button is-warning">
+                            <a href="/reset-password/${token}" class="button is-warning">
                                 Change Password
                             </a>
                         </div>

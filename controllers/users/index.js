@@ -158,6 +158,7 @@ export const getLogout = (req, res, next) => {
 
 export const getUserProfile = async (req, res, next) => {
     let user = await User.findById(req.params.id)
+    let token = await crypto.randomBytes(20).toString('hex')
 
     if (user) {
         let firstName = user.firstName.split('.')
@@ -170,7 +171,7 @@ export const getUserProfile = async (req, res, next) => {
 
         let orders = await Order.find({ user: user.id })
 
-        res.send(userProfilePage({ user, orders }, req))
+        res.send(userProfilePage({ user, orders, token }, req))
     } else {
         if (process.env.NODE_ENV === 'development') {
             throw new Error('Could not find resource')

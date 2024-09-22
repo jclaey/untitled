@@ -60,7 +60,10 @@ const userEditProfilePage = ({ userInfo, errors, values }, req) => {
                             <input type="checkbox" id="verifySMS" name="verifySMS" value="" />
                         </label>
                     </div>
-                    <button class="button mb-4 is-warning" type="submit">Edit Profile</button>
+                    <div id="user-edit-profile-btns">
+                        <button class="button mb-4 is-warning" type="submit">Edit Profile</button>
+                        <a href="/users/user/${userInfo.id}/profile" class="button mb-4 is-link">Back to Profile</a>
+                    </div>
                 </form>
             </section>
         </main>    

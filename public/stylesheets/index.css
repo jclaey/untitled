@@ -459,3 +459,11 @@ body {
     font-size: 18px;
 } */
 
+#about-section .fa-shield {
+    color: var(--secondary-color);
+}
+
+#user-edit-profile-btns {
+    display: flex;
+    justify-content: space-between;
+}
