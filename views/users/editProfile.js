@@ -61,7 +61,7 @@ const userEditProfilePage = ({ userInfo, errors, values }, req) => {
                         </label>
                     </div>
                     <div id="user-edit-profile-btns">
-                        <button class="button mb-4 is-warning" type="submit">Edit Profile</button>
+                        <button class="button mb-4 is-warning" type="submit">Save Changes</button>
                         <a href="/users/user/${userInfo.id}/profile" class="button mb-4 is-link">Back to Profile</a>
                     </div>
                 </form>

@@ -45,7 +45,7 @@ router.route('/payment-successful').get(requireUserAuth, asyncHandler(getPayment
 router.route('/forgot-password').get(getForgotPassword).patch([
     requireValidEmail
 ], asyncHandler(patchForgotPassword))
-router.route('/reset-password/:token').get(asyncHandler(getResetPassword)).patch([
+router.route('/reset-password/:token/:userId?').get(asyncHandler(getResetPassword)).patch([
     requireValidPasswordForUser
 ], asyncHandler(patchResetPassword))
 router.route('/stay-signed-in').get(getStaySignedIn)

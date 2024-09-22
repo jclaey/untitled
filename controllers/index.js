@@ -223,15 +223,20 @@ export const patchForgotPassword = async (req, res, next) => {
 
 export const getResetPassword = async (req, res, next) => {
     const { token } = req.params
+    let user
 
-    const user = await User.findOne({
-        resetPasswordToken: token,
-        resetPasswordExpires: { $gt: Date.now() }
-    })
+    if (req.params.userId) {
+        user = await User.findById(req.params.userId)
+    } else {
+        user = await User.findOne({
+            resetPasswordToken: token,
+            resetPasswordExpires: { $gt: Date.now() }
+        })
+    }
 
     if (!user) {
         req.session.error = 'Password reset token is invalid or has expired'
-        res.redirect('/forgot-password')
+        return res.redirect('/forgot-password')
     }
 
     res.send(resetPasswordPage({ token }, req))
@@ -239,16 +244,21 @@ export const getResetPassword = async (req, res, next) => {
 
 export const patchResetPassword = async (req, res, next) => {
     const { token } = req.params
+    let user
     const errors = validationResult(req)
 
     if (!errors.isEmpty()) {
         res.send(resetPasswordPage({ token, errors }, req))
     }
 
-    const user = await User.findOne({
-        resetPasswordToken: token,
-        resetPasswordExpires: { $gt: Date.now() }
-    })
+    if (req.params.userId) {
+        user = await User.findById(req.params.id)
+    } else {
+        user = await User.findOne({
+            resetPasswordToken: token,
+            resetPasswordExpires: { $gt: Date.now() }
+        })
+    }
 
     if (user) {
         const { password, confirmPassword } = req.body
