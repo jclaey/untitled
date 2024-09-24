@@ -277,7 +277,7 @@ export const getCart = async (req, res, next) => {
     
         let cartItems
 
-        if (order.length > 0) {
+        if (order) {
             cartItems = order.orderItems
 
             user = {

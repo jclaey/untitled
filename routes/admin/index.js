@@ -16,7 +16,7 @@ import {
     postProjectNew
 } from '../../controllers/admin/index.js'
 
-router.route('/').get(requireAdminAuth, asyncHandler(getIndex))
+router.route('/:adminId?').get(requireAdminAuth, asyncHandler(getIndex))
 router.route('/login').get(getLogin).post([ requireValidEmail, requireValidPasswordForUser ], asyncHandler(postLogin))
 router.route('/logout').get(getLogout)
 router.route('/projects/new/:quoteInfoId?/-/:userId?').get(requireAdminAuth, asyncHandler(getProjectNew)).post([

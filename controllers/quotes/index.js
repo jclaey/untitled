@@ -19,6 +19,7 @@ export const postNewQuote = async (req, res, next) => {
     }
 
     const quote = new QuoteInfoItem({
+        user: decryptStringData(req.session.userId, key, req.session.userIv),
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         businessName: req.body.businessName,

@@ -15,7 +15,9 @@ const adminIndexPage = ({ docs, products }, req) => {
         }
     })
 
-    const renderedProducts = products => {
+    let renderedProducts
+
+    products ? renderedProducts = products => {
         return products.map(product => {
             return `
                 <article class="media">
@@ -38,9 +40,11 @@ const adminIndexPage = ({ docs, products }, req) => {
                 </article>
             `
         })
-    }
+    } : ''
 
-    const renderedDocs = docs => {
+    let renderedDocs
+
+    docs ? renderedDocs = docs => {
         return docs.map(doc => {
             return `
                 <article class="media">
@@ -63,7 +67,7 @@ const adminIndexPage = ({ docs, products }, req) => {
                 </article>
             `
         }).join('')
-    }
+    } : ''
 
     return layout({ template: `
         <main>
@@ -89,13 +93,13 @@ const adminIndexPage = ({ docs, products }, req) => {
                             <div class="box" id="recent-docs">
                                 <h3 class="is-size-4 mb-5">Most Recent Docs</h3>
                                 <div>
-                                    ${renderedDocs(recentDocs)}
+                                    ${docs ? renderedDocs(recentDocs) : ''}
                                 </div>
                             </div>
                             <div class="box" id="my-docs">
                                 <h3 class="is-size-4 mb-5">Your Docs</h3>
                                 <div>
-                                    ${renderedDocs(myDocs)}
+                                    ${docs ? renderedDocs(myDocs) : ''}
                                 </div>
                             </div>
                         </div>
@@ -105,7 +109,7 @@ const adminIndexPage = ({ docs, products }, req) => {
                             <div class="box">
                                 <h3 class="is-size-4 mb-5">Your Products</h3>
                                 <div id="my-products">
-                                    ${renderedProducts(products)}
+                                    ${products ? renderedProducts(products) : ''}
                                 </div>
                             </div>
                         </div>

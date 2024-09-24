@@ -8,10 +8,14 @@ import Admin from "../../models/Admin.js"
 import Project from '../../models/Project.js'
 import QuoteInfoItem from "../../models/QuoteInfoItem.js"
 import { Product } from '../../models/Product.js'
+import { decryptStringData } from '../../utils/encrypt.js'
+
+const key = process.env.ENCRYPTION_KEY
 
 export const getIndex = async (req, res, next) => {
     const docs = await DocItem.find({})
-    const products = await Product.find({ user: req.session.adminId })
+    let userId = decryptStringData(req.session.adminId, key, req.session.adminIv)
+    const products = await Product.findById(userId)
     
     if (docs) {
         res.send(adminIndexPage({ docs, products }, req))
@@ -21,10 +25,6 @@ export const getIndex = async (req, res, next) => {
 }
 
 export const getLogin = (req, res, next) => {
-    if (req && req.session && req.session.adminId) {
-        res.redirect('/admin')
-    }
-
     res.send(adminLoginPage({}, req, res))
 }
 
@@ -75,6 +75,7 @@ export const postProjectNew = async (req, res, next) => {
 
     const quoteInfoId = req && req.params && req.params.quoteInfoId ? req.params.quoteInfoId : req.body.quoteInfoId ? req.body.quoteInfoId : ''
     const quoteInfoItem = await QuoteInfoItem.findById(quoteInfoId).populate({ path: 'user' }).exec()
+    console.log(quoteInfoItem)
     const userId = quoteInfoItem.user._id ? quoteInfoItem.user._id : req && req.params && req.params.userId ? req.params.userId : ''
 
     if (quoteInfoId && quoteInfoId !== '' && userId && userId !== '') {

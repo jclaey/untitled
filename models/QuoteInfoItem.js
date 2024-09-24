@@ -61,6 +61,10 @@ const QuoteInfoItemSchema = new Schema({
         required: true
     },
     dueDate: Date,
+    isActive: {
+        type: Boolean,
+        default: true
+    },
     submitted_at: {
         type: Date,
         default: Date.now()
