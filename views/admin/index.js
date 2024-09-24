@@ -1,6 +1,8 @@
+import { decryptStringData } from "../../utils/encrypt.js"
 import layout from "../layout.js"
 
-const adminIndexPage = ({ docs, products }, req) => {
+const adminIndexPage = ({ docs, products, projects }, req) => {
+    const key = process.env.ENCRYPTION_KEY
     const recentDocs = []
     const myDocs = []
 
@@ -69,6 +71,33 @@ const adminIndexPage = ({ docs, products }, req) => {
         }).join('')
     } : ''
 
+    let renderedProjects 
+
+    projects ? renderedProjects = projects => { 
+        return projects.map(project => {
+            console.log(project)
+            
+            let user = {
+                firstName: decryptStringData(project.user.firstName.split('.')[0], key, project.user.lastName.split('.')[1]),
+                lastName: decryptStringData(project.user.lastName.split('.')[0], key, project.user.lastName.split('.')[1])
+            }
+
+            return `
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <div class="mb-3">
+                                <strong>User:</strong> ${user.firstName} ${user.lastName}
+                            </div>
+                            <div class="mb-3">
+                                <strong>Project Title:</strong> ${project.title}
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            `
+    })} : ''
+
     return layout({ template: `
         <main>
             <section class="container">
@@ -99,17 +128,25 @@ const adminIndexPage = ({ docs, products }, req) => {
                             <div class="box" id="my-docs">
                                 <h3 class="is-size-4 mb-5">Your Docs</h3>
                                 <div>
-                                    ${docs ? renderedDocs(myDocs) : ''}
+                                    ${docs ? renderedDocs(myDocs) : 'There are no docs right now'}
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="column">
-                        <div id="admin-index-posts-area">
+                        <div id="admin-index-products-area" class="mb-5">
                             <div class="box">
                                 <h3 class="is-size-4 mb-5">Your Products</h3>
                                 <div id="my-products">
-                                    ${products ? renderedProducts(products) : ''}
+                                    ${products ? renderedProducts(products) : 'There are no products right now'}
+                                </div>
+                            </div>
+                        </div>
+                        <div id="admin-index-projects-area" class="mb-5">
+                            <div class="box">
+                                <h3 class="is-size-4 mb-5">Active Projects</h3>
+                                <div id="my-projects">
+                                    ${projects ? renderedProjects(projects) : 'There are no active projects right now'}
                                 </div>
                             </div>
                         </div>

@@ -15,10 +15,11 @@ const key = process.env.ENCRYPTION_KEY
 export const getIndex = async (req, res, next) => {
     const docs = await DocItem.find({})
     let userId = decryptStringData(req.session.adminId, key, req.session.adminIv)
-    const products = await Product.findById(userId)
+    const products = await Product.find({ user: userId })
+    const projects = await Project.find({}).populate({ path: 'user', path: 'quoteInfoItem' }).exec()
     
     if (docs) {
-        res.send(adminIndexPage({ docs, products }, req))
+        res.send(adminIndexPage({ docs, products, projects }, req))
     } else {
         res.redirect('/failure')
     }
