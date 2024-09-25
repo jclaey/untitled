@@ -12,7 +12,7 @@ const adminIndexPage = ({ docs, products, projects }, req) => {
         }
         
         // adminId
-        if (req && req.session && req.session.adminId === String(doc.author)) {
+        if (req && req.session && decryptStringData(req.session.adminId, key, req.session.adminIv) === String(doc.author._id)) {
             myDocs.push(doc)
         }
     })
@@ -75,11 +75,23 @@ const adminIndexPage = ({ docs, products, projects }, req) => {
 
     projects ? renderedProjects = projects => { 
         return projects.map(project => {
-            console.log(project)
-            
+
             let user = {
-                firstName: decryptStringData(project.user.firstName.split('.')[0], key, project.user.lastName.split('.')[1]),
+                firstName: decryptStringData(project.user.firstName.split('.')[0], key, project.user.firstName.split('.')[1]),
                 lastName: decryptStringData(project.user.lastName.split('.')[0], key, project.user.lastName.split('.')[1])
+            }
+
+            const nowDate = Date.now()
+            let dueDate = Date.parse(project.quoteInfoItem.dueDate)
+            let level
+            if (dueDate - nowDate < 604800000) {
+                level = 'yellow'
+            } else if (dueDate - nowDate < 1209600000) {
+                level = 'orange'
+            } else if ((dueDate - nowDate) < 2592000000) {
+                level = 'yellow'
+            } else {
+                level = 'green'
             }
 
             return `
@@ -90,13 +102,26 @@ const adminIndexPage = ({ docs, products, projects }, req) => {
                                 <strong>User:</strong> ${user.firstName} ${user.lastName}
                             </div>
                             <div class="mb-3">
-                                <strong>Project Title:</strong> ${project.title}
+                                <strong>Project Title:</strong> <span id="project-title">${project.title}</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong>Date Quote Created:</strong> ${project.quoteInfoItem.submitted_at.toLocaleDateString()}
+                            </div>
+                            <div class="mb-3">
+                                <strong>Date Project Created:</strong> ${project.created_at.toLocaleDateString()}
+                            </div>
+                            <div class="mb-3">
+                                <strong>Date Due:</strong> <span id="quote-due-date" style="color: ${level}">${project.quoteInfoItem.dueDate.toLocaleDateString()}</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong>Last Update:</strong> <span>There are no updates</span>
                             </div>
                         </div>
                     </div>
                 </article>
             `
-    })} : ''
+        }).join('')
+    } : ''
 
     return layout({ template: `
         <main>
@@ -122,7 +147,7 @@ const adminIndexPage = ({ docs, products, projects }, req) => {
                             <div class="box" id="recent-docs">
                                 <h3 class="is-size-4 mb-5">Most Recent Docs</h3>
                                 <div>
-                                    ${docs ? renderedDocs(recentDocs) : ''}
+                                    ${docs ? renderedDocs(recentDocs) : 'There are no docs right now'}
                                 </div>
                             </div>
                             <div class="box" id="my-docs">
@@ -142,11 +167,31 @@ const adminIndexPage = ({ docs, products, projects }, req) => {
                                 </div>
                             </div>
                         </div>
-                        <div id="admin-index-projects-area" class="mb-5">
+                        <div id="admin-index-projects-area" class="mb-5 is-size-5">
                             <div class="box">
                                 <h3 class="is-size-4 mb-5">Active Projects</h3>
-                                <div id="my-projects">
-                                    ${projects ? renderedProjects(projects) : 'There are no active projects right now'}
+                                <div id="my-projects" class="mb-6">
+                                    <div id="projects">
+                                        ${projects ? renderedProjects(projects) : 'There are no projects right now'}
+                                    </div>
+                                </div>
+                                <div id="project-due-key">
+                                    <div>
+                                        <label for="moreThanOneMonth">Due date is more than a month away</label>
+                                        <div id="moreThanOneMonth" class="colorLevel"></div>
+                                    </div>
+                                    <div>
+                                        <label for="moreThanTwoWeeks">Due date is more than two weeks away</label>
+                                        <div id="moreThanTwoWeeks" class="colorLevel"></div>
+                                    </div>
+                                    <div>
+                                        <label for="moreThanOneWeek">Due date is more than one week away</label>
+                                        <div id="moreThanOneWeek" class="colorLevel"></div>
+                                    </div>
+                                    <div>
+                                        <label for="lessThanOneWeek">Due date is less than one week away</label>
+                                        <div id="lessThanOneWeek" class="colorLevel"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

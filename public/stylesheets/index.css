@@ -467,3 +467,30 @@ body {
     display: flex;
     justify-content: space-between;
 }
+
+.colorLevel {
+    height: 50px;
+    width: 45%;
+    margin-bottom: 1rem;
+}
+
+#project-due-key {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.colorLevel#moreThanOneMonth {
+    background-color: green;
+}
+
+.colorLevel#moreThanTwoWeeks {
+    background-color: yellow;
+}
+
+.colorLevel#moreThanOneWeek {
+    background-color: orange;
+}
+
+.colorLevel#lessThanOneWeek {
+    background-color: red;
+}

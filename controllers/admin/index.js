@@ -8,15 +8,18 @@ import Admin from "../../models/Admin.js"
 import Project from '../../models/Project.js'
 import QuoteInfoItem from "../../models/QuoteInfoItem.js"
 import { Product } from '../../models/Product.js'
-import { decryptStringData } from '../../utils/encrypt.js'
+import { decryptStringData, encryptStringData } from '../../utils/encrypt.js'
 
 const key = process.env.ENCRYPTION_KEY
 
 export const getIndex = async (req, res, next) => {
-    const docs = await DocItem.find({})
+    const docs = await DocItem.find({}).populate('author').exec()
     let userId = decryptStringData(req.session.adminId, key, req.session.adminIv)
     const products = await Product.find({ user: userId })
-    const projects = await Project.find({}).populate({ path: 'user', path: 'quoteInfoItem' }).exec()
+    const projects = await Project.find({})
+        .populate('user')
+        .populate('quoteInfoItem')
+        .exec()
     
     if (docs) {
         res.send(adminIndexPage({ docs, products, projects }, req))
@@ -45,7 +48,9 @@ export const postLogin = async (req, res, next) => {
     const admin = await Admin.findOne({ email })
 
     if (admin && admin.comparePasswords(password)) {
-        req.session.adminId = String(admin._id)
+        let adminId = encryptStringData(String(admin._id), key)
+        req.session.adminId = adminId.encryptedData
+        req.session.adminIv = adminId.iv
         req.session.expiration = Date.now() + 10800000
         res.redirect('/admin')
     } else {
@@ -76,7 +81,6 @@ export const postProjectNew = async (req, res, next) => {
 
     const quoteInfoId = req && req.params && req.params.quoteInfoId ? req.params.quoteInfoId : req.body.quoteInfoId ? req.body.quoteInfoId : ''
     const quoteInfoItem = await QuoteInfoItem.findById(quoteInfoId).populate({ path: 'user' }).exec()
-    console.log(quoteInfoItem)
     const userId = quoteInfoItem.user._id ? quoteInfoItem.user._id : req && req.params && req.params.userId ? req.params.userId : ''
 
     if (quoteInfoId && quoteInfoId !== '' && userId && userId !== '') {
