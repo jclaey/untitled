@@ -11,7 +11,6 @@ const adminIndexPage = ({ docs, products, projects }, req) => {
             recentDocs.push(doc)
         }
         
-        // adminId
         if (req && req.session && decryptStringData(req.session.adminId, key, req.session.adminIv) === String(doc.author._id)) {
             myDocs.push(doc)
         }
