@@ -61,6 +61,7 @@ const layout = ({ template }, req) => {
             ${req && req.originalUrl && req.originalUrl === '/users/register' || req && req.originalUrl && req.originalUrl.includes('/reset-password') ? '<script src="/javascript/noMatch.js"></script>' : ''}
             ${req && req.originalUrl && req.originalUrl === '/contact' ? '<script src="/javascript/tiny-user-facing.js"></script><script src="/javascript/closeMessage.js"></script>"' : ''}
             ${req && req.originalUrl && req.originalUrl === '/' ? `<script src="/javascript/testimonials.js"></script><br /><script>AOS.init()</script>` : ''}
+            ${req && req.originalUrl && req.originalUrl.includes('/docs') || template.includes('id="docs-search-container"') ? `<script src="/javascript/search.js"></script>` : ''}
             ${template.includes('id="message"') ? '<script src="/javascript/closeMessage.js"></script>' : ''}
             <script src="/javascript/auth-modal.js"></script>
           </body>

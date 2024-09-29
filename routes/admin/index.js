@@ -13,7 +13,8 @@ import {
     postLogin,
     getLogout,
     getProjectNew,
-    postProjectNew
+    postProjectNew,
+    getProjectShow
 } from '../../controllers/admin/index.js'
 
 router.route('/').get(requireAdminAuth, asyncHandler(getIndex))
@@ -22,5 +23,6 @@ router.route('/logout').get(getLogout)
 router.route('/projects/new/:quoteInfoId?/-/:userId?').get(requireAdminAuth, asyncHandler(getProjectNew)).post([
     requireValidId
 ], asyncHandler(postProjectNew))
+router.route('/project/:projectId').get(requireAdminAuth, asyncHandler(getProjectShow))
 
 export default router

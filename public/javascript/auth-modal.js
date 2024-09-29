@@ -7,11 +7,9 @@ if (signOut) {
         let hasType = signOut.getAttribute('data-type')
     
         if (hasType && hasType === 'user') {
-            fetch('https://40fa-173-175-236-109.ngrok-free.app/users/logout')
-        }
-    
-        if (hasType && hasType === 'admin') {
-            fetch('https://40fa-173-175-236-109.ngrok-free.app/admin/logout')
+            fetch('https://f8e0-173-175-236-109.ngrok-free.app/users/logout')
+        } else if (hasType && hasType === 'admin') {
+            fetch('https://f8e0-173-175-236-109.ngrok-free.app/admin/logout')
         }
     })
 }

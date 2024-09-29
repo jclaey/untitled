@@ -17,7 +17,8 @@ import {
     postNew,
     getShow,
     getEdit,
-    patchEdit
+    patchEdit,
+    filterDocs
 } from '../../controllers/docs/index.js'
 
 router.route('/').get(getIndex)
@@ -37,5 +38,6 @@ router.route('/doc/:id/edit')
         validateContent, 
         validateDescription
 ], asyncHandler(patchEdit))
+router.route('/filter-docs').get(asyncHandler(filterDocs))
 
 export default router

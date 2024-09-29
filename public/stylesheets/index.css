@@ -494,3 +494,69 @@ body {
 .colorLevel#lessThanOneWeek {
     background-color: red;
 }
+
+#docs-search-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#docs-search-container .login-section {
+    width: 100%;
+}
+
+#docs-search-container form #search {
+    width: 100%;
+}
+
+#docs-search-container #filters {
+    width: 100%;
+}
+
+#docs-search-container #filters #panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#docs-search-container form #search, #docs-search-container form #filter-btn {
+    height: 50px;
+}
+
+#docs-search-container form #search {
+    border-right: none;
+    border-left: 1px solid #dbdbdb;
+    border-top: 1px solid #dbdbdb;
+    border-bottom: 1px solid #dbdbdb;
+    box-shadow: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    padding-right: 0;
+}
+
+#docs-search-container form #search:focus {
+    box-shadow: none;
+    border-right: 1px solid #dbdbdb;
+}
+
+#docs-search-container form #search:hover {
+    box-shadow: none;
+}
+
+#docs-search-container form #filter-btn {
+    border-left: none;
+    box-shadow: none;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    border-color: #dbdbdb;
+    margin-left: 0;
+}
+
+#docs-search-container .search-group {
+    display: flex;
+}
+
+#docs-search-container #apply-filters {
+    height: 50px;
+    font-size: 20px;
+}

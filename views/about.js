@@ -20,7 +20,7 @@ const aboutPage = (req) => {
                                 and some cool AI stuff too. We build for individuals, small businesses, and enterprises as well.
                             </p>
                             <p class="is-size-4 block">
-                                Do you have needs in the finance sector? How about retail? Government? Really, any sector, any budget, and any application, we can build for. If it's web-based, Web Solutions can build it for you. <a href="/users/register">Register</a> today for a free quote! Already have an account with us? Contact us <a href="/quotes">here</a>.
+                                Do you have needs in the finance sector? How about retail? Government? Insurance? Really, any sector, any budget, and any application, we can build for. If it's web-based, Web Solutions can build it for you. <a href="/users/register">Register</a> today for a free quote! Already have an account with us? Contact us <a href="/quotes">here</a>.
                             </p>
                         </div>
                         <div class="mb-6">
@@ -71,6 +71,17 @@ const aboutPage = (req) => {
                                         Regularly scan software for vulnerabilities
                                     </li>
                                 </ul>
+                        </div>
+                        <div class="mb-6">
+                            <h2 class="is-size-2 mb-5">
+                                <i class="fa-solid fa-handshake has-text-info"></i>
+                                Trust
+                            </h2>
+                            <p class="is-size-4">
+                                Web Solutions is all about trust, transparency, and integrity. We believe that customer service in the tech industry
+                                is severely lacking, which is exactly why we put so much of a focus on it. A good product is not just the product
+                                itself, but the service given around that product.
+                            </p>
                         </div>
                         <div class="mb-6">
                             <h2 class="is-size-2 mb-5">Trivia!</h2>

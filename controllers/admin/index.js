@@ -4,6 +4,7 @@ import DocItem from '../../models/Doc.js'
 import adminIndexPage from "../../views/admin/index.js"
 import adminLoginPage from "../../views/admin/login.js"
 import projectNewPage from "../../views/admin/projectNew.js"
+import projectShowPage from '../../views/admin/projectShow.js'
 import Admin from "../../models/Admin.js"
 import Project from '../../models/Project.js'
 import QuoteInfoItem from "../../models/QuoteInfoItem.js"
@@ -102,4 +103,23 @@ export const postProjectNew = async (req, res, next) => {
             }
         }
     }    
+}
+
+export const getProjectShow = async (req, res, next) => {
+    let project = await Project.findById(req.params.projectId)
+        .populate('user')
+        .populate('quoteInfoItem')
+        .exec()
+
+    project = {
+        quoteInfoItem: {
+
+        },
+        user: {
+
+        },
+        
+    }
+
+    res.send(projectShowPage({ project }, req))
 }

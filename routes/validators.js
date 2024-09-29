@@ -168,7 +168,7 @@ export const requireValidEmail =
 export const requireValidPasswordForUser =
     body('password')
     .trim()
-    .isLength({ min: 8, max: 30 })
+    .isLength({ min: 8, max: 64 })
     .withMessage('Password must be between 8 and 30 characters')
 
 export const validateImage =

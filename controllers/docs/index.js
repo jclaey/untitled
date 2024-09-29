@@ -127,3 +127,49 @@ export const patchEdit = async (req, res, next) => {
         }
     }
 }
+
+export const filterDocs = async (req, res, next) => {
+    const arr = []
+
+    if (req.query.type) {
+        arr.push({ type: req.query.type.replace('_', ' ') })
+        // query.where('type').equals(`${req.query.type.replace('_', ' ')}`)
+    }
+
+    if (req.query.category) {
+        arr.push({ category: req.query.category.replace('_', ' ') })
+        // query.where('category').equals(`${req.query.category.replace('_', ' ')}`)
+    }
+
+    if (req.query.description) {
+        arr.push({ description: { $regex: new RegExp(req.query.description.replace('_', ' '), 'i') } })
+        // query.where('description').in(`${req.query.description.replace('_', ' ')}`)
+    }
+
+    if (req.query.title) {
+        arr.push({ title: { $regex: new RegExp(req.query.title.replace('_', ' '), 'i') } })
+        // query.where('title').in(`${req.query.title.replace('_', ' ')}`)
+    }
+
+    if (req.query.content) {
+        arr.push({ content: { $regex: new RegExp(req.query.content.replace('_', ' '), 'i') } })
+        // query.where('content').in(`${req.query.content.replace('_', ' ')}`)
+    }
+
+    let inputValue
+
+    if (req.query.description || req.query.content || req.query.title) {
+        inputValue = req.query.description || req.query.content || req.query.title
+    }
+
+    let docs
+
+    if (arr.length === 0) {
+        docs = []
+        return res.send(docsIndexPage({ docs: { docs, isFiltered: true, inputValue } }))
+    }
+
+    docs = await DocItem.find({}).or(arr).populate({ path: 'author' })
+
+    res.send(docsIndexPage({ docs: { docs, isFiltered: true, inputValue } }, req))
+}

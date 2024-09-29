@@ -101,7 +101,7 @@ const adminIndexPage = ({ docs, products, projects }, req) => {
                                 <strong>User:</strong> ${user.firstName} ${user.lastName}
                             </div>
                             <div class="mb-3">
-                                <strong>Project Title:</strong> <span id="project-title">${project.title}</span>
+                                <strong>Project Title:</strong> <span id="project-title"><a href="/admin/project/${project._id}">${project.title}</a></span>
                             </div>
                             <div class="mb-3">
                                 <strong>Date Quote Created:</strong> ${project.quoteInfoItem.submitted_at.toLocaleDateString()}
@@ -112,8 +112,11 @@ const adminIndexPage = ({ docs, products, projects }, req) => {
                             <div class="mb-3">
                                 <strong>Date Due:</strong> <span id="quote-due-date" style="color: ${level}">${project.quoteInfoItem.dueDate.toLocaleDateString()}</span>
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-5">
                                 <strong>Last Update:</strong> <span>There are no updates</span>
+                            </div>
+                            <div>
+                                <a href="/admin/project/${project._id}" class="button is-medium is-info">View/Push Update</a>
                             </div>
                         </div>
                     </div>
