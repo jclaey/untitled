@@ -17,6 +17,7 @@ import User from '../models/User.js'
 import Order from '../models/Order.js'
 import websitesDemoPage from '../views/demo_pages/websites.js'
 import verifyMobilePage from '../views/verify-mobile.js'
+import verifyEmailSuccessPage from '../views/verify-email-success.js'
 import { encryptStringData, decryptStringData } from '../utils/encrypt.js'
 
 const key = process.env.ENCRYPTION_KEY
@@ -331,4 +332,23 @@ export const postVerifyMobile = (req, res, next) => {
     } else {
         console.log('data not available')
     }
+}
+
+export const postVerifyEmail = async (req, res, next) => {
+    const userId = decryptStringData(req.session.userId, key, req.session.userIv)
+    const user = await User.findById(userId)
+
+    if (user && user.emailVerifyToken === req.params.token) {
+        user.emailVerified = true
+        user.save()
+        res.redirect(`/users/user/${user._id}/profile`)
+    } else {
+        if (process.env.NODE_ENV === 'development') {
+            res.redirect('/verify-email-success')
+        }
+    }
+}
+
+export const getVerifyEmailSuccess = (req, res, next) => {
+    res.send(verifyEmailSuccessPage({}, req))
 }

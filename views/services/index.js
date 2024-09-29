@@ -27,6 +27,20 @@ const indexPage = (req) => {
                                         </div>
                                     </div>
                                 </div>
+                                <div class="card service">
+                                    <div class="card-image">
+                                        <figure class="image is-3by2">
+                                            <img src="/resources/images/services_artificial_intelligence.png" />
+                                        </figure>
+                                    </div>
+                                    <div class="card-content">
+                                        <div class="content has-text-centered">
+                                            <strong><span class="is-size-5"><span class="pipe pr-2">|</span>Artificial Intelligence<span class="pipe pl-2">|</span></span></strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="column">
                                 <div class="card mb-4 service">
                                     <div class="card-image">
                                         <figure class="image is-3by2">
@@ -56,6 +70,10 @@ const indexPage = (req) => {
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="columns">
                             <div class="column">
                                 <div class="card mb-4 service">
                                     <div class="card-image">
@@ -71,6 +89,8 @@ const indexPage = (req) => {
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="column">
                                 <div class="card service">
                                     <div class="card-image">
                                         <figure class="image is-3by2">
@@ -80,62 +100,6 @@ const indexPage = (req) => {
                                     <div class="card-content">
                                         <div class="content has-text-centered">
                                             <strong><span class="is-size-5"><span class="pipe pr-2">|</span>Desktop Applications<span class="pipe pl-2">|</span></span></strong>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="column">
-                        <div class="columns">
-                            <div class="column">
-                                <div class="card mb-4 service">
-                                    <div class="card-image">
-                                        <figure class="image is-3by2">
-                                            <img src="/resources/images/services_augmented_reality.png" />
-                                        </figure>
-                                    </div>
-                                    <div class="card-content">
-                                        <div class="content has-text-centered">
-                                            <strong><span class="is-size-5"><span class="pipe pr-2">|</span>Augmented Reality<span class="pipe pl-2">|</span></span></strong>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card service">
-                                    <div class="card-image">
-                                        <figure class="image is-3by2">
-                                            <img src="/resources/images/services_virtual_reality.png" />
-                                        </figure>
-                                    </div>
-                                    <div class="card-content">
-                                        <div class="content has-text-centered">
-                                            <strong><span class="is-size-5"><span class="pipe pr-2">|</span>Virtual Reality<span class="pipe pl-2">|</span></span></strong>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="column">
-                                <div class="card mb-4 service">
-                                    <div class="card-image">
-                                        <figure class="image is-3by2">
-                                            <img src="/resources/images/services_blockchain.png" />
-                                        </figure>
-                                    </div>
-                                    <div class="card-content">
-                                        <div class="content has-text-centered">
-                                            <strong><span class="is-size-5"><span class="pipe pr-2">|</span>Blockchain<span class="pipe pl-2">|</span></span></strong>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card service">
-                                    <div class="card-image">
-                                        <figure class="image is-3by2">
-                                            <img src="/resources/images/services_artificial_intelligence.png" />
-                                        </figure>
-                                    </div>
-                                    <div class="card-content">
-                                        <div class="content has-text-centered">
-                                            <strong><span class="is-size-5"><span class="pipe pr-2">|</span>Artificial Intelligence<span class="pipe pl-2">|</span></span></strong>
                                         </div>
                                     </div>
                                 </div>

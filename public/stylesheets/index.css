@@ -560,3 +560,18 @@ body {
     height: 50px;
     font-size: 20px;
 }
+
+#register-section #policies {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+#register-section #fields {
+    margin-left: 2rem;
+    margin-right: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}

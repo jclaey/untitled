@@ -120,10 +120,93 @@ export const postRegister = async (req, res, next) => {
         })
 
         if (user) {
-            const otp = await crypto.randomBytes(3).toString('hex')
-            user.mobileVerifyToken = otp
-            user.mobileVerifyTokenExpires = Date.now() + 3600000
+            const emailToken = await crypto.randomBytes(20).toString('hex')
+            const resetUrl = `http://${req.headers.host}/verify-email/${token}`
+            // const otp = await crypto.randomBytes(3).toString('hex')
+            // user.mobileVerifyToken = otp
+            // user.mobileVerifyTokenExpires = Date.now() + 3600000
+            user.emailVerifyToken = emailToken
+            user.emailVerifyTokenExpires = Date.now() + 10800000
             await user.save()
+
+            const transporter = nodemailer.createTransport({
+                host: 'smtp-mail.outlook.com',
+                port: 587,
+                secure: false,
+                auth: {
+                    user: process.env.OUTLOOK_EMAIL,
+                    pass: process.env.OUTLOOK_PASS
+                }
+            })
+        
+            const info = await transporter.sendMail({
+                from: `"contact@handierme.com" <${process.env.OUTLOOK_EMAIL}>`,
+                to: `${req.body.email}`,
+                subject: 'Verify Email Address for Web Solutions',
+                text: `From: Web Solutions, Subject: Verify Email Address`,
+                html: Buffer.from(`
+                    <!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+                        <title>Verify Email</title>
+                    </head>
+                        <body>
+                            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td align="center">
+                                        <table width="600" cellpadding="0" cellspacing="0" border="0">
+                                            <tr>
+                                                <td>
+                                                    <h1 style="font-size: 48px;">Verify Email</h1>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <h3 style="font-size: 28px;">From: <strong>Web Solutions by HandierMe</strong></h3>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <h3 style="font-size: 28px;">Subject: <strong>Verify Email</strong></h3>
+                                                    <p style="font-size: 28px;">
+                                                        <strong>
+                                                            You are receiving this because you have created an account with Web Solutions.
+                                                        </strong>
+                                                    </p>
+                                                    <p style="font-size: 28px;">
+                                                        <strong>
+                                                            Please click on the following link to verify your email address: <br />
+                                                            ${resetUrl}
+                                                        </strong>
+                                                    </p>
+                                                    <p style="font-size: 28px;">
+                                                        <strong>
+                                                            This link will expire in 3 hours.
+                                                        </strong>
+                                                    </p>
+                                                    <p style="font-size: 28px;">
+                                                        <strong>
+                                                            Regards, <br />
+                                                            Web Solutions by HandierMe
+                                                        </strong>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </body>
+                    </html>
+                `, 'utf-8')
+            })
+        
+            if (process.env.NODE_ENV === 'development') {
+                console.log("Message sent: %s", info.messageId)
+            }
 
             // const message = await twilioClient.messages.create({
             //     body: `Here is your Untitled verification code: ${otp}`,
@@ -135,10 +218,10 @@ export const postRegister = async (req, res, next) => {
             req.session.userId = userId.encryptedData
             req.session.userIv = userId.iv
             req.session.expiration = Date.now() + 10800000
-            res.redirect(`/users/user/${user._id}/profile`)
-            if (message) {
-                res.send(verifyMobilePage({ userId: user._id }, req))
-            }
+            res.redirect(`/verify-email`)
+            // if (message) {
+            //     res.send(verifyMobilePage({ userId: user._id }, req))
+            // }
         } else {
             if (process.env.NODE_ENV === 'development') {
                 throw new Error('Could not create a new user')
@@ -159,6 +242,10 @@ export const getLogout = (req, res, next) => {
 export const getUserProfile = async (req, res, next) => {
     let user = await User.findById(req.params.id)
     let token = await crypto.randomBytes(20).toString('hex')
+
+    if (user && !user.emailVerified)  {
+        return res.redirect('/verify-email')
+    }
 
     if (user) {
         let firstName = user.firstName.split('.')

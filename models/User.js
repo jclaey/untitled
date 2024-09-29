@@ -67,7 +67,13 @@ const UserSchema = new Schema({
     mobileVerifyToken: String,
     mobileVerifyTokenExpires: Date,
     mobileVerified: {
-        type: String,
+        type: Boolean,
+        default: false
+    },
+    emailVerifyToken: String,
+    emailVerifyTokenExpires: Date,
+    emailVerified: {
+        type: Boolean,
         default: false
     }
 })
