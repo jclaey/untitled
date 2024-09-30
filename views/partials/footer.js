@@ -22,6 +22,19 @@ const footer = () => {
                     </div>
                 </div>
             </div>
+            <div id="footer-social">
+                <div id="social-links">
+                    <a href="https://facebook.com">
+                        <i class="fa-brands fa-facebook mr-5"></i>
+                    </a>
+                    <a href="https://threads.com">
+                        <i class="fa-brands fa-square-threads mr-5"></i>
+                    </a>
+                    <a href="https://youtube.com">
+                        <i class="fa-brands fa-youtube mr-5"></i>
+                    </a>
+                </div>
+            </div>
             <div id="footer-built-by" class="has-text-centered content">
                 <p>
                     Built by <a href="https://claeysdev.com" target="_blank" class="has-text-dark">ClaeysDev</a>
