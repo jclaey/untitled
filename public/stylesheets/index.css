@@ -593,3 +593,12 @@ body {
     margin-bottom: 2rem;
 }
 
+#verify-email-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#verify-email-message .hero-box {
+    width: 50%;
+}

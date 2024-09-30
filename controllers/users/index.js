@@ -107,6 +107,16 @@ export const postRegister = async (req, res, next) => {
         lastName = encryptStringData(lastName, key)
         phoneNumber = encryptStringData(phoneNumber, key)
 
+        let verificationMethods = []
+        
+        if (req.body.verifyEmail) {
+            verificationMethods.push(req.body.verifyEmail)
+        }
+
+        if (req.body.verifySMS) {
+            verificationMethods.push(req.body.verifySMS)
+        }
+
         let user = new User({
             firstName: `${firstName.encryptedData}.${firstName.iv}`,
             lastName: `${lastName.encryptedData}.${lastName.iv}`,
@@ -116,12 +126,14 @@ export const postRegister = async (req, res, next) => {
             },
             emailHashed: hashed,
             phoneNumber: `${phoneNumber.encryptedData}.${phoneNumber.iv}`,
+            verificationMethods: verificationMethods.length > 0 ? verificationMethods : [],
+            isNewsletterSubscriber: req.body.isNewsletterSubscriber ? req.body.isNewsletterSubscriber : false,
             password
         })
 
         if (user) {
             const emailToken = await crypto.randomBytes(20).toString('hex')
-            const resetUrl = `http://${req.headers.host}/verify-email/${token}`
+            const resetUrl = `http://${req.headers.host}/verify-email/${emailToken}`
             // const otp = await crypto.randomBytes(3).toString('hex')
             // user.mobileVerifyToken = otp
             // user.mobileVerifyTokenExpires = Date.now() + 3600000
@@ -218,7 +230,8 @@ export const postRegister = async (req, res, next) => {
             req.session.userId = userId.encryptedData
             req.session.userIv = userId.iv
             req.session.expiration = Date.now() + 10800000
-            res.redirect(`/verify-email`)
+            res.redirect(`/verify-email-page`)
+
             // if (message) {
             //     res.send(verifyMobilePage({ userId: user._id }, req))
             // }
@@ -242,9 +255,10 @@ export const getLogout = (req, res, next) => {
 export const getUserProfile = async (req, res, next) => {
     let user = await User.findById(req.params.id)
     let token = await crypto.randomBytes(20).toString('hex')
+    let emailToken = await crypto.randomBytes(20).toString('hex')
 
     if (user && !user.emailVerified)  {
-        return res.redirect('/verify-email')
+        return res.redirect('/verify-email-page')
     }
 
     if (user) {

@@ -19,6 +19,7 @@ import websitesDemoPage from '../views/demo_pages/websites.js'
 import verifyMobilePage from '../views/verify-mobile.js'
 import verifyEmailSuccessPage from '../views/verify-email-success.js'
 import { encryptStringData, decryptStringData } from '../utils/encrypt.js'
+import verifyEmailPage from '../views/verify-email.js'
 
 const key = process.env.ENCRYPTION_KEY
 
@@ -341,12 +342,18 @@ export const postVerifyEmail = async (req, res, next) => {
     if (user && user.emailVerifyToken === req.params.token) {
         user.emailVerified = true
         user.save()
-        res.redirect(`/users/user/${user._id}/profile`)
+        res.redirect('/verify-email-success')
     } else {
         if (process.env.NODE_ENV === 'development') {
-            res.redirect('/verify-email-success')
+            throw new Error('Token is invalid or has expired')
+        } else {
+            res.redirect('/failure')
         }
     }
+}
+
+export const getVerifyEmailPage = (req, res, next) => {
+    res.send(verifyEmailPage({}, req))
 }
 
 export const getVerifyEmailSuccess = (req, res, next) => {

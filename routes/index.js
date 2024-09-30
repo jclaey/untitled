@@ -28,12 +28,13 @@ import {
     getVerifyMobile,
     postVerifyMobile,
     postVerifyEmail,
-    getVerifyEmailSuccess
+    getVerifyEmailSuccess,
+    getVerifyEmailPage
 } from '../controllers/index.js'
 
 router.route('/').get(getIndex)
 router.route('/about').get(getAbout)
-router.route('/contact').get(getContact).post([ 
+router.route('/contact').get(getContact).post([
     validateName, 
     requireValidEmail, 
     validateContent, 
@@ -53,7 +54,8 @@ router.route('/reset-password/:token/:userId?').get(asyncHandler(getResetPasswor
 router.route('/stay-signed-in').get(getStaySignedIn)
 router.route('/websites-demos').get(getWebsitesDemo)
 router.route('/verify-mobile/:code?').get(getVerifyMobile).post(postVerifyMobile)
-router.route('/verify-email/:token').post(postVerifyEmail)
+router.route('/verify-email-page').get(getVerifyEmailPage)
+router.route('/verify-email/:token').get(postVerifyEmail)
 router.route('/verify-email-success').get(getVerifyEmailSuccess)
 
 export default router

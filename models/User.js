@@ -75,6 +75,11 @@ const UserSchema = new Schema({
     emailVerified: {
         type: Boolean,
         default: false
+    },
+    verificationMethods: [String],
+    isNewsletterSubscriber: {
+        type: Boolean,
+        default: false
     }
 })
 

@@ -29,8 +29,8 @@ const verifyEmailSuccessPage = ({}, req) => {
                     </div>
                 </div>
             </section>
-        </main>    
-    ` })
+        </main>
+    ` }, req)
 }
 
 export default verifyEmailSuccessPage

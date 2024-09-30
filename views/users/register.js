@@ -81,11 +81,11 @@ const userRegisterPage = ({ errors, values = {} }, req) => {
                                 <strong>Verification Methods</strong>
                             </div>
                             <label class="checkbox mr-2">
-                                <input name="verificationMethod" value="email" type="checkbox" checked disabled />
+                                <input name="verifyEmail" value="email" type="checkbox" checked disabled />
                                 Email
                             </label>
                             <label class="checkbox">
-                                <input name="verificationMethod" value="sms" type="checkbox" />
+                                <input name="verifySMS" value="sms" type="checkbox" />
                                 Text Message (SMS)
                             </label>
                         </div>
