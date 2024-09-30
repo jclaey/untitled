@@ -63,6 +63,7 @@ const layout = ({ template }, req) => {
             ${req && req.originalUrl && req.originalUrl === '/' ? `<script src="/javascript/testimonials.js"></script><br /><script>AOS.init()</script>` : ''}
             ${req && req.originalUrl && req.originalUrl.includes('/docs') || template.includes('id="docs-search-container"') ? `<script src="/javascript/search.js"></script>` : ''}
             ${template.includes('id="message"') ? '<script src="/javascript/closeMessage.js"></script>' : ''}
+            ${template.includes('id="form-btn"') ? '<script src="/javascript/spinner.js"></script>' : ''}
             <script src="/javascript/auth-modal.js"></script>
           </body>
         </html>

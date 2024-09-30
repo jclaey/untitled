@@ -98,7 +98,10 @@ const userRegisterPage = ({ errors, values = {} }, req) => {
                                 Subscribe to our weekly newsletter :)
                             </label>
                         </div>
-                        <button class="button is-medium mb-5 register-btn" id="form-btn" type="submit" disabled>Register</button>
+                        <button class="button is-medium mb-5 register-btn" id="form-btn" type="submit" disabled>
+                            <span>Register</span>
+                            <i class="fa-solid fa-arrows-rotate spinner"></i>
+                        </button>
                         <div class="mb-5">
                             <p class="has-text-centered">Already have an account? Click <a href="/users/login">here</a> to sign in.</p>
                         </div>

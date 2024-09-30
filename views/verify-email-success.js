@@ -2,8 +2,8 @@ import layout from "./layout.js"
 
 const verifyEmailSuccessPage = ({}, req) => {
     return layout({ template: `
-        <main>
-            <section class="hero-box">
+        <main id="verify-email-message">
+            <section class="hero-box box">
                 <div class="hero-body">
                     <div class="mb-6">
                         <p class="title has-text-success mb-6">Success!</p>
