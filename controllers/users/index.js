@@ -67,6 +67,12 @@ export const postLogin = async (req, res, next) => {
         req.session.userId = userId.encryptedData
         req.session.userIv = userId.iv
         req.session.expiration = Date.now() + 10800000
+
+        if (!user.emailVerified) {
+            req.session.emailUnverified = true
+            res.redirect('/verify-email-page')
+        }
+
         res.redirect(`/users/user/${user._id}/profile`)
     } else {
         req.session.error = 'Invalid credentials'

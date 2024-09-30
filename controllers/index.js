@@ -359,3 +359,115 @@ export const getVerifyEmailPage = (req, res, next) => {
 export const getVerifyEmailSuccess = (req, res, next) => {
     res.send(verifyEmailSuccessPage({}, req))
 }
+
+export const resendEmailVerification = async (req, res, next) => {
+    const token = await crypto.randomBytes(20).toString('hex')
+    let userId = decryptStringData(req.session.userId, key, req.session.userIv)
+    const user = await User.findById(userId)
+    const userEmail = decryptStringData(user.emailEncrypted.encryptedData, key, user.emailEncrypted.iv)
+
+    if (token) {
+        if (user) {
+            user.emailVerifyToken = token
+            user.emailVerifyTokenExpires = Date.now() + 10800000
+
+            const resetUrl = `http://${req.headers.host}/verify-email/${token}`
+
+            const transporter = nodemailer.createTransport({
+                host: 'smtp-mail.outlook.com',
+                port: 587,
+                secure: false,
+                auth: {
+                    user: process.env.OUTLOOK_EMAIL,
+                    pass: process.env.OUTLOOK_PASS
+                }
+            })
+        
+            const info = await transporter.sendMail({
+                from: `"contact@handierme.com" <${process.env.OUTLOOK_EMAIL}>`,
+                to: `${userEmail}`,
+                subject: 'Verify Email Address for Web Solutions',
+                text: `From: Web Solutions, Subject: Verify Email Address`,
+                html: Buffer.from(`
+                    <!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+                        <title>Verify Email</title>
+                    </head>
+                        <body>
+                            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td align="center">
+                                        <table width="600" cellpadding="0" cellspacing="0" border="0">
+                                            <tr>
+                                                <td>
+                                                    <h1 style="font-size: 48px;">Verify Email</h1>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <h3 style="font-size: 28px;">From: <strong>Web Solutions by HandierMe</strong></h3>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <h3 style="font-size: 28px;">Subject: <strong>Verify Email</strong></h3>
+                                                    <p style="font-size: 28px;">
+                                                        <strong>
+                                                            You are receiving this because you have created an account with Web Solutions.
+                                                        </strong>
+                                                    </p>
+                                                    <p style="font-size: 28px;">
+                                                        <strong>
+                                                            Please click on the following link to verify your email address: <br />
+                                                            ${resetUrl}
+                                                        </strong>
+                                                    </p>
+                                                    <p style="font-size: 28px;">
+                                                        <strong>
+                                                            This link will expire in 3 hours.
+                                                        </strong>
+                                                    </p>
+                                                    <p style="font-size: 28px;">
+                                                        <strong>
+                                                            Regards, <br />
+                                                            Web Solutions by HandierMe
+                                                        </strong>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </body>
+                    </html>
+                `, 'utf-8')
+            })
+        
+            if (process.env.NODE_ENV === 'development') {
+                console.log("Message sent: %s", info.messageId)
+            }
+
+            req.session.message = 'A new verification email is being sent to your email address on record. Please allow a few minutes for the email to be sent and check any spam or other folders if the email is not in your normal inbox.'
+            return res.send(verifyEmailPage({}, req))
+        } else {
+            if (process.env.NODE_ENV === 'development') {
+                throw new Error('User could not be found')
+            } else {
+                req.session.error = 'User could not be found'
+                return res.send(verifyEmailPage({}, req))
+            }
+        }
+    } else {
+        if (process.env.NODE_ENV === 'development') {
+            throw new Error('Token could not be generated')
+        } else {
+            req.session.error = 'Token could not be generated. Please try again at a later time or report the error to our team. Thank you and we apologize for any inconvenience.'
+            return res.send(verifyEmailPage({}, req))
+        }
+    }
+}

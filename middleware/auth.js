@@ -13,6 +13,10 @@ export const requireUserAuth = (req, res, next) => {
         }
     }
 
+    if (req.session.emailUnverified) {
+        return res.redirect('/verify-email-page')
+    }
+
     next()
 }
 
