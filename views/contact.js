@@ -54,7 +54,13 @@ const contactPage = ({errors, values = {}}, req) => {
                     </form>
                 </section>
             </main>    
-        ` 
+        `, meta: {
+            seo: {
+                description: 'We are always available to answer your questions or comments. Contact us today. We would love to hear from you.',
+                keywords: ''
+            },
+            title: 'Contact Us'
+        } 
     }, req)
 }
 

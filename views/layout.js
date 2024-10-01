@@ -1,7 +1,7 @@
 import header from "./partials/header.js"
 import footer from "./partials/footer.js"
 
-const layout = ({ template }, req) => {
+const layout = ({ template, meta = {} }, req) => {
     return `
       <!DOCTYPE html>
         <html>
@@ -9,6 +9,10 @@ const layout = ({ template }, req) => {
             <meta charset="UTF-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            ${meta ? `
+                <meta name="description" content="${meta.seo.description}">
+                <meta name="keywords" content="${meta.seo.keywords}">
+              ` : ''}
             ${req && req.originalUrl && req.originalUrl === '/docs/new' || req && req.originalUrl && req.originalUrl.includes('/edit') || req && req.originalUrl && req.originalUrl === '/contact' ? '<script src="https://cdn.tiny.cloud/1/gpcfinmpmsaqqlj61u93b2k1jce8onblj0nybpb9ti64jvmu/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>' : ''}
             ${req && req.originalUrl && req.originalUrl === '/' ? '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" integrity="sha512-1cK78a1o+ht2JcaW6g8OXYwqpev9+6GqOkz9xmBN9iUUhIndKtxwILGWYOSibOKjLsEdjyjZvYDq/cZwNeak0w==" crossorigin="anonymous" referrerpolicy="no-referrer">' : ''}
             ${req && req.originalUrl && req.originalUrl === '/' ? '<link rel="stylesheet" href="/stylesheets/testimonials.css">' : ''}
@@ -17,7 +21,7 @@ const layout = ({ template }, req) => {
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
             <link rel="stylesheet" href="/stylesheets/index.css">
             <link rel="stylesheet" href="/stylesheets/mobile.css">
-            <title>Untitled Business Project</title>
+            <title>${meta ? `${meta.title} | ` : ' '}Untitled</title>
           </head>
           <body>
             <header class="header">

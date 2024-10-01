@@ -16,7 +16,7 @@ const aboutPage = (req) => {
                                 What We Do
                             </h2>
                             <p class="is-size-4 block">
-                                Hi! We are Web Solutions and we create solutions for the web! Think web sites, web apps, mobile apps, desktop apps, Internet of Things,
+                                Hi! We are Web Solutions and we create solutions for the web! Think web sites, web apps, mobile apps, desktop apps,
                                 and some cool AI stuff too. We build for individuals, small businesses, and enterprises as well.
                             </p>
                             <p class="is-size-4 block">
@@ -95,8 +95,14 @@ const aboutPage = (req) => {
                     </div>
                 </section>
             </main>
-        ` 
-    }, req)
+        `, meta: {
+            seo: {
+                description: `Hi! We are Web Solutions and we create solutions for the web! Think web sites, web apps, mobile apps, desktop apps,
+                            and some cool AI stuff too. We build for individuals, small businesses, and enterprises as well, and for any industry.`,
+                keywords: 'web sites, web apps, mobile apps, desktop apps, AI, artificial intelligence, web development, web development for individuals, web development for small businesses, web development for enterprises'
+            },
+            title: 'About Us'
+        } }, req)
 }
 
 export default aboutPage
