@@ -67,6 +67,12 @@ const newDocPage = ({ errors, values = {} }, req) => {
                             <textarea id="content" name="content" class="textarea" value="${errors && values.content && values.content !== '' ? values.content : ''}"></textarea>
                         </div>
                     </div>
+                    <div class="field mb-4">
+                        <label class="label" for="content">Keywords</label>
+                        <div class="control">
+                            <textarea id="content" name="content" class="textarea" value="${errors && values.keywords && values.keywords !== '' ? values.keywords : ''}">Enter comma separated list of keywords...</textarea>
+                        </div>
+                    </div>
                     <div class="field mb-6">
                         <label class="label" for="image">Image*</label>
                         <div class="control">

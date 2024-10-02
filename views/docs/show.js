@@ -38,7 +38,13 @@ const showDocPage = ({ doc }, req) => {
                 </div>
             </section>
         </main>
-    ` }, req)
+    `, meta: {
+        seo: {
+            description: `${doc.description.length > 160 ? doc.description.slice(0, 159) : doc.description}`,
+            keywords: `${doc.keywords ? doc.keywords : ''}`
+        },
+        title: `${doc.title}`
+    }, }, req)
 }
 
 export default showDocPage

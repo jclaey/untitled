@@ -11,6 +11,7 @@ const DocSchema = new Schema({
     },
     description: String,
     content: String,
+    keywords: String,
     image: {
         path: String,
         filename: String

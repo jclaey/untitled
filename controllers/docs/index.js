@@ -35,6 +35,7 @@ export const postNew = async (req, res, next) => {
         author: req.session.adminId,
         description: req.body.description,
         content: req.body.content,
+        keywords: req.body.keywords,
         image: {
             path: req.file.path,
             filename: req.file.filename
