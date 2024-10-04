@@ -21,6 +21,8 @@ export const getIndex = async (req, res, next) => {
         .populate('user')
         .populate('quoteInfoItem')
         .exec()
+
+        console.log(projects)
     
     if (docs) {
         res.send(adminIndexPage({ docs, products, projects }, req))

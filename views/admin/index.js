@@ -74,10 +74,13 @@ const adminIndexPage = ({ docs, products, projects }, req) => {
 
     projects ? renderedProjects = projects => { 
         return projects.map(project => {
+            let user
 
-            let user = {
-                firstName: decryptStringData(project.user.firstName.split('.')[0], key, project.user.firstName.split('.')[1]),
-                lastName: decryptStringData(project.user.lastName.split('.')[0], key, project.user.lastName.split('.')[1])
+            if (project.user) {
+                user = {
+                    firstName: decryptStringData(project.user.firstName.split('.')[0], key, project.user.firstName.split('.')[1]),
+                    lastName: decryptStringData(project.user.lastName.split('.')[0], key, project.user.lastName.split('.')[1])
+                }
             }
 
             const nowDate = Date.now()
@@ -98,7 +101,7 @@ const adminIndexPage = ({ docs, products, projects }, req) => {
                     <div class="media-content">
                         <div class="content">
                             <div class="mb-3">
-                                <strong>User:</strong> ${user.firstName} ${user.lastName}
+                                ${project.user ? `<strong>User:</strong> ${user.firstName} ${user.lastName}` : ''}
                             </div>
                             <div class="mb-3">
                                 <strong>Project Title:</strong> <span id="project-title"><a href="/admin/project/${project._id}">${project.title}</a></span>

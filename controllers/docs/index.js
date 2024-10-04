@@ -6,6 +6,9 @@ import showDocPage from '../../views/docs/show.js'
 import docsEditPage from '../../views/docs/edit.js'
 import DocItem from "../../models/Doc.js"
 import { decode } from 'html-entities'
+import { decryptStringData } from '../../utils/encrypt.js'
+
+const key = process.env.ENCRYPTION_KEY
 
 export const getIndex = async (req, res, next) => {
     const docs = await DocItem.find({}).populate('author').exec()
@@ -28,13 +31,15 @@ export const postNew = async (req, res, next) => {
         return res.send(newDocPage({ errors, values: req.body }, req))
     }
 
+    const adminId = decryptStringData(req.session.adminId, key, req.session.adminIv)
+
     const doc = new DocItem({
         type: req.body.type,
         category: req.body.category,
         title: req.body.title,
-        author: req.session.adminId,
+        author: adminId,
         description: req.body.description,
-        content: req.body.content,
+        content: typeof req.body.content !== 'string' ? req.body.content[0] : '',
         keywords: req.body.keywords,
         image: {
             path: req.file.path,
