@@ -610,6 +610,12 @@ body {
     transform-origin: center;
 }
 
+#project-update-form #update-btns {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }

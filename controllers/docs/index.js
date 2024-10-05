@@ -5,7 +5,6 @@ import newDocPage from "../../views/docs/new.js"
 import showDocPage from '../../views/docs/show.js'
 import docsEditPage from '../../views/docs/edit.js'
 import DocItem from "../../models/Doc.js"
-import { decode } from 'html-entities'
 import { decryptStringData } from '../../utils/encrypt.js'
 
 const key = process.env.ENCRYPTION_KEY
