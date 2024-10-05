@@ -8,7 +8,7 @@ if (window.location.href.includes('=')) {
     history.pushState({}, '', '/docs/filter-docs')
 }
 
-console.log(window.location)
+// console.log(window.location)
 
 button.addEventListener('click', () => {
     url = url += `title=${input.value.toLowerCase()}&description=${input.value.toLowerCase()}&content=${input.value.toLowerCase()}`
@@ -73,99 +73,107 @@ filter.addEventListener('click', () => {
         </div>
     `
 
-    button.style.display = 'none'
-    filters.style.display = 'block'
-    filters.innerHTML = panel
-    button = document.querySelector('#apply-filters')
+    if (filters.classList.contains('show')) {
+        filters.classList.remove('show')
+        filters.style.display = 'none'
+        filters.innerHTML = ''
+        button.style.display = 'block'
+    } else {
+        filters.classList.add('show')
+        button.style.display = 'none'
+        filters.style.display = 'block'
+        filters.innerHTML = panel
+        button = document.querySelector('#apply-filters')
 
-    const selects = document.querySelectorAll('#docs-search-container select')
+        const selects = document.querySelectorAll('#docs-search-container select')
 
-    if (selects.length > 0) {
-        const checkboxes = document.querySelectorAll('.checkbox input')
+        if (selects.length > 0) {
+            const checkboxes = document.querySelectorAll('.checkbox input')
 
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('click', () => {
-                if (checkbox.classList.contains('checked')) {
-                    checkbox.classList.remove('checked')
-                } else {
-                    checkbox.classList.add('checked')
-                }
-            })
-        })
-
-        button.addEventListener('click', e => {
-            if (input.value === '') {
-                e.preventDefault()
-                const error = document.querySelector('#error')
-                error.textContent = 'Please enter a search term'
-
-                setTimeout(() => {
-                    error.textContent = ''
-                }, 3000)
-
-                return
-            }
-
-            if (selects.length > 0) {
-                selects.forEach(select => {
-                    if (select.value !== '') {
-                        let name = select.getAttribute('id')
-                        filterObj[name] = select.value
-                    }
-                })
-            }
-
-            if (checkboxes.length > 0) {
-                checkboxes.forEach(checkbox => {
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('click', () => {
                     if (checkbox.classList.contains('checked')) {
-                        filterObj[checkbox.value] = input.value.toLowerCase()
+                        checkbox.classList.remove('checked')
+                    } else {
+                        checkbox.classList.add('checked')
                     }
                 })
-            }
+            })
 
-            for (let value in filterObj) {
-                if (value === 'description' && filterObj[value] !== '') {
-                    if (url.split('?')[1] !== '') {
-                        url += `&`
-                    }
+            button.addEventListener('click', e => {
+                if (input.value === '') {
+                    e.preventDefault()
+                    const error = document.querySelector('#error')
+                    error.textContent = 'Please enter a search term'
 
-                    url += `description=${filterObj[value].replace(' ', '_')}`
+                    setTimeout(() => {
+                        error.textContent = ''
+                    }, 3000)
+
+                    return
                 }
 
-                if (value === 'type' && filterObj[value] !== '') {
-                    if (url.split('?')[1] !== '') {
-                        url += `&`
-                    }
-
-                    url += `type=${filterObj[value].replace(' ', '_')}`
+                if (selects.length > 0) {
+                    selects.forEach(select => {
+                        if (select.value !== '') {
+                            let name = select.getAttribute('id')
+                            filterObj[name] = select.value
+                        }
+                    })
                 }
 
-                if (value === 'category' && filterObj[value] !== '') {
-                    if (url.split('?')[1] !== '') {
-                        url += `&`
-                    }
-
-                    url += `category=${filterObj[value].replace(' ', '_')}`
+                if (checkboxes.length > 0) {
+                    checkboxes.forEach(checkbox => {
+                        if (checkbox.classList.contains('checked')) {
+                            filterObj[checkbox.value] = input.value.toLowerCase()
+                        }
+                    })
                 }
 
-                if (value === 'title' && filterObj[value] !== '') {
-                    if (url.split('?')[1] !== '') {
-                        url += `&`
+                for (let value in filterObj) {
+                    if (value === 'description' && filterObj[value] !== '') {
+                        if (url.split('?')[1] !== '') {
+                            url += `&`
+                        }
+
+                        url += `description=${filterObj[value].replace(' ', '_')}`
                     }
 
-                    url += `title=${filterObj[value].replace(' ', '_')}`
-                }
+                    if (value === 'type' && filterObj[value] !== '') {
+                        if (url.split('?')[1] !== '') {
+                            url += `&`
+                        }
 
-                if (value === 'content' && filterObj[value] !== '') {
-                    if (url.split('?')[1] !== '') {
-                        url += `&`
+                        url += `type=${filterObj[value].replace(' ', '_')}`
                     }
 
-                    url += `content=${filterObj[value].replace(' ', '_')}`
-                }
-            }
+                    if (value === 'category' && filterObj[value] !== '') {
+                        if (url.split('?')[1] !== '') {
+                            url += `&`
+                        }
 
-            window.location.assign(url)
-        })
+                        url += `category=${filterObj[value].replace(' ', '_')}`
+                    }
+
+                    if (value === 'title' && filterObj[value] !== '') {
+                        if (url.split('?')[1] !== '') {
+                            url += `&`
+                        }
+
+                        url += `title=${filterObj[value].replace(' ', '_')}`
+                    }
+
+                    if (value === 'content' && filterObj[value] !== '') {
+                        if (url.split('?')[1] !== '') {
+                            url += `&`
+                        }
+
+                        url += `content=${filterObj[value].replace(' ', '_')}`
+                    }
+                }
+
+                window.location.assign(url)
+            })
+        }
     }
 })

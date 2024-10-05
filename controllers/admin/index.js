@@ -113,8 +113,6 @@ export const getProjectShow = async (req, res, next) => {
         .populate('quoteInfoItem')
         .exec()
 
-    console.log(project)
-
     project = {
         quoteInfoItem: {
 
