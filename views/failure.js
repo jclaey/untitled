@@ -1,6 +1,6 @@
 import layout from "./layout.js"
 
-const failurePage = (req) => {
+const failurePage = ({}, req) => {
     return layout({ template: `
         <main class="container">
             <div>

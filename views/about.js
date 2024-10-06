@@ -33,44 +33,47 @@ const aboutPage = (req) => {
                                 and the underlying infrastructure. At Web Solutions, we keep it top of mind and take a security-first approach to development.
                                 For every platform or application we build, we:
                             </p>
-                                <ul class="is-size-4">
-                                    <li>
-                                        <i class="fa-regular fa-circle-check has-text-success pr-2"></i>
-                                        Sanitize and escape all input values to prevent XSS attacks
-                                    </li>
-                                    <li>
-                                        <i class="fa-regular fa-circle-check has-text-success pr-2"></i>
-                                        All sensitive and personally identifiable information is encrypted at every stage of transit and at rest
-                                    </li>
-                                    <li>
-                                        <i class="fa-regular fa-circle-check has-text-success pr-2"></i>
-                                        All passwords are hashed and salted
-                                    </li>
-                                    <li>
-                                        <i class="fa-regular fa-circle-check has-text-success pr-2"></i>
-                                        Use HTTP security headers to protect information in transit
-                                    </li>
-                                    <li>
-                                        <i class="fa-regular fa-circle-check has-text-success pr-2"></i>
-                                        Encrypt information used in tamper resistant cookies
-                                    </li>
-                                    <li>
-                                        <i class="fa-regular fa-circle-check has-text-success pr-2"></i>
-                                        Use HTTPS and SSL
-                                    </li>
-                                    <li>
-                                        <i class="fa-regular fa-circle-check has-text-success pr-2"></i>
-                                        Limit log in attempts to prevent brute force attacks
-                                    </li>
-                                    <li>
-                                        <i class="fa-regular fa-circle-check has-text-success pr-2"></i>
-                                        Keep libraries and packages up-to-date with the latest security features
-                                    </li>
-                                    <li>
-                                        <i class="fa-regular fa-circle-check has-text-success pr-2"></i>
-                                        Regularly scan software for vulnerabilities
-                                    </li>
-                                </ul>
+                            <ul class="is-size-4">
+                                <li>
+                                    <i class="fa-regular fa-circle-check has-text-success pr-2"></i>
+                                    Sanitize and escape all input values to prevent XSS attacks
+                                </li>
+                                <li>
+                                    <i class="fa-regular fa-circle-check has-text-success pr-2"></i>
+                                    All sensitive and personally identifiable information is encrypted at every stage of transit and at rest
+                                </li>
+                                <li>
+                                    <i class="fa-regular fa-circle-check has-text-success pr-2"></i>
+                                    All passwords are hashed and salted
+                                </li>
+                                <li>
+                                    <i class="fa-regular fa-circle-check has-text-success pr-2"></i>
+                                    Use HTTP security headers to protect information in transit
+                                </li>
+                                <li>
+                                    <i class="fa-regular fa-circle-check has-text-success pr-2"></i>
+                                    Encrypt information used in tamper resistant cookies
+                                </li>
+                                <li>
+                                    <i class="fa-regular fa-circle-check has-text-success pr-2"></i>
+                                    Use HTTPS and SSL
+                                </li>
+                                <li>
+                                    <i class="fa-regular fa-circle-check has-text-success pr-2"></i>
+                                    Limit log in attempts to prevent brute force attacks
+                                </li>
+                                <li>
+                                    <i class="fa-regular fa-circle-check has-text-success pr-2"></i>
+                                    Keep libraries and packages up-to-date with the latest security features
+                                </li>
+                                <li>
+                                    <i class="fa-regular fa-circle-check has-text-success pr-2"></i>
+                                    Regularly scan software for vulnerabilities
+                                </li>
+                            </ul>
+                            <p>
+                                In addition, on this site we have extra security features in place that are also offered to our clients.
+                            </p>
                         </div>
                         <div class="mb-6">
                             <h2 class="is-size-2 mb-5">

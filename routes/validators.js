@@ -1,5 +1,6 @@
 import { body } from "express-validator"
 import { parsePhoneNumber } from "libphonenumber-js"
+import User from "../models/User"
 
 export const validateAuthorName = 
     body('author')

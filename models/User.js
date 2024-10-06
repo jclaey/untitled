@@ -80,6 +80,11 @@ const UserSchema = new Schema({
     isNewsletterSubscriber: {
         type: Boolean,
         default: false
+    },
+    logins: [String],
+    lockedAccount: {
+        type: Boolean,
+        default: false
     }
 })
 

@@ -8,8 +8,6 @@ if (window.location.href.includes('=')) {
     history.pushState({}, '', '/docs/filter-docs')
 }
 
-// console.log(window.location)
-
 button.addEventListener('click', () => {
     url = url += `title=${input.value.toLowerCase()}&description=${input.value.toLowerCase()}&content=${input.value.toLowerCase()}`
     window.location.assign(url)
