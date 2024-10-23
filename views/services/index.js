@@ -30,7 +30,9 @@ const indexPage = (req) => {
                                 <div class="card service">
                                     <div class="card-image">
                                         <figure class="image is-3by2">
-                                            <img src="/resources/images/services_artificial_intelligence.png" />
+                                            <a href="/services/artificialIntelligence">
+                                                <img src="/resources/images/services_artificial_intelligence.png" />
+                                            </a>
                                         </figure>
                                     </div>
                                     <div class="card-content">
@@ -89,12 +91,29 @@ const indexPage = (req) => {
                                         </div>
                                     </div>
                                 </div>
+                                <div class="card service">
+                                    <a href="/services/otherServices">
+                                        <div class="card-image" id="other">
+                                            <div class="mb-5">
+                                                <i class="fa-solid fa-ellipsis is-size-1 has-text-black"></i>
+                                            </div>
+                                            <p class="">More Services</p>
+                                        </div>
+                                    </a>
+                                    <div class="card-content">
+                                        <div class="content has-text-centered">
+                                            <strong><span class="is-size-5"><span class="pipe pr-2">|</span>So...much...more!<span class="pipe pl-2">|</span></span></strong>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="column">
                                 <div class="card service">
                                     <div class="card-image">
                                         <figure class="image is-3by2">
-                                            <img src="/resources/images/services_desktop_applications.png" />
+                                            <a href="/services/desktopApplications">
+                                                <img src="/resources/images/services_desktop_applications.png" />
+                                            </a>
                                         </figure>
                                     </div>
                                     <div class="card-content">

@@ -22,6 +22,8 @@ import {
     patchForgotPassword,
     getResetPassword,
     patchResetPassword,
+    getResetPasswordEmail,
+    getPasswordEmailSentPage,
     getSuccessQuote,
     getStaySignedIn,
     getWebsitesDemo,
@@ -51,6 +53,8 @@ router.route('/forgot-password').get(getForgotPassword).patch([
 router.route('/reset-password/:token/:userId?').get(asyncHandler(getResetPassword)).patch([
     requireValidPasswordForUser
 ], asyncHandler(patchResetPassword))
+router.route('reset-password/:id/email').get(asyncHandler(getResetPasswordEmail))
+router.route('password-email-sent').get(getPasswordEmailSentPage)
 router.route('/stay-signed-in').get(getStaySignedIn)
 router.route('/websites-demos').get(getWebsitesDemo)
 router.route('/verify-mobile/:code?').get(getVerifyMobile).post(postVerifyMobile)

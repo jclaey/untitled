@@ -244,7 +244,13 @@ header {
 }
 
 .services .column .logo {
-    height: 6em;
+    height: 100px;
+}
+
+#full-system-section .fa-raspberry-pi,
+#full-system-section .fa-react,
+#full-system-section .fa-node-js {
+    font-size: 100px;
 }
 
 .services .column #electron {
@@ -615,6 +621,104 @@ body {
     align-items: center;
     justify-content: space-between;
 }
+
+#quote-form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#quote-form {
+    width: 60%;
+}
+
+#why-us p {
+    padding-left: 4rem;
+}
+
+.card-image#other {
+    height: 212px;
+    background-color: var(--primary-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-image#other p {
+    font-size: 24px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.service-logo {
+    width: 150px;
+    height: auto;
+}
+
+.column.logos i {
+    font-size: 150px;
+}
+
+.column.logos {
+    display: flex;
+    align-items: center;
+}
+
+.fa-bolt {
+    color: var(--secondary-color);
+}
+
+.trivia-item {
+    font-weight: 600;
+}
+
+.show {
+    display: block;
+}
+
+.services-logos {
+    font-size: 100px;
+}
+
+.consultations-tab .container-width,
+.tutorials-tab .container-width,
+.web-hosting-tab .container-width {
+    width: 60%;
+}
+
+#tags span {
+    padding: 17px;
+    font-weight: 500;
+}
+
+/* ICON COLORS */
+
+.fa-aws {
+    color: #FFD43B;
+}
+
+.fa-cpanel {
+    color: #EE651B;
+}
+
+.fa-android {
+    color: #A4C639;
+}
+
+.fa-apple {
+    color: #5C5C5C;
+}
+
+.fa-react {
+    color: #57B4D4;
+}
+
+.fa-node-js {
+    color: #4F9840;
+}
+
 
 @keyframes spin {
     0% { transform: rotate(0deg); }

@@ -8,10 +8,10 @@ const indexPage = (req) => {
                         <div class="columns">
                             <div class="column">
                                 <h1 class="title is-size-1" data-aos="fade-right" data-aos-anchor-placement="middle-middle" data-aos-duration="1000" data-aos-delay="50">
-                                    Web Solutions
+                                    Untitled Web Solutions
                                 </h1>
                                 <hr id="title-hr">
-                                <p class="subtitle is-size-4">Solutions for the web...</p>
+                                <p class="subtitle is-size-4">Development and services for the web...</p>
                             </div>
                             <div class="column mt-5">
                                 <div class="column-group mb-6">
@@ -78,8 +78,8 @@ const indexPage = (req) => {
                                 </figure>
                             </div>
                             <div class="column pl-5 pr-5 mt-5">
-                                <div class="mb-4">
-                                    <h2 class="subtitle is-size-3">Welcome to Web Solutions</h2>
+                                <div class="mb-6">
+                                    <h2 class="subtitle is-size-2">Welcome to Web Solutions!</h2>
                                 </div>
                                 <div class="block is-size-5">
                                     At Web Solutions, we develop with the future in mind. Everything we build is built to scale and built to work.
@@ -91,6 +91,46 @@ const indexPage = (req) => {
                                     We build mobile apps, desktop apps, websites, Internet of Things apps, web apps, Web3 apps, apps using artificial intelligence, and so much more. We build more apps than a five star restaurant.
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="container" id="why-us">
+                    <div class="columns mb-5">
+                        <div class="column">
+                            <div class="section-title mb-6">
+                                <h2 class="subtitle is-size-2">Why Choose Us?</h2>
+                            </div>
+                            <ul>
+                                <li class="is-size-4 mb-3">
+                                    <i class="fa-solid fa-pencil pr-3"></i> Customization <br />
+                                    <p>
+                                        <span class="is-size-5">- We offer full customization of all of your web projects. If you want to add, change, or delete anything, just let us know, and your wish becomes our command.</span>
+                                    </p>
+                                </li>
+                                <li class="is-size-4 mb-3">
+                                    <i class="fa-solid fa-users-rectangle pr-3"></i> Transparency <br />
+                                    <p>
+                                        <span class="is-size-5">- We give daily project updates straight to your profile whenever a change is made.</span>
+                                    </p>
+                                </li>
+                                <li class="is-size-4 mb-3">
+                                    <i class="fa-solid fa-bell-concierge pr-3"></i> Service <br />
+                                    <p>
+                                        <span class="is-size-5">- We pride ourselves on offering THE best customer service in the business. We're with you every step of the way, throughout the duration of your project and beyond.</span>
+                                    </p>
+                                </li>
+                                <li class="is-size-4 mb-3">
+                                    <i class="fa-solid fa-code pr-3"></i> The Tech!!! <br />
+                                    <p>
+                                        <span class="is-size-5">- And of course, the tech! </span>
+                                    </p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <figure class="image">
+                                <img src="/resources/images/why-us.webp" alt="Illustration of a man and woman shaking hands" />
+                            </figure>
                         </div>
                     </div>
                 </section>

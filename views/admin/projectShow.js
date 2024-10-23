@@ -36,7 +36,7 @@ const projectShowPage = ({ project, errors, values = {} }, req) => {
                                     <div>
                                         <h3 class="is-size-3">Update Project</h3>
                                     </div>
-                                    <form action="" method="" enctype="multipart/form-data" id="project-update-form">
+                                    <form action="/admin/projects/new/" method="" enctype="multipart/form-data" id="project-update-form">
                                         <div class="field mb-4">
                                             <label for="title" class="label">
                                                 Title*

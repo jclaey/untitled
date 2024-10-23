@@ -33,7 +33,7 @@ const aboutPage = (req) => {
                                 and the underlying infrastructure. At Web Solutions, we keep it top of mind and take a security-first approach to development.
                                 For every platform or application we build, we:
                             </p>
-                            <ul class="is-size-4">
+                            <ul class="is-size-4 mb-4">
                                 <li>
                                     <i class="fa-regular fa-circle-check has-text-success pr-2"></i>
                                     Sanitize and escape all input values to prevent XSS attacks
@@ -71,8 +71,9 @@ const aboutPage = (req) => {
                                     Regularly scan software for vulnerabilities
                                 </li>
                             </ul>
-                            <p>
-                                In addition, on this site we have extra security features in place that are also offered to our clients.
+                            <p class="is-size-5">
+                                This is, by no means, an exhaustive list. We offer lots of additional security features to our clients. 
+                                <a href="/contact">Contact</a> us to inquire further.
                             </p>
                         </div>
                         <div class="mb-6">
@@ -87,11 +88,23 @@ const aboutPage = (req) => {
                             </p>
                         </div>
                         <div class="mb-6">
-                            <h2 class="is-size-2 mb-5">Trivia!</h2>
+                            <h2 class="is-size-2 mb-5">
+                                <i class="fa-solid fa-bolt"></i>
+                                Trivia!
+                            </h2>
                             <ul class="mb-6">
-                                <li class="is-size-4">We are based in the Dallas-Fort Worth area.</li>
-                                <li class="is-size-4">We're really nice.</li>
-                                <li class="is-size-4">The company's favorite color is pink.*</li>
+                                <li class="is-size-4 ml-5">
+                                    <span class="has-text-success trivia-item">-</span> We are based in the Dallas-Fort Worth, Texas area in the United States.
+                                </li>
+                                <li class="is-size-4 ml-5">
+                                    <span class="has-text-success trivia-item">-</span> We're super nice. :)
+                                </li>
+                                <li class="is-size-4 ml-5">
+                                    <span class="has-text-success trivia-item">-</span> We're really bad at naming businesses. Much better at naming variables and resources.
+                                </li>
+                                <li class="is-size-4 ml-5">
+                                    <span class="has-text-success trivia-item">-</span> The company's favorite color is pink.*
+                                </li>
                             </ul>
                             <p>*I know, hard to tell from this website</p>
                         </div>

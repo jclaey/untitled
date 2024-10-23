@@ -34,8 +34,8 @@ router.route('/doc/:id').get(asyncHandler(getShow))
 router.route('/doc/:id/edit')
     .get(requireAdminAuth, asyncHandler(getEdit))
     .patch(requireAdminAuth, upload.single('image'), [
-        validateTitle, 
-        validateContent, 
+        validateTitle,
+        validateContent,
         validateDescription
 ], asyncHandler(patchEdit))
 router.route('/filter-docs').get(asyncHandler(filterDocs))

@@ -1,8 +1,8 @@
 import layout from "../layout.js"
 
-const webApplicationServicesPage = (req) => {
+const artficialIntelligenceServicesPage = ({}, req) => {
     return layout({ template: `
-        <main id="web-applications" class="services">
+        <main>
             <div class="mb-2 is-size-5 ml-5">
                 <a href="/services">
                     <i class="fa-solid fa-left-long pr-1"></i> Back to services
@@ -10,28 +10,20 @@ const webApplicationServicesPage = (req) => {
             </div>
             <div class="page-title-div">
                 <h1 class="title is-size-1">
-                    <span class="pipe">|</span> Web Applications <span class="pipe">|</span>
+                    <span class="pipe">|</span> Artificial Intelligence <span class="pipe">|</span>
                 </h1>
             </div>
             <section class="container mb-6">
                 <div class="columns mb-6">
                     <div class="column">
-                        <div class="columns">
-                            <div class="column">
-                                <i class="fa-brands fa-node ml-6"></i>
-                            </div>
-                        </div>
-                        <div class="columns">
-                            <div class="column">
-                            </div>
-                        </div>
+                        <img src="/resources/images/tensorflow_js_logo.png" alt="Tensorflow JS logo" class="service-logo mr-6" />
+                        <img src="/resources/images/openai-logo.webp" alt="OpenAI logo" class="service-logo" />
                     </div>
                     <div class="column">
                         <div class="container mt-4">
                             <p class="block has-text-weight-medium is-size-5">
-                               Need a blog app? How about an eCommerce site? A site like this one? Literally any kind of front 
-                               end web app or full stack web app you can think of, we can build for you. The web app might just 
-                               be our favorite thing to build!
+                                 We would love to build you a website or web application stuffed with AI tech! From natural language 
+                                processing and advanced chatbots to spam detection, we can build you the AI app of your dreams.
                             </p>
                             <p class="block has-text-weight-medium is-size-5">
                                
@@ -53,8 +45,8 @@ const webApplicationServicesPage = (req) => {
                     </div>
                 </a>
             </section>
-        </main>
+        </main>    
     ` }, req)
 }
 
-export default webApplicationServicesPage
+export default artficialIntelligenceServicesPage

@@ -15,7 +15,7 @@ import process from 'node:process'
         <nav class="navbar container" role="navigation" aria-label="main navigation">
             <div class="nav-left navbar-brand nav-label">
                 <a href="/" class="navbar-item title-item">
-                    Web Solutions
+                    ____ Untitled
                 </a>
                 <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
                     <span aria-hidden="true"></span>

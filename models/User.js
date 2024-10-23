@@ -41,10 +41,6 @@ const UserSchema = new Schema({
         postalCode: String,
         country: String
     },
-    phoneNumber: {
-        type: String,
-        required: true
-    },
     cart: [
         {
             qty: {
@@ -77,12 +73,12 @@ const UserSchema = new Schema({
         default: false
     },
     verificationMethods: [String],
-    isNewsletterSubscriber: {
+    logins: [String],
+    lockedAccount: {
         type: Boolean,
         default: false
     },
-    logins: [String],
-    lockedAccount: {
+    isNewsletterSubscriber: {
         type: Boolean,
         default: false
     }

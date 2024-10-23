@@ -3,6 +3,11 @@ import layout from "../layout.js"
 const websiteServicesPage = (req) => {
     return layout({ template: `
         <main id="websites" class="services">
+            <div class="mb-2 is-size-5 ml-5">
+                <a href="/services">
+                    <i class="fa-solid fa-left-long pr-1"></i> Back to services
+                </a>
+            </div>
             <div class="page-title-div">
                 <h1 class="title is-size-1">
                     <span class="pipe">|</span> Websites <span class="pipe">|</span>
@@ -88,12 +93,21 @@ const websiteServicesPage = (req) => {
                                 <div class="content">
                                     <div>
                                         <div class="table-price">
-                                            <strong><span class="is-size-2 has-text-info">$99</span></strong>
+                                            <strong><span class="is-size-2 has-text-info">Free Quote</span></strong>
                                             <br />
-                                            <span class="is-size-3 has-text-info">Informational Website</span>
+                                            <span class="is-size-3 has-text-info">Complete Customization</span>
                                         </div>
                                         <div class="has-text-center is-size-5 website-pricing-feature">
-                                            <i class="fa-solid fa-check pr-3 is-size-3 has-text-success"></i> Basic, informational site
+                                            <i class="fa-solid fa-check pr-3 is-size-3 has-text-success"></i> Unlimited Pages
+                                        </div>
+                                        <div class="has-text-center is-size-5 website-pricing-feature">
+                                            <i class="fa-solid fa-check pr-3 is-size-3 has-text-success"></i> Unlimited Features
+                                        </div>
+                                        <div class="has-text-center is-size-5 website-pricing-feature mb-5">
+                                            <i class="fa-solid fa-check pr-3 is-size-3 has-text-success"></i> Unlimited Customization
+                                        </div>
+                                        <div class="pricing-btn mb-5">
+                                            <a href="" class="button is-info is-medium">Select Option</a>
                                         </div>
                                     </div>
                                 </div>
@@ -106,12 +120,24 @@ const websiteServicesPage = (req) => {
                                 <div class="content">
                                     <div>
                                         <div class="table-price">
-                                            <strong><span class="is-size-2 has-text-info">$99</span></strong>
+                                            <strong><span class="is-size-2 has-text-info">One Low Monthly Price</span></strong>
                                             <br />
-                                            <span class="is-size-3 has-text-info">Informational Website</span>
+                                            <span class="is-size-3 has-text-info">Website Management</span>
                                         </div>
                                         <div class="has-text-center is-size-5 website-pricing-feature">
-                                            <i class="fa-solid fa-check pr-3 is-size-3 has-text-success"></i> Basic, informational site
+                                            <i class="fa-solid fa-check pr-3 is-size-3 has-text-success"></i> Manage hosting
+                                        </div>
+                                        <div class="has-text-center is-size-5 website-pricing-feature">
+                                            <i class="fa-solid fa-check pr-3 is-size-3 has-text-success"></i> Feature updates
+                                        </div>
+                                        <div class="has-text-center is-size-5 website-pricing-feature">
+                                            <i class="fa-solid fa-check pr-3 is-size-3 has-text-success"></i> Information updates
+                                        </div>
+                                        <div class="has-text-center is-size-5 website-pricing-feature mb-5">
+                                            <i class="fa-solid fa-check pr-3 is-size-3 has-text-success"></i> Resource management
+                                        </div>
+                                        <div class="pricing-btn mb-5">
+                                            <a href="" class="button is-info is-medium">Select Option</a>
                                         </div>
                                     </div>
                                 </div>

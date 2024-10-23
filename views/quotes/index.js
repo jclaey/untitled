@@ -33,8 +33,8 @@ const newQuotePage = ({ errors, values = {} }, req) => {
                 <div class="mb-6" id="byline">
                     <p class="is-size-4">Free is the best, isn't it? Honestly, why would we charge you for this anyway? Fill out and submit the form below to get a personalized quote!</p>
                 </div>
-                <div>
-                    <form class="box" action="/quotes" method="POST">
+                <div id="quote-form-container">
+                    <form class="box" action="/quotes" method="POST" id="quote-form">
                         <div class="mb-3">
                             <small>* denotes a required field</small>
                         </div>

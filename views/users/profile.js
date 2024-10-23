@@ -65,7 +65,7 @@ const userProfilePage = ({ user, orders = [], token }, req) => {
                             <a href="/users/user/${user.id}/profile/edit" class="button is-warning">
                                 Edit Profile
                             </a>
-                            <a href="/reset-password/${token}/${user.id}" class="button is-warning">
+                            <a href="/reset-password/${user.id}/email" class="button is-warning">
                                 Change Password
                             </a>
                         </div>
@@ -123,6 +123,7 @@ const userProfilePage = ({ user, orders = [], token }, req) => {
             <section>
                 <div class="box">
                     <h2 class="is-size-2 mb-5">Current Projects</h2>
+                    <hr>
                     <div class="project box">
                         <p>You have no current projects</p>
                     </div>

@@ -46,7 +46,9 @@ const layout = ({ template, meta = {} }, req) => {
                         </form>
                         <button class="button is-danger"
                           ${req.session.userId ? `data-type="user"` : req.session.adminId ? `data-type="admin"` : ''}
-                        >Sign Out</button>
+                        >
+                          Sign Out
+                        </button>
                       </div>
                     </div>
                   </article>  
@@ -66,6 +68,7 @@ const layout = ({ template, meta = {} }, req) => {
             ${req && req.originalUrl && req.originalUrl === '/contact' ? '<script src="/javascript/tiny-user-facing.js"></script><script src="/javascript/closeMessage.js"></script>"' : ''}
             ${req && req.originalUrl && req.originalUrl === '/' ? `<script src="/javascript/testimonials.js"></script><br /><script>AOS.init()</script>` : ''}
             ${req && req.originalUrl && req.originalUrl.includes('/docs') || template.includes('id="docs-search-container"') ? `<script src="/javascript/search.js"></script>` : ''}
+            ${req && req.originalUrl && req.originalUrl === '/services/otherServices' ? `<script src="/javascript/tabs.js"></script>` : ''}
             ${template.includes('id="message"') ? '<script src="/javascript/closeMessage.js"></script>' : ''}
             ${template.includes('id="form-btn"') ? '<script src="/javascript/spinner.js"></script>' : ''}
             <script src="/javascript/auth-modal.js"></script>

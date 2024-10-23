@@ -3,6 +3,11 @@ import layout from "../layout.js"
 const mobileApplicationServicesPage = (req) => {
     return layout({ template: `
         <main id="mobile-applications" class="services">
+            <div class="mb-2 is-size-5 ml-5">
+                <a href="/services">
+                    <i class="fa-solid fa-left-long pr-1"></i> Back to services
+                </a>
+            </div>
             <div class="page-title-div">
                 <h1 class="title is-size-1">
                     <span class="pipe">|</span> Mobile Applications <span class="pipe">|</span>
@@ -29,11 +34,7 @@ const mobileApplicationServicesPage = (req) => {
                         <div class="container mt-4">
                             <p class="block has-text-weight-medium is-size-5">
                                 We love to build new mobile applications! Whether you're looking for something native on Android or iOS or 
-                                cross-platform, using Flutter, we can construct the perfect mobile application for your use case.
-                            </p>
-                            <p class="block has-text-weight-medium is-size-5">
-                                Need a front end application? We can build those too! Written completely from scratch, or using the assistance of 
-                                libraries and APIs, we can build you something truly unique.
+                                cross-platform, using Flutter and Dart, we can create the perfect mobile application for your use case.
                             </p>
                             <p class="block has-text-weight-medium is-size-5">
                                 We can now build mobile games with Unity! Get a <a href="/quotes">free quote</a> today! 
