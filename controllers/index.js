@@ -15,11 +15,11 @@ import resetPasswordPage from '../views/reset-password.js'
 import sendEmail from "../utils/sendEmail.js"
 import User from '../models/User.js'
 import Order from '../models/Order.js'
-import websitesDemoPage from '../views/demo_pages/websites.js'
 import verifyMobilePage from '../views/verify-mobile.js'
 import verifyEmailSuccessPage from '../views/verify-email-success.js'
 import { encryptStringData, decryptStringData } from '../utils/encrypt.js'
 import verifyEmailPage from '../views/verify-email.js'
+import passwordEmailSentPage from '../views/passwordEmailSent.js'
 
 const key = process.env.ENCRYPTION_KEY
 
@@ -227,8 +227,8 @@ export const getResetPassword = async (req, res, next) => {
     const { token } = req.params
     let user
 
-    if (req.params.userId) {
-        user = await User.findById(req.params.userId)
+    if (req.params.id) {
+        user = await User.findById(req.params.id)
     } else {
         user = await User.findOne({
             resetPasswordToken: token,
@@ -244,9 +244,105 @@ export const getResetPassword = async (req, res, next) => {
     res.send(resetPasswordPage({ token }, req))
 }
 
+export const getResetPasswordEmail = async (req, res, next) => {
+    let user = await User.findById(req.params.id)
+
+    const token = crypto.randomBytes(16).toString('hex')
+
+    if (user) {
+        user.passwordResetToken = token
+    }
+
+    let email = decryptStringData(user.emailEncrypted.encryptedData, key, user.emailEncrypted.iv)
+
+    const transporter = nodemailer.createTransport({
+        host: 'smtp-mail.outlook.com',
+        port: 587,
+        secure: false,
+        auth: {
+            user: process.env.OUTLOOK_EMAIL,
+            pass: process.env.OUTLOOK_PASS
+        }
+    })
+
+    const resetUrl = `http://${req.headers.host}/reset-password/${token}`
+
+    const info = await transporter.sendMail({
+        from: `"Web Solutions by HandierMe" <${process.env.OUTLOOK_EMAIL}>`,
+        to: `${email}`,
+        subject: 'Reset Password',
+        text: `From: Web Solutions by HandierMe, Subject: Reset Password, Body: ${content}`,
+        html: Buffer.from(`
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+                <title>Reset Password Email</title>
+            </head>
+            <body>
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td align="center">
+                            <table width="600" cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td>
+                                        <h1 style="font-size: 48px;">Reset Password</h1>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h3 style="font-size: 28px;">From: <strong>Web Solutions by HandierMe</strong></h3>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h3 style="font-size: 28px;">Subject: <strong>Reset Password</strong></h3>
+                                        <p style="font-size: 28px;">
+                                            <strong>
+                                                You are receiving this because you (or someone else) have requested the reset of the password for your account with Web Solutions.
+                                            </strong>
+                                        </p>
+                                        <p style="font-size: 28px;">
+                                            <strong>
+                                                Please click on the following link to reset your password: <br />
+                                                ${resetUrl}
+                                            </strong>
+                                        </p>
+                                        <p style="font-size: 28px;">
+                                            <strong>
+                                                If you did not request to reset your password, please ignore this email.
+                                            </strong>
+                                        </p>
+                                        <p style="font-size: 28px;">
+                                            <strong>
+                                                Regards, <br />
+                                                Web Solutions by HandierMe
+                                            </strong>
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </body>
+            </html>
+        `, 'utf-8')
+    })
+
+    res.send(passwordEmailSentPage({}, req))
+}
+
+export const getPasswordEmailSentPage = (req, res, next) => {
+    res.send(passwordEmailSentPage({}, req))
+}
+
 export const patchResetPassword = async (req, res, next) => {
     const { token } = req.params
     let user
+
     const errors = validationResult(req)
 
     if (!errors.isEmpty()) {
@@ -304,10 +400,6 @@ export const getStaySignedIn = (req, res, next) => {
         req.session.adminId = req.session.adminId
         req.session.expiration = Date.now() + 10800000
     }
-}
-
-export const getWebsitesDemo = (req, res, next) => {
-    res.send(websitesDemoPage(req))
 }
 
 export const getVerifyMobile = (req, res, next) => {

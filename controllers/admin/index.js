@@ -113,14 +113,32 @@ export const getProjectShow = async (req, res, next) => {
         .populate('quoteInfoItem')
         .exec()
 
+    console.log(project)
+
     project = {
         quoteInfoItem: {
-
+            businessName: project.quoteInfoItem.businessName,
+            businessAddress: {
+                streetAddressOne: project.quoteInfoItem.businessAddress.streetAddressOne,
+                streetAddressTwo: project.quoteInfoItem.businessAddress.streetAddressTwo,
+                city: project.quoteInfoItem.businessAddress.city,
+                state: project.quoteInfoItem.businessAddress.state,
+                postalCode: project.quoteInfoItem.businessAddress.postalCode
+            }
+            // businessName: decryptStringData(project.quoteInfoItem.businessName.split('.')[0], key, project.quoteInfoItem.businessName.split('.')[1]),
+            // businessAddress: {
+            //     streetAddressOne: decryptStringData(project.quoteInfoItem.businessAddress.streetAddressOne.split('.')[0], key, project.quoteInfoItem.businessAddress.streetAddressOne.split('.')[1]),
+            //     streetAddressTwo: project.quoteInfoItem.businessAddress.streetAddressTwo ? decryptStringData(project.quoteInfoItem.businessAddress.streetAddressTwo.split('.')[0], key, project.quoteInfoItem.businessAddress.streetAddressTwo.split('.')[1]),
+            //     city: decryptStringData(project.quoteInfoItem.businessAddress.city.split('.')[0], key, project.quoteInfoItem.businessAddress.city.split('.')[1]),
+            //     state: decryptStringData(project.quoteInfoItem.businessAddress.state.split('.')[0], key, project.quoteInfoItem.businessAddress.state.split('.')[1]),
+            //     postalCode: decryptStringData(project.quoteInfoItem.businessAddress.postalCode.split('.')[0], key, project.quoteInfoItem.businessAddress.postalCode.split('.')[1])
+            // }
         },
         user: {
-
+            firstName: decryptStringData(project.user.firstName.split('.')[0], key, project.user.firstName.split('.')[1]),
+            lastName: decryptStringData(project.user.lastName.split('.')[0], key, project.user.lastName.split('.')[1])
         },
-        
+        title: project.title
     }
 
     res.send(projectShowPage({ project }, req))

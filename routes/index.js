@@ -26,7 +26,6 @@ import {
     getPasswordEmailSentPage,
     getSuccessQuote,
     getStaySignedIn,
-    getWebsitesDemo,
     getVerifyMobile,
     postVerifyMobile,
     postVerifyEmail,
@@ -56,7 +55,6 @@ router.route('/reset-password/:token/:userId?').get(asyncHandler(getResetPasswor
 router.route('reset-password/:id/email').get(asyncHandler(getResetPasswordEmail))
 router.route('password-email-sent').get(getPasswordEmailSentPage)
 router.route('/stay-signed-in').get(getStaySignedIn)
-router.route('/websites-demos').get(getWebsitesDemo)
 router.route('/verify-mobile/:code?').get(getVerifyMobile).post(postVerifyMobile)
 router.route('/verify-email-page').get(getVerifyEmailPage)
 router.route('/verify-email/:token').get(postVerifyEmail)
