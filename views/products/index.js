@@ -43,12 +43,15 @@ const productsIndexPage = ({ products }, req) => {
                             ` : ''}
                         </div>
                         <div class="buttons">
-                            <a href="/products/product/${product._id}" class="button is-info">View More</a>
+                            <a href="/products/product/${product._id}" class="button is-info mr-5">View More</a>
                             ${req && req.session && userId ? `
                                 <form action="/users/user/${userId}/cart/${product._id}/add" method="POST">
                                     <button type="submit" class="button">Add To Cart</button>
                                 </form>
-                            ` : ''}
+                            ` : `
+                                <p class="has-text-danger">Please <a href="/users/login">sign in</a> or <a href="/users/register">sign up</a> to add items to a 
+                                cart</p>
+                            `}
                         </div>
                     </div>
                 </div>

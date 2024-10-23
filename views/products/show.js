@@ -37,7 +37,14 @@ const productsShowPage = ({ product }, req) => {
                                 <a href="/products/product/${product._id}/edit" class="button is-warning">Edit Product</a>
                                 <a href="/products/product/${product._id}/delete" class="button is-danger">Delete Product</a>
                             </div>
-                        ` : ''}
+                        ` : `
+                            <div>
+                                <p class="has-text-danger">
+                                    Please <a href="/users/login">sign in</a> or <a href="/users/register">sign up</a> to add items to a 
+                                    cart and make a purchase
+                                </p>
+                            </div>
+                        `}
                     </div>
                 </div>
             </section>
