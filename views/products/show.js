@@ -31,20 +31,18 @@ const productsShowPage = ({ product }, req) => {
                                 <p class="is-size-5"><strong>Number In Stock:</strong> ${product.countInStock}</p>
                             ` : ''}
                         </div>
-
+                        ${req && req.session && req.session.userId ? `
+                            <div class="product-btns">
+                                <a href="/users/user/${product.user.id}/cart/${product.id}/add" class="button is-primary mr-5">Add To Cart</a>
+                                <a href="/products" class="button is-info ml-5">Back to Products</a>
+                            </div>
+                        ` : ''}
                         ${req && req.session && req.session.adminId ? `
-                            <div>
+                            <div class="product-btns">
                                 <a href="/products/product/${product._id}/edit" class="button is-warning">Edit Product</a>
                                 <a href="/products/product/${product._id}/delete" class="button is-danger">Delete Product</a>
                             </div>
-                        ` : `
-                            <div>
-                                <p class="has-text-danger">
-                                    Please <a href="/users/login">sign in</a> or <a href="/users/register">sign up</a> to add items to a 
-                                    cart and make a purchase
-                                </p>
-                            </div>
-                        `}
+                        ` : ''}
                     </div>
                 </div>
             </section>

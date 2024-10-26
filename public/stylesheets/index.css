@@ -17,9 +17,23 @@ main {
 }
 
 /*  */
-#showcase-area .hero-body .columns .column .title {
+#index-main .hero-body .columns .column .title {
     color: var(--primary-color);
 }
+
+/* #index-main {
+    position: relative;
+    background: rgba(0,0,0,0.2) no-repeat center center/cover url('https://res.cloudinary.com/dsuch7fys/image/upload/v1729925795/hero-bg-2_qij8nz.jpg');
+    height: 550px;
+}
+
+#index-main .hero.container {
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+} */
 
 #showcase-area {
     margin-bottom: 5rem;
@@ -691,6 +705,11 @@ body {
 #tags span {
     padding: 17px;
     font-weight: 500;
+}
+
+.product-btns {
+    display: flex;
+    justify-content: center;
 }
 
 /* ICON COLORS */

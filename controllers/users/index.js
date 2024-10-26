@@ -22,7 +22,6 @@ import {
     handlePaymentIntentFailed
 } from "../../utils/handleStripeEvents.js"
 import { encryptStringData, decryptStringData } from "../../utils/encrypt.js"
-import { ClientSecretCredential } from "@azure/identity"
 
 const CREDENTIALS_PATH = path.join(process.cwd(), 'credentials.json')
 
@@ -139,16 +138,6 @@ export const postRegister = async (req, res, next) => {
         })
 
         if (user) {
-            const credential = new ClientSecretCredential(
-                '0b2880f8-8255-467b-a590-b55906188ff8',
-                '9623c307-b25f-4fc6-aee8-f64c81e16d15',
-                process.env.MS_CLIENT_SECRET_ID
-            )
-
-            const tokenResponse = await credential.getToken('https://outlook.office.com/SMTP.Send')
-            const accessToken = tokenResponse.token
-            console.log(accessToken)
-
             const emailToken = await crypto.randomBytes(20).toString('hex')
             const resetUrl = `http://${req.headers.host}/verify-email/${emailToken}`
             // const otp = await crypto.randomBytes(3).toString('hex')
@@ -158,29 +147,24 @@ export const postRegister = async (req, res, next) => {
             user.emailVerifyTokenExpires = Date.now() + 10800000
 
             const transporter = nodemailer.createTransport({
-                host: 'smtp.office365.com',
-                port: 587,
-                secure: false,
+                service: 'gmail',
                 auth: {
-                    type: 'OAuth2',
-                    user: process.env.OUTLOOK_EMAIL,
-                    accessToken
+                    user: process.env.GMAIL_EMAIL,
+                    pass: process.env.GMAIL_APP_PASS
                 }
             })
         
             const info = await transporter.sendMail({
-                from: `"contact@handierme.com" <${process.env.OUTLOOK_EMAIL}>`,
+                from: `"Untitled Web Solutions" <${process.env.OUTLOOK_EMAIL}>`,
                 to: `${req.body.email}`,
                 subject: 'Verify Email Address for Web Solutions',
-                text: `From: Web Solutions, Subject: Verify Email Address`,
                 html: Buffer.from(`
                     <!DOCTYPE html>
                     <html lang="en">
                     <head>
                         <meta charset="UTF-8">
                         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
-                        <title>Verify Email</title>
+                        <title>Verify Email Address</title>
                     </head>
                         <body>
                             <table width="100%" cellpadding="0" cellspacing="0" border="0">
@@ -660,7 +644,7 @@ export const getBillingShipping = async (req, res, next) => {
 
     let order = await Order.find({ user: user._id, isPaid: false })
 
-    if (order) {
+    if (order.length > 0) {
         order = order[0]
         order = {
             billingAddress: {

@@ -3,6 +3,7 @@ import { getErrors } from "../../utils/getErrors.js"
 import { decryptStringData } from "../../utils/encrypt.js"
 
 const userBillingShippingPage = ({ cart, errors, values = {}, order }, req) => {
+    console.log(errors)
     const key = process.env.ENCRYPTION_KEY
 
     const renderedItems = cart.cartItems.map(item => {
@@ -58,7 +59,7 @@ const userBillingShippingPage = ({ cart, errors, values = {}, order }, req) => {
                                         Street Address One*
                                     </label>
                                     <div class="control">
-                                        <input class="input" type="text" id="streetAddressOne" name="streetAddressOne" value="${errors && values.streetAddressOne && values.streetAddressOne !== '' ? values.streetAddressOne : order ? order.billingAddress.streetAddressOne : ''}" />
+                                        <input class="input" type="text" id="streetAddressOne" name="streetAddressOne" value="${errors && values.streetAddressOne && values.streetAddressOne !== '' ? values.streetAddressOne : order.length > 0 ? order.billingAddress.streetAddressOne : ''}" />
                                     </div>
                                 </div>
                                 <div class="field mb-4">
@@ -66,7 +67,7 @@ const userBillingShippingPage = ({ cart, errors, values = {}, order }, req) => {
                                         Street Address Two
                                     </label>
                                     <div class="control">
-                                        <input class="input" type="text" id="streetAddressTwo" name="streetAddressTwo" value="${errors && values.streetAddressTwo && values.streetAddressTwo !== '' ? values.streetAddressTwo : order && order.billingAddress.streetAddressTwo ? order.billingAddress.streetAddressTwo : ''}" />
+                                        <input class="input" type="text" id="streetAddressTwo" name="streetAddressTwo" value="${errors && values.streetAddressTwo && values.streetAddressTwo !== '' ? values.streetAddressTwo : order.length > 0 && order.billingAddress.streetAddressTwo ? order.billingAddress.streetAddressTwo : ''}" />
                                     </div>
                                 </div>
                                 <div class="field mb-4">
@@ -74,7 +75,7 @@ const userBillingShippingPage = ({ cart, errors, values = {}, order }, req) => {
                                         City*
                                     </label>
                                     <div class="control">
-                                        <input class="input" type="text" id="city" name="city" value="${errors && values.city && values.city !== '' ? values.city : order ? order.billingAddress.city : ''}" />
+                                        <input class="input" type="text" id="city" name="city" value="${errors && values.city && values.city !== '' ? values.city : order.length > 0 ? order.billingAddress.city : ''}" />
                                     </div>
                                 </div>
                                 <div class="field mb-4">
@@ -82,7 +83,7 @@ const userBillingShippingPage = ({ cart, errors, values = {}, order }, req) => {
                                         Zip Code*
                                     </label>
                                     <div class="control">
-                                        <input class="input" type="text" id="postalCode" name="postalCode" value="${errors && values.postalCode && values.postalCode !== '' ? values.postalCode : order ? order.billingAddress.postalCode : ''}" />
+                                        <input class="input" type="text" id="postalCode" name="postalCode" value="${errors && values.postalCode && values.postalCode !== '' ? values.postalCode : order.length > 0 ? order.billingAddress.postalCode : ''}" />
                                     </div>
                                 </div>
                                 <div class="field mb-4">
@@ -91,7 +92,7 @@ const userBillingShippingPage = ({ cart, errors, values = {}, order }, req) => {
                                     </label>
                                     <div class="control">
                                         <div class="select">
-                                            <select id="state" name="state" value="${errors && values.state && values.state !== '' ? values.state : order ? order.billingAddress.state : ''}">
+                                            <select id="state" name="state" value="${errors && values.state && values.state !== '' ? values.state : order.length > 0 ? order.billingAddress.state : ''}">
                                                 <option>Alabama</option>
                                                 <option>Alaska</option>
                                                 <option>Arizona</option>
@@ -177,7 +178,7 @@ const userBillingShippingPage = ({ cart, errors, values = {}, order }, req) => {
                                                 Street Address One*
                                             </label>
                                             <div class="control">
-                                                <input class="input" type="text" id="shippingAddressOne" name="shippingAddressOne" value="${errors && values.shippingAddressOne && values.shippingAddressOne !== '' ? values.shippingAddressOne : order ? order.shippingAddress.shippingAddressOne : ''}" />
+                                                <input class="input" type="text" id="shippingAddressOne" name="shippingAddressOne" value="${errors && values.shippingAddressOne && values.shippingAddressOne !== '' ? values.shippingAddressOne : order.length > 0 ? order.shippingAddress.shippingAddressOne : ''}" />
                                             </div>
                                         </div>
                                         <div class="field mb-4">
@@ -185,7 +186,7 @@ const userBillingShippingPage = ({ cart, errors, values = {}, order }, req) => {
                                                 Street Address Two
                                             </label>
                                             <div class="control">
-                                                <input class="input" type="text" id="shippingAddressTwo" name="shippingAddressTwo" value="${errors && values.shippingAddressTwo && values.shippingAddressTwo !== '' ? values.shippingAddressTwo : order && order.shippingAdrress.shippingAddressTwo ? order.shippingAddress.shippingAddressTwo : ''}" />
+                                                <input class="input" type="text" id="shippingAddressTwo" name="shippingAddressTwo" value="${errors && values.shippingAddressTwo && values.shippingAddressTwo !== '' ? values.shippingAddressTwo : order.length > 0 && order.shippingAdrress.shippingAddressTwo ? order.shippingAddress.shippingAddressTwo : ''}" />
                                             </div>
                                         </div>
                                         <div class="field mb-4">
@@ -193,7 +194,7 @@ const userBillingShippingPage = ({ cart, errors, values = {}, order }, req) => {
                                                 City*
                                             </label>
                                             <div class="control">
-                                                <input class="input" type="text" id="shippingCity" name="shippingCity" value="${errors && values.shippingCity && values.shippingCity !== '' ? values.shippingCity : order ? order.shippingAdress.city : ''}" />
+                                                <input class="input" type="text" id="shippingCity" name="shippingCity" value="${errors && values.shippingCity && values.shippingCity !== '' ? values.shippingCity : order.length > 0 ? order.shippingAdress.city : ''}" />
                                             </div>
                                         </div>
                                         <div class="field mb-4">
@@ -201,7 +202,7 @@ const userBillingShippingPage = ({ cart, errors, values = {}, order }, req) => {
                                                 Zip Code*
                                             </label>
                                             <div class="control">
-                                                <input class="input" type="text" id="shippingPostalCode" name="shippingPostalCode" value="${errors && values.shippingPostalCode && values.shippingPostalCode !== '' ? values.shippingPostalCode : ''}" />
+                                                <input class="input" type="text" id="shippingPostalCode" name="shippingPostalCode" value="${errors && values.shippingPostalCode && values.shippingPostalCode !== '' ? values.shippingPostalCode : order.length > 0 ? order.shippingAddress.postalCode : ''}" />
                                             </div>
                                         </div>
                                         <div class="field mb-4">
@@ -210,7 +211,7 @@ const userBillingShippingPage = ({ cart, errors, values = {}, order }, req) => {
                                             </label>
                                             <div class="control">
                                                 <div class="select">
-                                                    <select id="shippingState" name="shippingState" value="${errors && values.shippingState && values.shippingState !== '' ? values.shippingState : order ? order.shippingAddress.state : ''}">
+                                                    <select id="shippingState" name="shippingState" value="${errors && values.shippingState && values.shippingState !== '' ? values.shippingState : order.length > 0 ? order.shippingAddress.state : ''}">
                                                         <option>Alabama</option>
                                                         <option>Alaska</option>
                                                         <option>Arizona</option>

@@ -9,6 +9,7 @@ import newProductPage from '../../views/products/new.js'
 import productsIndexPage from '../../views/products/index.js'
 import productsShowPage from '../../views/products/show.js'
 import productsEditPage from '../../views/products/edit.js'
+import { decryptStringData } from '../../utils/encrypt.js'
 
 const CREDENTIALS_PATH = path.join(process.cwd(), 'credentials.json')
 
@@ -98,9 +99,19 @@ export const postNew = async (req, res, next) => {
 
 export const getShow = async (req, res, next) => {
     const isSignedIn = req.adminId && req.adminId === process.env.ADMIN_ID ? true : false
-    const product = await Product.findById(req.params.id)
+    let product = await Product.findById(req.params.id).populate('user').exec()
 
     if (product) {
+        product = {
+            id: product._id,
+            title: product.title,
+            imageId: product.imageId,
+            description: product.description,
+            price: product.price,
+            countInStock: product.countInStock,
+            user: { id: product.user._id }
+        }
+
         res.send(productsShowPage({ product }, req))
     } else {
         if (process.env.NODE_ENV === 'development') {

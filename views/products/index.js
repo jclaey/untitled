@@ -35,8 +35,6 @@ const productsIndexPage = ({ products }, req) => {
                         </div>
                         <div class="content">
                             <p class="is-size-5"><strong>Description:</strong> ${product.description}</p>
-                            <p class="is-size-5"><strong>Rating:</strong> ${product.rating}</p>
-                            <p class="is-size-5"><strong>Number of Reviews:</strong> ${product.numReviews}</p>
                             <p class="is-size-5"><strong>Price:</strong> $${product.price}</p>
                             ${product.countInStock && product.countInStock > 0 ? `
                                 <p class="is-size-5"><strong>Count In Stock:</strong> ${product.countInStock}</p>

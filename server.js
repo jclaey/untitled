@@ -2,6 +2,7 @@ import 'dotenv/config'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import express from 'express'
+import morgan from 'morgan'
 import cookieSession from 'cookie-session'
 import methodOverride from 'method-override'
 import session from 'express-session'
@@ -23,6 +24,8 @@ const app = express()
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
+
+app.use(morgan('dev'))
 
 // Use public folder for static files
 app.use(express.static(path.join(__dirname, 'public')))

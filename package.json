@@ -24,7 +24,6 @@
   "author": "Jason Claeys",
   "license": "ISC",
   "dependencies": {
-    "@azure/identity": "^4.5.0",
     "@google-cloud/local-auth": "^2.1.0",
     "@ngrok/ngrok": "^1.4.1",
     "@stripe/stripe-js": "^4.1.0",

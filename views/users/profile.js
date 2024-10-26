@@ -75,6 +75,7 @@ const userProfilePage = ({ user, orders = [], token }, req) => {
                             <div class="column container" id="order-history">
                                 <div class="box">
                                     <h3 class="is-size-3">
+                                        <i class="fa-regular fa-calendar pr-2"></i>
                                         Order History
                                     </h3>
                                     <hr>
@@ -96,6 +97,7 @@ const userProfilePage = ({ user, orders = [], token }, req) => {
                                 <div id="subscriptions" class="mb-5">
                                     <div class="box">
                                         <h3 class="is-size-3">
+                                            <i class="fa-solid fa-arrows-rotate pr-2"></i>
                                             Subscriptions
                                         </h3>
                                         <hr>
@@ -107,6 +109,7 @@ const userProfilePage = ({ user, orders = [], token }, req) => {
                                 <div id="quotes">
                                     <div class="box">
                                         <h3 class="is-size-3">
+                                            <i class="fa-solid fa-magnifying-glass-dollar pr-2"></i>
                                             Quotes Under Review
                                         </h3>
                                         <hr>
@@ -122,7 +125,10 @@ const userProfilePage = ({ user, orders = [], token }, req) => {
             </section>
             <section>
                 <div class="box">
-                    <h2 class="is-size-2 mb-5">Current Projects</h2>
+                    <h2 class="is-size-2 mb-5">
+                        <i class="fa-solid fa-person-digging pr-2"></i>
+                        Current Projects
+                    </h2>
                     <hr>
                     <div class="project box">
                         <p>You have no current projects</p>
