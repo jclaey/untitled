@@ -41,7 +41,7 @@ const indexPage = (req) => {
                                         </div>
                                         <div class="column-group">
                                             <h3 class="is-size-3" data-aos="fade-left" data-aos-anchor-placement="middle-middle" data-aos-duration="1000" data-aos-delay="50">
-                                                Fields
+                                                Sectors
                                             </h3>
                                             <hr>
                                             <div class="icon-group">
@@ -218,7 +218,13 @@ const indexPage = (req) => {
                         </div>
                     </section>
             </main>
-        `
+        `,
+        meta: {
+            seo: {
+                description: 'Your neighborhood web development and web services firm, serving individuals, small businesses, and enterprises. Specializing in website and web applications, but offering mobile, desktop, and IOT apps, AI integrations, as well as superior customer service. Based in Dallas-Fort Worth, USA.',
+                keywords: ''
+            }
+        }
     }, req)
 }
 
