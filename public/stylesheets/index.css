@@ -16,9 +16,34 @@ main {
     width: 100%;
 }
 
-/*  */
+#title-hr {
+    width: 80%;
+}
+
+.fa-solid.fa-bars {
+    transition: 0.3s;
+}
+
+.fa-solid.fa-bars:hover {
+    cursor: pointer;
+    background-color: #ccc;
+}
+
+/* INDEX PAGE */
 #index-main .hero-body .columns .column .title {
     color: var(--primary-color);
+    display: inline;
+}
+
+/* #index-main #title-area {
+    display: flex;
+    align-items: center;
+} */
+
+#index-main #summit-logo {
+    height: 80px;
+    width: auto;
+    display: inline;
 }
 
 /* #index-main {
@@ -39,10 +64,7 @@ main {
     margin-bottom: 5rem;
 }
 
-.title-item {
-    color: var(--primary-color);
-    font-size: 1.7rem;
-}
+/* NAVBAR */
 
 .navbar-dropdown {
     font-size: 1.15rem;
@@ -62,16 +84,30 @@ main {
     color: #fff;
 }
 
-.nav-right .button {
+.navbar-end .button {
     transition: 0.3s;
 }
 
-.nav-right .button:hover {
+.navbar-end .button:hover {
     transform: scale(1.05);
 }
 
 .navbar-brand {
     color: var(--primary-color);
+}
+
+.title-item {
+    color: var(--primary-color);
+    font-size: 1.7rem;
+}
+
+.navbar-item {
+    height: 70px;
+}
+
+nav.navbar .navbar-item.title-item #summit-logo {
+    height: 70px;
+    width: auto;
 }
 
 .fa-circle-user {
@@ -82,7 +118,7 @@ main {
     transform: scale(1.10);
 }
 
-/*  */
+/* FOOTER */
 .icon {
     font-size: 32px;
     margin: 0 3rem;
@@ -146,14 +182,6 @@ header {
 
 #contact-form {
     margin-bottom: 5rem;
-}
-
-#title-hr {
-    width: 80%;
-}
-
-.navbar.container {
-    font-size: 18px;
 }
 
 #sub-showcase {
@@ -666,6 +694,13 @@ body {
 
 #why-us p {
     padding-left: 4rem;
+    padding-right: 2rem;
+}
+
+#why-us .columns {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .card-image#other {

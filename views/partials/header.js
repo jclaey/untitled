@@ -12,19 +12,60 @@ import process from 'node:process'
     }
 
     return `
+        <div id="menu-div">
+            <div id="burger-div">
+                <i class="fa-solid fa-bars p-4 is-size-3"></i>
+            </div>
+            <aside class="menu ml-4 is-size-5">
+                <p class="menu-label is-size-6">General</p>
+                <ul class="menu-list">
+                    <li>
+                        <a href="/"><i class="fa-solid fa-house pr-2 is-theme-1"></i>Home</a>
+                    </li>
+                </ul>
+                <p class="menu-label is-size-6">More</p>
+                <ul class="menu-list">
+                    <li>
+                        <a href="/services">
+                            <i class="fa-solid fa-gears pr-2 is-theme-1"></i> Services
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/quotes">
+                            <i class="fa-regular fa-clipboard pr-2 is-theme-2"></i> Get A Free Quote
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/products">
+                            <i class="fa-solid fa-bag-shopping pr-2 is-theme-1"></i> Products
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/about">
+                            <i class="fa-solid fa-circle-question pr-2 is-theme-2"></i> About
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/contact">
+                            <i class="fa-regular fa-envelope pr-2 is-theme-1"></i> Contact
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/docs">
+                            <i class="fa-solid fa-book pr-2 is-theme-2"></i> Articles and Posts
+                        </a>
+                    </li>
+                </ul>
+            </aside>
+        </div>
         <nav class="navbar container" role="navigation" aria-label="main navigation">
             <div class="nav-left navbar-brand nav-label">
                 <a href="/" class="navbar-item title-item">
-                    ____ Untitled
-                </a>
-                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
+                    <img src="./resources/images/summit_logo_4.png" alt="Summit Web Services mountain peak alternate logo" id="summit-logo" class="mr-3">
+                    Summit
                 </a>
             </div>
-            <div id="navbarBasicExample" class="navbar-menu">
+            <div id="navMenu" class="navbar-menu">
                 <div class="navbar-start">
                     <a href="/" class="navbar-item nav-label">Home</a>
                     <div class="navbar-item has-dropdown is-hoverable">
@@ -32,33 +73,31 @@ import process from 'node:process'
                         <div class="navbar-dropdown">
                             <div class="columns">
                                 <div class="column">
-                                    <div class="level">
-                                        <a href="/services" class="navbar-item"><i class="fa-solid fa-gears pr-2 is-theme-1"></i> Services</a>
-                                    </div>
-                                    <div class="level">
-                                        <a href="/quotes" class="navbar-item"><i class="fa-regular fa-clipboard pr-2 is-theme-2"></i> Get A Free Quote</a>
-                                    </div>
-                                    <div class="level">
-                                        <a href="/products" class="navbar-item"><i class="fa-solid fa-bag-shopping pr-2 is-theme-1"></i> Products</a>
-                                    </div>
+                                    <a href="/services" class="navbar-item">
+                                        <i class="fa-solid fa-gears pr-2 is-theme-1"></i> Services
+                                    </a>
+                                    <a href="/about" class="navbar-item">
+                                        <i class="fa-solid fa-circle-question pr-2 is-theme-2"></i> About
+                                    </a>
+                                    <a href="/contact" class="navbar-item">
+                                        <i class="fa-regular fa-envelope pr-2 is-theme-1"></i> Contact
+                                    </a>
                                 </div>
                                 <div class="column">
-                                    <div class="level">
-                                        <a href="/about" class="navbar-item"><i class="fa-solid fa-circle-question pr-2 is-theme-2"></i> About</a>
-                                    </div>
-                                    <div class="level">
-                                        <a href="/contact" class="navbar-item"><i class="fa-regular fa-envelope pr-2 is-theme-1"></i> Contact</a>
-                                    </div>
-                                    <div class="level">
-                                        <a href="/docs" class="navbar-item"><i class="fa-solid fa-book pr-2 is-theme-2"></i> Articles and Posts</a>
-                                    </div>
+                                    <a href="/quotes" class="navbar-item">
+                                        <i class="fa-regular fa-clipboard pr-2 is-theme-2"></i> Get A Free Quote
+                                    </a>
+                                    <a href="/products" class="navbar-item">
+                                        <i class="fa-solid fa-bag-shopping pr-2 is-theme-1"></i> Products
+                                    </a>
+                                    <a href="/docs" class="navbar-item">
+                                        <i class="fa-solid fa-book pr-2 is-theme-2"></i> Articles and Posts
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="nav-right mt-2">
                 <div class="navbar-end">
                     ${!req || !req.session || !req.session.userId && !req.session.adminId ? `
                         <div class="navbar-item">
