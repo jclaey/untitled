@@ -8,6 +8,8 @@ const projectNewPage = ({ errors, values = {} }, req) => {
     if (req.originalUrl.length > 32) {
         quoteInfo = req.originalUrl.split('/').slice(-3)[0]
         userId = req.originalUrl.split('/').slice(-3)[2]
+    } else {
+
     }
 
     return layout({ template: `
@@ -36,7 +38,6 @@ const projectNewPage = ({ errors, values = {} }, req) => {
                         </label>
                         <div class="control mb-3">
                             <input type="text" id="quoteInfoId" name="quoteInfoId" placeholder="Enter quote info id number..." class="input mb-2" value="${errors && values.quoteInfoId && values.quoteInfoId !== '' ? values.quoteInfoId : req && req.params && req.params.quoteInfoId ? req.params.quoteInfoId : ''}" />
-                            <input type="text" id="userId" name="userId" placeholder="Enter user id number..." class="input" value="${errors && values.userId && values.userId !== '' ? values.userId : req && req.params && req.params.userId ? req.params.userId : ''}" />
                         </div>
                         <button type="submit" class="button is-info">Create Project</button>
                     </div>

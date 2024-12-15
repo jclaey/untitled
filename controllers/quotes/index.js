@@ -117,7 +117,8 @@ export const postNewQuote = async (req, res, next) => {
                                                 <strong>Budget: $${req.body.budget}</strong><br />
                                                 <strong>Due date: ${req.body.dueDate}</strong><br />
                                                 <strong>User Email: ${userEmail}</strong><br />
-                                                <strong>User Id: ${userId}</strong>
+                                                <strong>User ID: ${userId}</strong><br />
+                                                <strong>Quote Info ID: ${quote._id}</strong>
                                                 <p>
                                                     Please click the button below to create a project for this quote<br />
                                                     <a href="https://d5d9-173-175-236-109.ngrok-free.app/admin/projects/new/${quote._id}/-/${req.session.userId}">Create Project</a>

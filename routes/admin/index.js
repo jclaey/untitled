@@ -29,6 +29,9 @@ router.route('/logout').get(getLogout)
 router.route('/projects/new/:quoteInfoId?/-/:userId?').get(requireAdminAuth, asyncHandler(getProjectNew)).post([
     requireValidId
 ], asyncHandler(postProjectNew))
+router.route('/projects/new/na/-/na').post([
+    requireValidId
+], asyncHandler(postProjectNew))
 router.route('/project/:projectId').get(requireAdminAuth, asyncHandler(getProjectShow)).post([
     validateTitle,
     validateDescription
