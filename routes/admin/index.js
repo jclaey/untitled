@@ -5,7 +5,9 @@ import { requireAdminAuth } from '../../middleware/auth.js'
 import {
     requireValidEmail,
     requireValidPasswordForUser,
-    requireValidId
+    requireValidId,
+    validateTitle,
+    validateDescription
 } from '../validators.js'
 import {
     getIndex,
@@ -14,15 +16,22 @@ import {
     getLogout,
     getProjectNew,
     postProjectNew,
-    getProjectShow
+    getProjectShow,
+    postProjectUpdate
 } from '../../controllers/admin/index.js'
 
 router.route('/').get(requireAdminAuth, asyncHandler(getIndex))
-router.route('/login').get(getLogin).post([ requireValidEmail, requireValidPasswordForUser ], asyncHandler(postLogin))
+router.route('/login').get(getLogin).post([ 
+    requireValidEmail, 
+    requireValidPasswordForUser 
+], asyncHandler(postLogin))
 router.route('/logout').get(getLogout)
 router.route('/projects/new/:quoteInfoId?/-/:userId?').get(requireAdminAuth, asyncHandler(getProjectNew)).post([
     requireValidId
 ], asyncHandler(postProjectNew))
-router.route('/project/:projectId').get(requireAdminAuth, asyncHandler(getProjectShow))
+router.route('/project/:projectId').get(requireAdminAuth, asyncHandler(getProjectShow)).post([
+    validateTitle,
+    validateDescription
+], asyncHandler(postProjectUpdate))
 
 export default router

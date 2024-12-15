@@ -61,7 +61,7 @@ const layout = ({ template, meta = {} }, req) => {
             
             ${req && req.originalUrl && req.originalUrl.includes('/checkout') ? '<script src="https://js.stripe.com/v3/"></script><br /><script src="/javascript/checkout.js"></script>' : ''}
             ${req && req.originalUrl && req.originalUrl === '/users/user/billing-shipping' ? '<script src="/javascript/toggleShipping.js"></script>' : ''}
-            ${req && req.originalUrl && req.originalUrl === '/' ? '<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" integrity="sha512-A7AYk1fGKX6S2SsHywmPkrnzTZHrgiVT7GcQkLGDe2ev0aWb8zejytzS8wjo7PGEXKqJOrjQ4oORtnimIRZBtw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><br /><script src="/javascript/navbar-burger.js"></script>' : ''}
+            ${req && req.originalUrl && req.originalUrl === '/' ? '<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" integrity="sha512-A7AYk1fGKX6S2SsHywmPkrnzTZHrgiVT7GcQkLGDe2ev0aWb8zejytzS8wjo7PGEXKqJOrjQ4oORtnimIRZBtw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>' : ''}
             ${req && req.originalUrl && req.originalUrl.includes('/product') && req.originalUrl.includes('/new') || req && req.originalUrl && req.originalUrl.includes('/edit') ? '<script src="/javascript/selectToggler.js"></script>' : ''}
             ${req && req.originalUrl && req.originalUrl === '/docs/new' || req && req.originalUrl && req.originalUrl.includes('/edit') ? '<script src="/javascript/tiny-admin-facing.js"></script>' : ''}
             ${req && req.originalUrl && req.originalUrl === '/users/register' || req && req.originalUrl && req.originalUrl.includes('/reset-password') ? '<script src="/javascript/noMatch.js"></script>' : ''}
@@ -72,6 +72,7 @@ const layout = ({ template, meta = {} }, req) => {
             ${template.includes('id="message"') ? '<script src="/javascript/closeMessage.js"></script>' : ''}
             ${template.includes('id="form-btn"') ? '<script src="/javascript/spinner.js"></script>' : ''}
             <script src="/javascript/auth-modal.js"></script>
+            <script src="/javascript/navbar-burger.js"></script>
           </body>
         </html>
     `

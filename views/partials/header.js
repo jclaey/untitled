@@ -61,7 +61,7 @@ import process from 'node:process'
         <nav class="navbar container" role="navigation" aria-label="main navigation">
             <div class="nav-left navbar-brand nav-label">
                 <a href="/" class="navbar-item title-item">
-                    <img src="./resources/images/summit_logo_4.png" alt="Summit Web Services mountain peak alternate logo" id="summit-logo" class="mr-3">
+                    <img src="/resources/images/summit_logo_4.png" alt="Summit Web Services mountain peak alternate logo" id="summit-logo" class="mr-3">
                     Summit
                 </a>
             </div>

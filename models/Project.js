@@ -17,6 +17,7 @@ const ProjectSchema = new Schema({
     stack: [String],
     updates: [
         {
+            // Is this right?
             id: mongoose.ObjectId,
             title: String,
             type: String,
@@ -33,7 +34,8 @@ const ProjectSchema = new Schema({
                     filename: String
                 }
             ],
-            version: String
+            version: String,
+            isPushed: Boolean
         }
     ],
     created_at: {

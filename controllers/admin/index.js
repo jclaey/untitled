@@ -143,3 +143,14 @@ export const getProjectShow = async (req, res, next) => {
 
     res.send(projectShowPage({ project }, req))
 }
+
+export const postProjectUpdate = (req, res, next) => {
+    // You need to create new users and then create new projects for those users
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+        res.send(adminLoginPage({ errors, values: req.body }, req))
+    }
+
+    
+}
