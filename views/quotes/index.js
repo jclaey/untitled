@@ -31,7 +31,7 @@ const newQuotePage = ({ errors, values = {} }, req) => {
                     : ''}
                 </div>
                 <div class="mb-6" id="byline">
-                    <p class="is-size-4">Free is the best, isn't it? Honestly, why would we charge you for this anyway? Fill out and submit the form below to get a personalized quote!</p>
+                    <p class="is-size-4 has-text-centered">Free is the best, isn't it? Honestly, why would we charge you for this anyway? Fill out and submit the form below to get a personalized quote!</p>
                 </div>
                 <div id="quote-form-container">
                     <form class="box" action="/quotes" method="POST" id="quote-form">

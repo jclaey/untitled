@@ -83,6 +83,7 @@ export const postProjectNew = async (req, res, next) => {
     }
 
     const quoteInfoId = req && req.params && req.params.quoteInfoId ? req.params.quoteInfoId : req.body.quoteInfoId ? req.body.quoteInfoId : ''
+    console.log(quoteInfoId)
     const quoteInfoItem = await QuoteInfoItem.findById(quoteInfoId).populate({ path: 'user' }).exec()
     const userId = quoteInfoItem.user._id ? quoteInfoItem.user._id : req && req.params && req.params.userId ? req.params.userId : ''
 
@@ -152,5 +153,5 @@ export const postProjectUpdate = (req, res, next) => {
         res.send(adminLoginPage({ errors, values: req.body }, req))
     }
 
-    
+
 }

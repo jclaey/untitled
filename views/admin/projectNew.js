@@ -1,10 +1,14 @@
 import layout from "../layout.js"
+import { getErrors } from "../../utils/getErrors.js"
 
 const projectNewPage = ({ errors, values = {} }, req) => {
-    const quoteInfo = req.originalUrl.split('/').slice(-3)[0]
-    console.log(quoteInfo)
-    const userId = req.originalUrl.split('/').slice(-3)[2]
-    console.log(userId)
+    let quoteInfo
+    let userId
+
+    if (req.originalUrl.length > 32) {
+        quoteInfo = req.originalUrl.split('/').slice(-3)[0]
+        userId = req.originalUrl.split('/').slice(-3)[2]
+    }
 
     return layout({ template: `
         <main class="container">
@@ -25,13 +29,14 @@ const projectNewPage = ({ errors, values = {} }, req) => {
                 : ''}
             </div>
             <section id="project-form-section">
-                <form action="/admin/projects/new/${quoteInfo}/-/${userId}" method="POST" class="box">
+                <form action="/admin/projects/new/${quoteInfo ? quoteInfo : 'na'}/-/${userId ? userId : 'na'}" method="POST" class="box">
                     <div class="field mb-5">
                         <label class="label" for="quoteInfoId">
                             <strong>Quote Info ID</strong>
                         </label>
                         <div class="control mb-3">
-                            <input type="text" id="quoteInfoId" name="quoteInfoId" placeholder="Enter quote info id number..." class="input" value="${errors && values.quoteInfoId && values.quoteInfoId !== '' ? values.quoteInfoId : req && req.params && req.params.quoteInfoId ? req.params.quoteInfoId : ''}" />
+                            <input type="text" id="quoteInfoId" name="quoteInfoId" placeholder="Enter quote info id number..." class="input mb-2" value="${errors && values.quoteInfoId && values.quoteInfoId !== '' ? values.quoteInfoId : req && req.params && req.params.quoteInfoId ? req.params.quoteInfoId : ''}" />
+                            <input type="text" id="userId" name="userId" placeholder="Enter user id number..." class="input" value="${errors && values.userId && values.userId !== '' ? values.userId : req && req.params && req.params.userId ? req.params.userId : ''}" />
                         </div>
                         <button type="submit" class="button is-info">Create Project</button>
                     </div>

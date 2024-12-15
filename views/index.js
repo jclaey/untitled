@@ -1,6 +1,7 @@
 import layout from "./layout.js"
 
 const indexPage = (req) => {
+    console.log(req.originalUrl.length)
     return layout({ template: `
             <main>
                 <div id="index-main">
