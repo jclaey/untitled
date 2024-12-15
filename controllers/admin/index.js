@@ -114,7 +114,9 @@ export const getProjectShow = async (req, res, next) => {
         .populate('quoteInfoItem')
         .exec()
 
-    console.log(project)
+    let quoteItem = await QuoteInfoItem.findById(project.quoteInfoItem._id)
+
+    console.log(quoteItem.projectDetails)
 
     project = {
         quoteInfoItem: {
@@ -125,7 +127,8 @@ export const getProjectShow = async (req, res, next) => {
                 city: project.quoteInfoItem.businessAddress.city,
                 state: project.quoteInfoItem.businessAddress.state,
                 postalCode: project.quoteInfoItem.businessAddress.postalCode
-            }
+            },
+            projectDetails: quoteItem.projectDetails
             // businessName: decryptStringData(project.quoteInfoItem.businessName.split('.')[0], key, project.quoteInfoItem.businessName.split('.')[1]),
             // businessAddress: {
             //     streetAddressOne: decryptStringData(project.quoteInfoItem.businessAddress.streetAddressOne.split('.')[0], key, project.quoteInfoItem.businessAddress.streetAddressOne.split('.')[1]),

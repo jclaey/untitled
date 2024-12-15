@@ -18,7 +18,16 @@ const projectShowPage = ({ project, errors, values = {} }, req) => {
                                         <h3 class="subtitle is-size-3">Project Details</h3>
                                     </div>
                                     <div class="mb-4">
-                                        <span class="is-size-4">${project.title}</span>
+                                        <div class="mb-3">
+                                            <span class="is-size-4">
+                                                ${project.title}
+                                            </span>
+                                        </div>
+                                        <div class="mb-3">
+                                            <span class="is-size-5 mb-2">
+                                                <strong>Project details:</strong> ${project.quoteInfoItem.projectDetails}
+                                            </span>
+                                        </div>
                                     </div>
                                     <div class="mb-2 box">
                                         <h4>Project User Details</h4>
