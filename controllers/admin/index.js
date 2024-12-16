@@ -152,19 +152,28 @@ export const postProjectUpdate = async (req, res, next) => {
         .populate('quoteInfoItem')
         .exec()
 
-    console.log(project)
-    console.log(req.body)
-
     const errors = validationResult(req)
 
     if (!errors.isEmpty()) {
         return res.send(projectShowPage({ project, errors, values: req.body }, req))
     }
 
+    let images = []
+
+    if (req.files) {
+        for (let image of req.files) {
+            images.push({
+                path: image.path,
+                filename: image.filename
+            })
+        }
+    }
+
     if (project) {
         project.updates.push({
             title: req.body.title,
             description: req.body.description,
+            images,
             version: req.body.version,
             type: req.body.type
         })

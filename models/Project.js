@@ -21,14 +21,12 @@ const ProjectSchema = new Schema({
             title: String,
             type: { type: String },
             description: String,
-            image: {
-                path: String,
-                filename: String
-            },
-            video: {
-                path: String,
-                filename: String
-            },
+            images: [
+                {
+                    path: String,
+                    filename: String
+                }
+            ],
             version: String,
             isPublished: Boolean,
             updated_at: {

@@ -12,6 +12,7 @@ const projectShowPage = ({ project, errors, values = {} }, req) => {
                 <div class="box">
                     <a href="" class="is-size-3">${update.title}</a>
                     <p class="is-size-5">${update.description}</p>
+                    <p class="is-size-5"><strong>Version:</strong> ${update.version}</p>
                 </div>
             `
         }).join('')
@@ -85,8 +86,9 @@ const projectShowPage = ({ project, errors, values = {} }, req) => {
                                 <div class="content">
                                     <div class="mb-5">
                                         <h3 class="is-size-3">Update Project</h3>
+                                        <p><small>* denotes a required field</small></p>
                                     </div>
-                                    <form action="/admin/project/${project.id}" method="POST" id="project-update-form">
+                                    <form action="/admin/project/${project.id}" method="POST" id="project-update-form" enctype="multipart/form-data">
                                         <div class="field mb-4">
                                             <label for="title" class="label">
                                                 Title*
@@ -104,8 +106,16 @@ const projectShowPage = ({ project, errors, values = {} }, req) => {
                                             </div>
                                         </div>
                                         <div class="field mb-4">
+                                            <label for="images" class="label">
+                                                Images
+                                            </label>
+                                            <div class="control">
+                                                <input class="input" type="file" accept="images/*" id="images" name="images" multiple />
+                                            </div>
+                                        </div>
+                                        <div class="field mb-4">
                                             <label for="version" class="label">
-                                                Version
+                                                Version*
                                             </label>
                                             <div class="control">
                                                 <input type="text" id="version" name="version" class="input" />
@@ -113,7 +123,7 @@ const projectShowPage = ({ project, errors, values = {} }, req) => {
                                         </div>
                                         <div class="field mb-6">
                                             <label for="type" class="label">
-                                                Type
+                                                Type*
                                             </label>
                                             <div class="control">
                                                 <input type="text" id="type" name="type" class="input" />
