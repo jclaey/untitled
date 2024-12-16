@@ -43,6 +43,20 @@ export const validateDescription =
     .withMessage('Please enter a description')
     .escape()
 
+export const validateVersion = 
+    body('version')
+    .trim()
+    .notEmpty()
+    .withMessage('Please enter a version number')
+    .escape()
+
+export const validateProjectUpdateType = 
+    body('type')
+    .trim()
+    .notEmpty()
+    .withMessage('Please enter an update type')
+    .escape()
+
 export const validateFirstName =
     body('firstName')
     .trim()
