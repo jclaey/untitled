@@ -30,7 +30,11 @@ const ProjectSchema = new Schema({
                 filename: String
             },
             version: String,
-            isPublished: Boolean
+            isPublished: Boolean,
+            updated_at: {
+                type: Date,
+                default: Date.now()
+            }
         }
     ],
     created_at: {
