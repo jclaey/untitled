@@ -7,7 +7,9 @@ import {
     requireValidPasswordForUser,
     requireValidId,
     validateTitle,
-    validateDescription
+    validateDescription,
+    validateVersion,
+    validateProjectUpdateType
 } from '../validators.js'
 import {
     getIndex,
@@ -33,8 +35,10 @@ router.route('/projects/new/na/-/na').post([
     requireValidId
 ], asyncHandler(postProjectNew))
 router.route('/project/:projectId').get(requireAdminAuth, asyncHandler(getProjectShow)).post([
-    validateTitle, 
-    validateDescription
+    validateTitle,
+    validateDescription,
+    validateVersion,
+    validateProjectUpdateType
 ], asyncHandler(postProjectUpdate))
 
 export default router
