@@ -33,7 +33,7 @@ router.route('/projects/new/na/-/na').post([
     requireValidId
 ], asyncHandler(postProjectNew))
 router.route('/project/:projectId').get(requireAdminAuth, asyncHandler(getProjectShow)).post([
-    validateTitle,
+    validateTitle, 
     validateDescription
 ], asyncHandler(postProjectUpdate))
 

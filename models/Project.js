@@ -17,25 +17,20 @@ const ProjectSchema = new Schema({
     stack: [String],
     updates: [
         {
-            // Is this right?
-            id: mongoose.ObjectId,
+            id: Schema.Types.ObjectId,
             title: String,
-            type: String,
+            type: { type: String },
             description: String,
-            images: [
-                {
-                    path: String,
-                    filename: String
-                }
-            ],
-            videos: [
-                {
-                    path: String,
-                    filename: String
-                }
-            ],
+            image: {
+                path: String,
+                filename: String
+            },
+            video: {
+                path: String,
+                filename: String
+            },
             version: String,
-            isPushed: Boolean
+            isPublished: Boolean
         }
     ],
     created_at: {

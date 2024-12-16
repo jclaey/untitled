@@ -21,8 +21,6 @@ export const getIndex = async (req, res, next) => {
         .populate('user')
         .populate('quoteInfoItem')
         .exec()
-
-        console.log(projects)
     
     if (docs) {
         res.send(adminIndexPage({ docs, products, projects }, req))
@@ -83,7 +81,6 @@ export const postProjectNew = async (req, res, next) => {
     }
 
     const quoteInfoId = req && req.params && req.params.quoteInfoId && req.params.quoteInfoId.length > 2 ? req.params.quoteInfoId : req.body.quoteInfoId ? req.body.quoteInfoId : ''
-    console.log(quoteInfoId)
     const quoteInfoItem = await QuoteInfoItem.findById(String(quoteInfoId)).populate({ path: 'user' }).exec()
     const userId = quoteInfoItem.user._id ? quoteInfoItem.user._id : req && req.params && req.params.userId ? req.params.userId : ''
 
@@ -101,6 +98,7 @@ export const postProjectNew = async (req, res, next) => {
             if (process.env.NODE_ENV === 'development') {
                 throw new Error('Could not create new project')
             } else {
+                // Not sure about this logic here
                 req.session.error = 'Could not create new project'
                 res.send(projectNewPage({}, req))
             }
@@ -116,9 +114,8 @@ export const getProjectShow = async (req, res, next) => {
 
     let quoteItem = await QuoteInfoItem.findById(project.quoteInfoItem._id)
 
-    console.log(quoteItem.projectDetails)
-
     project = {
+        id: project._id,
         quoteInfoItem: {
             businessName: project.quoteInfoItem.businessName,
             businessAddress: {
@@ -138,6 +135,7 @@ export const getProjectShow = async (req, res, next) => {
             //     postalCode: decryptStringData(project.quoteInfoItem.businessAddress.postalCode.split('.')[0], key, project.quoteInfoItem.businessAddress.postalCode.split('.')[1])
             // }
         },
+        updates: [...project.updates],
         user: {
             firstName: decryptStringData(project.user.firstName.split('.')[0], key, project.user.firstName.split('.')[1]),
             lastName: decryptStringData(project.user.lastName.split('.')[0], key, project.user.lastName.split('.')[1])
@@ -148,13 +146,40 @@ export const getProjectShow = async (req, res, next) => {
     res.send(projectShowPage({ project }, req))
 }
 
-export const postProjectUpdate = (req, res, next) => {
-    // You need to create new users and then create new projects for those users
+export const postProjectUpdate = async (req, res, next) => {
+    let project = await Project.findById(req.params.projectId)
+        .populate('user')
+        .populate('quoteInfoItem')
+        .exec()
+
+    console.log(project)
+    console.log(req.body)
+
     const errors = validationResult(req)
 
     if (!errors.isEmpty()) {
-        res.send(adminLoginPage({ errors, values: req.body }, req))
+        return res.send(projectShowPage({ project, errors, values: req.body }, req))
     }
 
+    if (project) {
+        project.updates.push({
+            title: req.body.title,
+            description: req.body.description,
+            version: req.body.version,
+            type: req.body.type
+        })
 
+        console.log(project)
+
+        await project.save()
+        res.redirect(`/admin`)
+    } else {
+        if (process.env.NODE_ENV === 'development') {
+            throw new Error('Could not update project')
+        } else {
+            // Not sure about this logic here
+            req.session.error = 'Could not update project'
+            res.send(projectShowPage({}, req))
+        }
+    }
 }

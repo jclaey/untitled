@@ -1,4 +1,5 @@
 import layout from "../layout.js"
+import { getErrors } from "../../utils/getErrors.js"
 
 const productsEditPage = ({ product, errors, values = {} }, req) => {
     return layout({ template: `
