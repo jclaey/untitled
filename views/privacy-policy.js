@@ -14,7 +14,7 @@ const privacyPolicyPage = ({}, req) => {
                 </div>
                 <div>
                     <p class="is-size-5">
-                        <strong>Untitled Company Project (UCP)</strong> is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website, use our services, or interact with us.
+                        <strong>Summit Web Services</strong> is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website, use our services, or interact with us.
                     </p>
                     <p class="is-size-5">
                         By using our website or services, you agree to the terms outlined in this Privacy Policy.
@@ -128,7 +128,7 @@ const privacyPolicyPage = ({}, req) => {
                     <p class="is-size-5 mb-3">
                         If you have questions or concerns about this Privacy Policy or how we handle your information, please contact us at:
                     </p>
-                    <strong>Untitled Company Project (UCP)</strong><br />
+                    <strong>Summit Web Services</strong><br />
                     Email: contact@handierme.com<br />
                     Address: [Insert Business Address]
                 </div>
