@@ -124,7 +124,7 @@ const termsAndConditionsPage = ({}, req) => {
                             If you have questions about these Terms and Conditions, please contact us at:
                         </p>
                         <strong>Summit Web Services</strong><br />
-                        Email: contact@handierme.com<br />
+                        Email: [Insert Email Address]<br />
                         Address: [Insert Business Address]
                     </div>
                 </div>

@@ -129,7 +129,7 @@ const privacyPolicyPage = ({}, req) => {
                         If you have questions or concerns about this Privacy Policy or how we handle your information, please contact us at:
                     </p>
                     <strong>Summit Web Services</strong><br />
-                    Email: contact@handierme.com<br />
+                    Email: [Insert Email Address]<br />
                     Address: [Insert Business Address]
                 </div>
             </section>
