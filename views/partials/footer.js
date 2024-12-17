@@ -15,10 +15,10 @@ const footer = () => {
                         <a href="/contact" class="has-text-dark is-size-5">Contact Us</a>
                     </div>
                     <div>
-                        <a href="#" target="_blank" class="has-text-dark is-size-5">Terms and Conditions</a>
+                        <a href="/terms-and-conditions" target="_blank" class="has-text-dark is-size-5">Terms and Conditions</a>
                     </div>
                     <div>
-                        <a href="#" target="_blank" class="has-text-dark is-size-5">Privacy Policy</a>
+                        <a href="/privacy-policy" target="_blank" class="has-text-dark is-size-5">Privacy Policy</a>
                     </div>
                 </div>
             </div>

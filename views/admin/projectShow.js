@@ -10,7 +10,7 @@ const projectShowPage = ({ project, errors, values = {} }, req) => {
         renderUpdatesList = project.updates.map(update => {
             return `
                 <div class="box">
-                    <a href="" class="is-size-3">${update.title}</a>
+                    <a href="/admin/project/${project.id}/update/${update._id}" class="is-size-3">${update.title}</a>
                     <p class="is-size-5">${update.description}</p>
                     <p class="is-size-5"><strong>Version:</strong> ${update.version}</p>
                 </div>
@@ -22,7 +22,7 @@ const projectShowPage = ({ project, errors, values = {} }, req) => {
 
     return layout({ template: `
         <main class="container">
-            <div class="page-title-div" id="admin-index-page-title">
+            <div class="page-title-div">
                 <h1 class="title is-size-1">
                     <span class="pipe pr-2">|</span>${project.title}<span class="pipe pl-2">|</span>
                 </h1>

@@ -114,6 +114,9 @@ import process from 'node:process'
                     ${req && req.session && req.session.adminId ? `
                         <div class="navbar-item">
                             <div class="buttons">
+                                <a href="/admin" class="button is-success">
+                                    <i class="fa-solid fa-house pr-2"></i> Admin Home
+                                </a>
                                 <a href="/admin/projects/new/-" class="button is-success">
                                     <i class="fa-solid fa-diagram-project pr-2"></i> Create Project
                                 </a>

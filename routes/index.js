@@ -30,7 +30,9 @@ import {
     postVerifyMobile,
     postVerifyEmail,
     getVerifyEmailSuccess,
-    getVerifyEmailPage
+    getVerifyEmailPage,
+    getPrivacyPolicy,
+    getTermsAndConditions
 } from '../controllers/index.js'
 
 router.route('/').get(getIndex)
@@ -59,5 +61,7 @@ router.route('/verify-mobile/:code?').get(getVerifyMobile).post(postVerifyMobile
 router.route('/verify-email-page').get(getVerifyEmailPage)
 router.route('/verify-email/:token').get(postVerifyEmail)
 router.route('/verify-email-success').get(getVerifyEmailSuccess)
+router.route('/privacy-policy').get(getPrivacyPolicy)
+router.route('/terms-and-conditions').get(getTermsAndConditions)
 
 export default router

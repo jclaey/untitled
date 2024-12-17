@@ -22,7 +22,8 @@ import {
     getProjectNew,
     postProjectNew,
     getProjectShow,
-    postProjectUpdate
+    postProjectUpdate,
+    getProjectUpdateShow
 } from '../../controllers/admin/index.js'
 
 router.route('/').get(requireAdminAuth, asyncHandler(getIndex))
@@ -45,5 +46,7 @@ router.route('/project/:projectId')
     validateVersion,
     validateProjectUpdateType
 ], asyncHandler(postProjectUpdate))
+router.route('/project/:projectId/update/:updateId')
+    .get(requireAdminAuth, asyncHandler(getProjectUpdateShow))
 
 export default router

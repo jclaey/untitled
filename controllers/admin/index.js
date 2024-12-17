@@ -5,6 +5,7 @@ import adminIndexPage from "../../views/admin/index.js"
 import adminLoginPage from "../../views/admin/login.js"
 import projectNewPage from "../../views/admin/projectNew.js"
 import projectShowPage from '../../views/admin/projectShow.js'
+import projectUpdateShowPage from '../../views/admin/projectUpdateShow.js'
 import Admin from "../../models/Admin.js"
 import Project from '../../models/Project.js'
 import QuoteInfoItem from "../../models/QuoteInfoItem.js"
@@ -178,8 +179,6 @@ export const postProjectUpdate = async (req, res, next) => {
             type: req.body.type
         })
 
-        console.log(project)
-
         await project.save()
         res.redirect(`/admin`)
     } else {
@@ -191,4 +190,11 @@ export const postProjectUpdate = async (req, res, next) => {
             res.send(projectShowPage({}, req))
         }
     }
+}
+
+export const getProjectUpdateShow = async (req, res, next) => {
+    const project = await Project.findById(req.params.projectId)
+    let update = project.updates.filter(update => String(update._id) === req.params.updateId)
+    update = update[0]
+    res.send(projectUpdateShowPage({ project, update }, req))
 }

@@ -12,6 +12,7 @@ import demoPage from "../views/demos.js"
 import paymentSuccessfulPage from '../views/payment-successful.js'
 import forgotPasswordPage from '../views/forgot-password.js'
 import resetPasswordPage from '../views/reset-password.js'
+import privacyPolicyPage from '../views/privacy-policy.js'
 import sendEmail from "../utils/sendEmail.js"
 import User from '../models/User.js'
 import Order from '../models/Order.js'
@@ -20,6 +21,7 @@ import verifyEmailSuccessPage from '../views/verify-email-success.js'
 import { encryptStringData, decryptStringData } from '../utils/encrypt.js'
 import verifyEmailPage from '../views/verify-email.js'
 import passwordEmailSentPage from '../views/passwordEmailSent.js'
+import termsAndConditionsPage from '../views/terms-and-conditions.js'
 
 const key = process.env.ENCRYPTION_KEY
 
@@ -562,4 +564,12 @@ export const resendEmailVerification = async (req, res, next) => {
             return res.send(verifyEmailPage({}, req))
         }
     }
+}
+
+export const getPrivacyPolicy = (req, res, next) => {
+    res.send(privacyPolicyPage({}, req))
+}
+
+export const getTermsAndConditions = (req, res, next) => {
+    res.send(termsAndConditionsPage({}, req))
 }

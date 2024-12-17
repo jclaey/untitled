@@ -790,6 +790,22 @@ body {
     color: #4F9840;
 }
 
+#update-details-container {
+    width: 40%;
+}
+
+#update-show-images {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+.update-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
 
 @keyframes spin {
     0% { transform: rotate(0deg); }
