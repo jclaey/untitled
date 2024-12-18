@@ -1,11 +1,13 @@
 import layout from "../layout.js"
 
-const userProfilePage = ({ user, orders = [], token }, req) => {
-    let renderedComplete
-    let renderedIncomplete
+const userProfilePage = ({ user, orders = [], token, projects, quotes }, req) => {
+    let renderedCompleteOrders
+    let renderedIncompleteOrders
+    let renderedProjects
+    let renderedActiveQuotes
 
     if (orders.length > 0) {
-        renderedComplete = orders.map(order => {
+        renderedCompleteOrders = orders.map(order => {
             if (order.isPaid === true) {
                 return `
                     <article class="media box">
@@ -25,7 +27,7 @@ const userProfilePage = ({ user, orders = [], token }, req) => {
             }
         })
 
-        renderedIncomplete = orders.map(order => {
+        renderedIncompleteOrders = orders.map(order => {
             if (!order.isPaid) {
                 return `
                     <article class="media box">
@@ -49,6 +51,39 @@ const userProfilePage = ({ user, orders = [], token }, req) => {
                 `
             }
         })
+    }
+
+    if (!projects || projects.length === 0) {
+        renderedProjects = '<p class="box">You have no quotes under review</p>'
+    } else {
+        renderedProjects = projects.map(project => {
+            return `
+                <div class="box">
+                    <h3 class="is-size-4">${project.title}</h3>
+                </div>
+            `
+        }).join('')
+    }
+
+    if (!quotes || quotes.length === 0) {
+        renderedActiveQuotes = '<p>You have no quotes under review</p>'
+    } else {
+        renderedActiveQuotes = quotes.map(quote => {
+            return `
+                <div class="box">
+                    <h3 class="is-size-5 mb-2">
+                        <strong>Project Type: ${quote.projectType}</strong>
+                    </h3>
+                    <p class="is-size-6">
+                        <strong>Project Details:</strong> ${
+                            quote.projectDetails.length > 60 
+                            ? quote.projectDetails.slice(0, 60) + '...' 
+                            : quote.projectDetails
+                        }
+                    </p>
+                </div>
+            `
+        }).join('')
     }
 
     return layout({ template: `
@@ -82,13 +117,13 @@ const userProfilePage = ({ user, orders = [], token }, req) => {
                                     <div id="complete" class="mb-5">
                                         <h4 class="is-size-4 mb-3">Completed Orders</h4>
                                         <div class="box">
-                                            ${renderedComplete ? renderedComplete : 'You have no completed orders, at this time'}
+                                            ${renderedCompleteOrders ? renderedCompleteOrders : 'You have no completed orders, at this time'}
                                         </div>
                                     </div>
                                     <div id="incomplete" class="mb-5">
                                         <h4 class="is-size-4 mb-3">Orders in Progress</h4>
                                         <div class="box">
-                                            ${renderedIncomplete ? renderedIncomplete : 'You have no incomplete orders, at this time'}
+                                            ${renderedIncompleteOrders ? renderedIncompleteOrders : 'You have no incomplete orders, at this time'}
                                         </div>
                                     </div>
                                 </div>
@@ -114,7 +149,7 @@ const userProfilePage = ({ user, orders = [], token }, req) => {
                                         </h3>
                                         <hr>
                                         <div class="quote">
-                                            <p class="box">You have no quotes under review</p>
+                                            ${renderedActiveQuotes}
                                         </div>
                                     </div>
                                 </div>
@@ -130,8 +165,8 @@ const userProfilePage = ({ user, orders = [], token }, req) => {
                         Current Projects
                     </h2>
                     <hr>
-                    <div class="project box">
-                        <p>You have no current projects</p>
+                    <div>
+                        ${renderedProjects}
                     </div>
                 </div>
             </section>

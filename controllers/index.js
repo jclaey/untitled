@@ -125,12 +125,14 @@ export const patchForgotPassword = async (req, res, next) => {
         await user.save()
 
         const transporter = nodemailer.createTransport({
-            host: 'smtp-mail.outlook.com',
-            port: 587,
-            secure: false,
+            service: 'gmail',
             auth: {
-                user: process.env.OUTLOOK_EMAIL,
-                pass: process.env.OUTLOOK_PASS
+                type: 'OAuth2',
+                user: `${process.env.GMAIL_EMAIL}`,
+                clientId: gmailClientId,
+                clientSecret: gmailClientSecret,
+                refreshToken: gmailRefreshToken,
+                accessToken: accessToken.token
             }
         })
 
@@ -258,12 +260,14 @@ export const getResetPasswordEmail = async (req, res, next) => {
     let email = decryptStringData(user.emailEncrypted.encryptedData, key, user.emailEncrypted.iv)
 
     const transporter = nodemailer.createTransport({
-        host: 'smtp-mail.outlook.com',
-        port: 587,
-        secure: false,
+        service: 'gmail',
         auth: {
-            user: process.env.OUTLOOK_EMAIL,
-            pass: process.env.OUTLOOK_PASS
+            type: 'OAuth2',
+            user: `${process.env.GMAIL_EMAIL}`,
+            clientId: gmailClientId,
+            clientSecret: gmailClientSecret,
+            refreshToken: gmailRefreshToken,
+            accessToken: accessToken.token
         }
     })
 
@@ -468,12 +472,14 @@ export const resendEmailVerification = async (req, res, next) => {
             const resetUrl = `http://${req.headers.host}/verify-email/${token}`
 
             const transporter = nodemailer.createTransport({
-                host: 'smtp-mail.outlook.com',
-                port: 587,
-                secure: false,
+                service: 'gmail',
                 auth: {
-                    user: process.env.OUTLOOK_EMAIL,
-                    pass: process.env.OUTLOOK_PASS
+                    type: 'OAuth2',
+                    user: `${process.env.GMAIL_EMAIL}`,
+                    clientId: gmailClientId,
+                    clientSecret: gmailClientSecret,
+                    refreshToken: gmailRefreshToken,
+                    accessToken: accessToken.token
                 }
             })
         

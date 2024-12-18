@@ -49,7 +49,7 @@ router.route('/register')
         validatePhoneNumber
 ], asyncHandler(postRegister))
 router.route('/logout').get(getLogout)
-router.route('/user/:id/profile').get(asyncHandler(getUserProfile))
+router.route('/user/:id/profile').get(requireUserAuth, asyncHandler(getUserProfile))
 router.route('/user/:id/profile/edit').get(requireUserAuth, asyncHandler(getEditUserProfile)).post([
     validateFirstName,
     validateLastName,

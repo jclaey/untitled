@@ -16,6 +16,8 @@ import verifyMobilePage from "../../views/verify-mobile.js"
 import User from "../../models/User.js"
 import Order from "../../models/Order.js"
 import { Product } from "../../models/Product.js"
+import Project from "../../models/Project.js"
+import QuoteInfoItem from "../../models/QuoteInfoItem.js"
 import { 
     handlePaymentIntentSucceeded,
     handlePaymentIntentCanceled,
@@ -271,6 +273,8 @@ export const getUserProfile = async (req, res, next) => {
     let user = await User.findById(req.params.id)
     let token = await crypto.randomBytes(20).toString('hex')
     let emailToken = await crypto.randomBytes(20).toString('hex')
+    let projects = await Project.find({ user: req.params.id })
+    let quotes = await QuoteInfoItem.find({ user: req.params.id })
 
     if (user && !user.emailVerified)  {
         return res.redirect('/verify-email-page')
@@ -287,7 +291,7 @@ export const getUserProfile = async (req, res, next) => {
 
         let orders = await Order.find({ user: user.id })
 
-        res.send(userProfilePage({ user, orders, token }, req))
+        res.send(userProfilePage({ user, orders, token, projects, quotes }, req))
     } else {
         if (process.env.NODE_ENV === 'development') {
             throw new Error('Could not find resource')
