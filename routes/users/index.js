@@ -33,6 +33,10 @@ import {
     patchEditUserProfile
 } from '../../controllers/users/index.js'
 
+import {
+    getProjectUpdateShow
+} from '../../controllers/admin/index.js'
+
 router.route('/login')
     .get(getLogin)
     .post([
@@ -68,5 +72,6 @@ router.route('/user/billing-shipping').get(requireUserAuth, asyncHandler(getBill
     validateCity,
     validateZipcode
 ], requireUserAuth, asyncHandler(postBillingShipping))
+router.route('/project/:projectId/update/:updateId').get(requireUserAuth, asyncHandler(getProjectUpdateShow))
 
 export default router

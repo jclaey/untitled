@@ -1,6 +1,6 @@
 import layout from "../layout.js"
 
-const userProfilePage = ({ user, orders = [], token, projects, quotes }, req) => {
+const userProfilePage = ({ user, orders = [], token, projects, quotes, updates }, req) => {
     let renderedCompleteOrders
     let renderedIncompleteOrders
     let renderedProjects
@@ -56,10 +56,31 @@ const userProfilePage = ({ user, orders = [], token, projects, quotes }, req) =>
     if (!projects || projects.length === 0) {
         renderedProjects = '<p class="box">You have no quotes under review</p>'
     } else {
+        let renderedUpdates
         renderedProjects = projects.map(project => {
+            if (project.updates.length > 0) {
+                renderedUpdates = project.updates.map(update => {
+                    return `
+                        <div>
+                            <a href="/users/project/${project._id}/update/${update._id}">
+                                <h5>${update.title}</h5>
+                            </a>
+                        </div>
+                    `
+                }).join('')
+            } else {
+                renderedUpdates = 'There are no updates to this project yet'
+            }
+
             return `
                 <div class="box">
-                    <h3 class="is-size-4">${project.title}</h3>
+                    <div>
+                        <h3 class="is-size-3">${project.title}</h3>
+                    </div>
+                    <div>
+                        <h4 class="is-size-4">Project Updates:</h4>
+                        ${renderedUpdates}
+                    </div>
                 </div>
             `
         }).join('')
@@ -74,13 +95,15 @@ const userProfilePage = ({ user, orders = [], token, projects, quotes }, req) =>
                     <h3 class="is-size-5 mb-2">
                         <strong>Project Type: ${quote.projectType}</strong>
                     </h3>
-                    <p class="is-size-6">
+                    <p class="is-size-6 mb-2">
                         <strong>Project Details:</strong> ${
                             quote.projectDetails.length > 60 
                             ? quote.projectDetails.slice(0, 60) + '...' 
                             : quote.projectDetails
                         }
                     </p>
+                    <p class="is-size-6 mb-2"><strong>Budget:</strong> $${quote.budget}</p>
+                    <p class="is-size-6 mb-2"><strong>Submitted at:</strong> ${quote.submitted_at.toLocaleDateString()} at ${quote.submitted_at.toLocaleTimeString()}
                 </div>
             `
         }).join('')
