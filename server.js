@@ -5,6 +5,7 @@ import express from 'express'
 import morgan from 'morgan'
 import cookieSession from 'cookie-session'
 import methodOverride from 'method-override'
+import cors from 'cors'
 import session from 'express-session'
 import MongoStore from 'connect-mongo'
 import process from 'node:process'
@@ -21,6 +22,8 @@ import connectDB from './config/db.js'
 connectDB()
 
 const app = express()
+
+app.use(cors())
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
