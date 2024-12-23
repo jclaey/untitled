@@ -37,7 +37,7 @@ const drive = google.drive({ version: 'v3', auth })
 const gmailClientId = process.env.GMAIL_CLIENT_ID
 const gmailClientSecret = process.env.GMAIL_CLIENT_SECRET
 const gmailRefreshToken = process.env.GMAIL_REFRESH_TOKEN
-const gmailRedirectUri = 'http://localhost:3000/verify-email-page'
+const gmailRedirectUri = 'https://summit-web-services-9b027d19ea1d.herokuapp.com/verify-email-page'
 
 const productsFolderId = process.env.DRIVE_PRODUCTS_FOLDER_ID
 const imagesFolderId = process.env.DRIVE_IMAGES_FOLDER_ID
