@@ -23,6 +23,9 @@
   ],
   "author": "Jason Claeys",
   "license": "ISC",
+  "engines": {
+    "node": "17.9.1"
+  },
   "dependencies": {
     "@google-cloud/local-auth": "^2.1.0",
     "@ngrok/ngrok": "^1.4.1",
