@@ -17,7 +17,7 @@ const layout = ({ template, meta = {} }, req) => {
             ${req && req.originalUrl && req.originalUrl === '/' ? '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" integrity="sha512-1cK78a1o+ht2JcaW6g8OXYwqpev9+6GqOkz9xmBN9iUUhIndKtxwILGWYOSibOKjLsEdjyjZvYDq/cZwNeak0w==" crossorigin="anonymous" referrerpolicy="no-referrer">' : ''}
             ${req && req.originalUrl && req.originalUrl === '/' ? '<link rel="stylesheet" href="/stylesheets/testimonials.css">' : ''}
             ${req && req.originalUrl && req.originalUrl.includes('/checkout') ? '<link rel="stylesheet" href="/stylesheets/checkout.css">' : ''}
-            <link rel="stylesheet" href="/stylesheets/bulma/css/bulma.min.css">
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
             <link rel="stylesheet" href="/stylesheets/index.css">
             <link rel="stylesheet" href="/stylesheets/mobile.css">
