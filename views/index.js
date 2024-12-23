@@ -1,7 +1,6 @@
 import layout from "./layout.js"
 
 const indexPage = (req) => {
-    console.log(req.originalUrl.length)
     return layout({ template: `
             <main>
                 <div id="index-main">
@@ -10,7 +9,7 @@ const indexPage = (req) => {
                             <div class="columns">
                                 <div class="column">
                                     <div id="title-area" data-aos="fade-right" data-aos-anchor-placement="middle-middle" data-aos-duration="1000" data-aos-delay="50">
-                                        <img src="./resources/images/summit_logo_4.png" alt="Summit Web Services mountain peak logo" class="mr-3" id="summit-logo">
+                                        <img src="/resources/images/summit_logo_4.png" alt="Summit Web Services mountain peak logo" class="mr-3" id="summit-logo">
                                         <h1 class="title is-size-2">
                                             Summit Web Services
                                         </h1>
