@@ -80,6 +80,8 @@ export const postLogin = async (req, res, next) => {
             res.redirect('/verify-email-page')
         }
 
+        console.log(req.session)
+
         res.redirect(`/users/user/${user._id}/profile`)
     } else {
         req.session.error = 'Invalid credentials'

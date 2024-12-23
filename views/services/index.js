@@ -15,7 +15,7 @@ const indexPage = (req) => {
                     </div>
                     <h3 class="is-size-3">Websites</h3>
                     <p class="is-size-5 mb-3">Check out our options for websites</p>
-                    <a href="/services/websites.js" class="button is-info is-outlined">View Page</a>
+                    <a href="/services/websites" class="button is-info is-outlined">View Page</a>
                 </div>
                 <div class="service mb-6">
                     <div class="icon mb-2">
@@ -23,7 +23,7 @@ const indexPage = (req) => {
                     </div>
                     <h3 class="is-size-3">Web Apps</h3>
                     <p class="is-size-5 mb-3">Check out our options for web applications</p>
-                    <a href="/services/webApplications.js" class="button is-info is-outlined">View Page</a>
+                    <a href="/services/webApplications" class="button is-info is-outlined">View Page</a>
                 </div>
                 <div class="service mb-6">
                     <div class="icon mb-2">
@@ -31,7 +31,7 @@ const indexPage = (req) => {
                     </div>
                     <h3 class="is-size-3">Mobile Applications</h3>
                     <p class="is-size-5 mb-3">Check out our options for mobile applications</p>
-                    <a href="/services/mobileApplications.js" class="button is-info is-outlined">View Page</a>
+                    <a href="/services/mobileApplications" class="button is-info is-outlined">View Page</a>
                 </div>
                 <div class="service mb-6">
                     <div class="icon mb-2">
@@ -39,7 +39,7 @@ const indexPage = (req) => {
                     </div>
                     <h3 class="is-size-3">Desktop Applications</h3>
                     <p class="is-size-5 mb-3">Check out our options for desktop applications</p>
-                    <a href="/services/desktopApplications.js" class="button is-info is-outlined">View Page</a>
+                    <a href="/services/desktopApplications" class="button is-info is-outlined">View Page</a>
                 </div>
                 <div class="service mb-6">
                     <div class="icon mb-2">
@@ -47,7 +47,7 @@ const indexPage = (req) => {
                     </div>
                     <h3 class="is-size-3">Artificial Intelligence</h3>
                     <p class="is-size-5 mb-3">Check out our options for artifical intelligence</p>
-                    <a href="/services/artificialIntelligence.js" class="button is-info is-outlined">View Page</a>
+                    <a href="/services/artificialIntelligence" class="button is-info is-outlined">View Page</a>
                 </div>
                 <div class="service mb-6">
                     <div class="icon mb-2">
@@ -55,7 +55,7 @@ const indexPage = (req) => {
                     </div>
                     <h3 class="is-size-3">Full Systems</h3>
                     <p class="is-size-5 mb-3">Check out our options for full systems</p>
-                    <a href="/services/fullSystem.js" class="button is-info is-outlined">View Page</a>
+                    <a href="/services/fullSystem" class="button is-info is-outlined">View Page</a>
                 </div>
                 <div class="service mb-6">
                     <div class="icon mb-2">
@@ -63,7 +63,7 @@ const indexPage = (req) => {
                     </div>
                     <h3 class="is-size-3">More Services</h3>
                     <p class="is-size-5 mb-3">Check out everything else we have to offer. There's so much more.</p>
-                    <a href="/services/otherServices.js" class="button is-info is-outlined">View Page</a>
+                    <a href="/services/otherServices" class="button is-info is-outlined">View Page</a>
                 </div>
             </section>
             <section>
