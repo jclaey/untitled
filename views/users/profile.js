@@ -61,11 +61,15 @@ const userProfilePage = ({ user, orders = [], token, projects, quotes, updates }
             if (project.updates.length > 0) {
                 renderedUpdates = project.updates.map(update => {
                     return `
-                        <div>
-                            <a href="/users/project/${project._id}/update/${update._id}">
-                                <h5>${update.title}</h5>
-                            </a>
-                        </div>
+                        <article class="media">
+                            <div class="media-content">
+                                <div class="content">
+                                    <a href="/users/project/${project._id}/update/${update._id}">
+                                        <h5 class="is-size-5">${update.title}</h5>
+                                    </a>
+                                </div>
+                            </div>
+                        </article>
                     `
                 }).join('')
             } else {
@@ -74,11 +78,12 @@ const userProfilePage = ({ user, orders = [], token, projects, quotes, updates }
 
             return `
                 <div class="box">
-                    <div>
-                        <h3 class="is-size-3">${project.title}</h3>
+                    <div class="is-size-5 mb-2">
+                        <h3 class="is-size-3 mb-2">${project.title}</h3>
+                        <strong>Created at:</strong> ${project.created_at.toLocaleDateString()} at ${project.created_at.toLocaleTimeString()}
                     </div>
                     <div>
-                        <h4 class="is-size-4">Project Updates:</h4>
+                        <h4 class="is-size-4 mb-2">Project Updates:</h4>
                         ${renderedUpdates}
                     </div>
                 </div>
