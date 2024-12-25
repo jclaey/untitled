@@ -5,6 +5,7 @@ import projectNewPage from "../views/admin/projectNew.js"
 const key = process.env.ENCRYPTION_KEY
 
 export const requireUserAuth = (req, res, next) => {
+    console.log(req.session)
     if (!req || !req.session || !req.session.userId) {
         if (req.originalUrl === '/quotes') {
             return res.send(userLoginPage({ fromQuotes: true }, req))

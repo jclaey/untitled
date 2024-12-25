@@ -434,8 +434,7 @@ export const postVerifyMobile = (req, res, next) => {
 }
 
 export const postVerifyEmail = async (req, res, next) => {
-    const userId = decryptStringData(req.session.userId, key, req.session.userIv)
-    const user = await User.findById(userId)
+    const user = await User.findById(req.params.userId)
 
     if (user && user.emailVerifyToken === req.params.token) {
         user.emailVerified = true

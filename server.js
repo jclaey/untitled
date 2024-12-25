@@ -23,7 +23,7 @@ connectDB()
 
 const app = express()
 
-app.set('trust proxy', 1);
+app.set('trust proxy', 1)
 app.use(cors())
 
 const __filename = fileURLToPath(import.meta.url)

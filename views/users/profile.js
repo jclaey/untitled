@@ -1,6 +1,6 @@
 import layout from "../layout.js"
 
-const userProfilePage = ({ user, orders = [], token, projects, quotes, updates }, req) => {
+const userProfilePage = ({ user, orders = [], projects, quotes }, req) => {
     let renderedCompleteOrders
     let renderedIncompleteOrders
     let renderedProjects
