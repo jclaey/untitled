@@ -32,7 +32,9 @@ import {
     getVerifyEmailSuccess,
     getVerifyEmailPage,
     getPrivacyPolicy,
-    getTermsAndConditions
+    getTermsAndConditions,
+    getEmailTokenInvalid,
+    resendEmailVerification
 } from '../controllers/index.js'
 
 router.route('/').get(getIndex)
@@ -63,5 +65,7 @@ router.route('/verify-email/:userId/:token').get(postVerifyEmail)
 router.route('/verify-email-success').get(getVerifyEmailSuccess)
 router.route('/privacy-policy').get(getPrivacyPolicy)
 router.route('/terms-and-conditions').get(getTermsAndConditions)
+router.route('/email-token-invalid').get(getEmailTokenInvalid)
+router.route('/resend-verification-email').get(resendEmailVerification)
 
 export default router

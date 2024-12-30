@@ -806,6 +806,16 @@ body {
     object-fit: cover;
 }
 
+#email-token-invalid-main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#email-token-invalid-main section {
+    width: 50%;
+}
+
 
 @keyframes spin {
     0% { transform: rotate(0deg); }

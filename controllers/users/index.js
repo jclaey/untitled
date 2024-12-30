@@ -149,7 +149,7 @@ export const postRegister = async (req, res, next) => {
 
         if (user) {
             const emailToken = await crypto.randomBytes(20).toString('hex')
-            const resetUrl = `http://${req.headers.host}/${user._id}/verify-email/${emailToken}`
+            const resetUrl = `http://${req.headers.host}/verify-email/${user._id}/${emailToken}`
             // const otp = await crypto.randomBytes(3).toString('hex')
             // user.mobileVerifyToken = otp
             // user.mobileVerifyTokenExpires = Date.now() + 3600000
@@ -748,7 +748,6 @@ export const postBillingShipping = async (req, res, next) => {
             res.send(userBillingShippingPage({ cart: { cartItems: user.cart, needsShipping, subtotal }, errors, values: req.body }, req))
         }
 
-        // add parameters to search for order where same user id and isPaid === false
         let existing = await Order.find({ user: user._id, isPaid: false })
 
         if (existing.length > 0) {

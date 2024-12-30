@@ -18,6 +18,7 @@ import User from '../models/User.js'
 import Order from '../models/Order.js'
 import verifyMobilePage from '../views/verify-mobile.js'
 import verifyEmailSuccessPage from '../views/verify-email-success.js'
+import emailTokenInvalidPage from '../views/email-token-invalid.js'
 import { encryptStringData, decryptStringData } from '../utils/encrypt.js'
 import verifyEmailPage from '../views/verify-email.js'
 import passwordEmailSentPage from '../views/passwordEmailSent.js'
@@ -444,7 +445,7 @@ export const postVerifyEmail = async (req, res, next) => {
         if (process.env.NODE_ENV === 'development') {
             throw new Error('Token is invalid or has expired')
         } else {
-            res.redirect('/failure')
+            res.redirect('/email-token-invalid')
         }
     }
 }
@@ -577,4 +578,8 @@ export const getPrivacyPolicy = (req, res, next) => {
 
 export const getTermsAndConditions = (req, res, next) => {
     res.send(termsAndConditionsPage({}, req))
+}
+
+export const getEmailTokenInvalid = (req, res, next) => {
+    res.send(emailTokenInvalidPage({}, req))
 }
