@@ -6,8 +6,6 @@ import morgan from 'morgan'
 import cookieSession from 'cookie-session'
 import methodOverride from 'method-override'
 import cors from 'cors'
-import session from 'express-session'
-import MongoStore from 'connect-mongo'
 import process from 'node:process'
 import favicon from 'serve-favicon'
 import index from './routes/index.js'
@@ -24,23 +22,29 @@ connectDB()
 const app = express()
 
 app.set('trust proxy', 1)
+
+if (process.env.NODE_ENV === 'production') {
+  app.use((req, res, next) => {
+    if (req.secure || req.headers['x-forwarded-proto'] === 'https') {
+        return next()
+    }
+    res.redirect(`https://${req.headers.host}${req.url}`)
+  })
+}
+
 app.use(cors())
+app.use(morgan('dev'))
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+app.use(methodOverride('_method'))
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
-
-app.use(morgan('dev'))
-
-// Use public folder for static files
 app.use(express.static(path.join(__dirname, 'public')))
-
-app.use(methodOverride('_method'))
-
 app.use(favicon(path.join(__dirname, 'public', 'favicon', 'favicon.ico')))
 
-// Use cookie session for authentication
 app.use(cookieSession({
-  secret: 'lklekaiudbfip32n48dpa3pihirgldnagf3qp3r09ieemviej',
+  keys: ['lklekaiudbfip32n48dpa3pihirgldnagf3qp3r09ieemviej'],
   secure: process.env.NODE_ENV === 'production' ? true : false,
   httpOnly: true,
   maxAge: 10800000,
@@ -49,31 +53,11 @@ app.use(cookieSession({
 
 app.use('/users/stripe/events', express.raw({ type: 'application/json' }))
 
-// Use body parser for form data
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
-
-// app.use(session({
-//   secret: 'lklekaiudbfip32n48dpa3pihirgldnagf3qp3r09ieemviej',
-//   store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
-//   resave: false,
-//   saveUninitialized: true
-// }))
-
-// app.use((req, res, next) => {
-//   res.locals.user = req.session.userId || ''
-//   res.locals.success = req.session.success || ''
-//   if (req && req.session && req.session.success) delete req.session.success
-//   if (req && req.session && req.session.error) delete req.session.error
-//   next()
-// })
-
 app.use((req, res, next) => {
   if (req && req.session && req.session.error) delete req.session.error
   next()
 })
 
-// Mount routes
 app.use('/', index)
 app.use('/admin', admin)
 app.use('/quotes', quotes)
@@ -84,7 +68,6 @@ app.use('/users', users)
 
 const PORT = process.env.PORT || 3000
 
-// Set Express server to listen to port 3000
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}`)
 })

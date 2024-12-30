@@ -528,9 +528,7 @@ export const getCheckout = async (req, res, next) => {
                 subtotal += item.product.price
     
                 // let image = await drive.files.get(item.imageId)
-    
-                // console.log(image)
-    
+        
                 cartItems.push({
                     title: item.product.title,
                     description: item.product.description,
