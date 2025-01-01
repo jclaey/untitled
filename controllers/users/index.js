@@ -157,7 +157,7 @@ export const postRegister = async (req, res, next) => {
                 to: 'recipient@example.com', // Recipient's email
                 from: 'your-email@example.com', // Your verified sender email
                 subject: 'Verify Email Address for Web Solutions',
-                html: Buffer.from(`
+                html: `
                     <!DOCTYPE html>
                     <html lang="en">
                     <head>
@@ -213,7 +213,7 @@ export const postRegister = async (req, res, next) => {
                             </table>
                         </body>
                     </html>
-                `, 'utf-8'),
+                `
             }
 
             const response = await sgMail.send(msg)
