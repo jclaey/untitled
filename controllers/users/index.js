@@ -154,8 +154,8 @@ export const postRegister = async (req, res, next) => {
             user.emailVerifyTokenExpires = Date.now() + 10800000
 
             const msg = {
-                to: 'recipient@example.com', // Recipient's email
-                from: 'your-email@example.com', // Your verified sender email
+                to: `${email}`, // Recipient's email
+                from: `${process.env.SEND_GRID_EMAIL}`, // Your verified sender email
                 subject: 'Verify Email Address for Web Solutions',
                 html: `
                     <!DOCTYPE html>
