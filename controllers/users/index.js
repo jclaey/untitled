@@ -34,11 +34,8 @@ const auth = new google.auth.GoogleAuth({
 
 const drive = google.drive({ version: 'v3', auth })
 
-const gmailClientId = process.env.GMAIL_CLIENT_ID
-const gmailClientSecret = process.env.GMAIL_CLIENT_SECRET
-const gmailRefreshToken = process.env.GMAIL_REFRESH_TOKEN
-const gmailRedirectUri = 'http://localhost:3000/verify-email-page'
-// const gmailRedirectUri = 'https://summit-web-services-9b027d19ea1d.herokuapp.com/verify-email-page'
+import sgMail from '@sendgrid/mail'
+sgMail.setApiKey(process.env.SEND_GRID_KEY)
 
 const productsFolderId = process.env.DRIVE_PRODUCTS_FOLDER_ID
 const imagesFolderId = process.env.DRIVE_IMAGES_FOLDER_ID
@@ -156,25 +153,9 @@ export const postRegister = async (req, res, next) => {
             user.emailVerifyToken = emailToken
             user.emailVerifyTokenExpires = Date.now() + 10800000
 
-            const oAuth2Client = new google.auth.OAuth2(gmailClientId, gmailClientSecret, gmailRedirectUri)
-            oAuth2Client.setCredentials({ refresh_token: gmailRefreshToken })
-            const accessToken = await oAuth2Client.getAccessToken()
-
-            const transporter = nodemailer.createTransport({
-                service: 'gmail',
-                auth: {
-                    type: 'OAuth2',
-                    user: `${process.env.GMAIL_EMAIL}`,
-                    clientId: gmailClientId,
-                    clientSecret: gmailClientSecret,
-                    refreshToken: gmailRefreshToken,
-                    accessToken: accessToken.token
-                }
-            })
-        
-            const info = await transporter.sendMail({
-                from: `"Untitled Web Solutions" <${process.env.OUTLOOK_EMAIL}>`,
-                to: `${req.body.email}`,
+            const msg = {
+                to: 'recipient@example.com', // Recipient's email
+                from: 'your-email@example.com', // Your verified sender email
                 subject: 'Verify Email Address for Web Solutions',
                 html: Buffer.from(`
                     <!DOCTYPE html>
@@ -232,12 +213,11 @@ export const postRegister = async (req, res, next) => {
                             </table>
                         </body>
                     </html>
-                `, 'utf-8')
-            })
-        
-            if (process.env.NODE_ENV === 'development') {
-                console.log("Message sent: %s", info.messageId)
+                `, 'utf-8'),
             }
+
+            const response = await sgMail.send(msg)
+            console.log('Email sent successfully:', response)
 
             // const message = await twilioClient.messages.create({
             //     body: `Here is your Untitled verification code: ${otp}`,

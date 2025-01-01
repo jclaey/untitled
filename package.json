@@ -29,6 +29,7 @@
   "dependencies": {
     "@google-cloud/local-auth": "^2.1.0",
     "@ngrok/ngrok": "^1.4.1",
+    "@sendgrid/mail": "^8.1.4",
     "@stripe/stripe-js": "^4.1.0",
     "aos": "^2.3.4",
     "axios": "^1.7.2",
