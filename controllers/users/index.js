@@ -254,12 +254,9 @@ export const getLogout = (req, res, next) => {
 export const getUserProfile = async (req, res, next) => {
     let user = await User.findById(req.params.id)
     let token = await crypto.randomBytes(20).toString('hex')
-    let emailToken = await crypto.randomBytes(20).toString('hex')
     let projects = await Project.find({ user: req.params.id })
     let quotes = await QuoteInfoItem.find({ user: req.params.id })
-    console.log(quotes)
-    console.log(projects)
-
+    
     if (user && !user.emailVerified)  {
         return res.redirect('/verify-email-page')
     }

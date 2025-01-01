@@ -56,24 +56,11 @@ export const postNewQuote = async (req, res, next) => {
         oAuth2Client.setCredentials({ refresh_token: gmailRefreshToken })
         const accessToken = await oAuth2Client.getAccessToken()
 
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                type: 'OAuth2',
-                user: `${process.env.GMAIL_EMAIL}`,
-                clientId: gmailClientId,
-                clientSecret: gmailClientSecret,
-                refreshToken: gmailRefreshToken,
-                accessToken: accessToken.token
-            }
-        })
-
-        const info = await transporter.sendMail({
-            from: `"Web Solutions" <${process.env.OUTLOOK_EMAIL}>`,
-            to: `${process.env.OUTLOOK_EMAIL}`,
-            subject: 'Quote Requested',
-            text: `From: Web Solutions by HandierMe, Subject: Quote Requested`,
-            html: Buffer.from(`
+        const msg = {
+            to: `${email}`,
+            from: `${process.env.SEND_GRID_EMAIL}`,
+            subject: 'Verify Email Address for Web Solutions',
+            html: `
                 <!DOCTYPE html>
                 <html lang="en">
                 <head>
@@ -132,10 +119,12 @@ export const postNewQuote = async (req, res, next) => {
                     </table>
                 </body>
                 </html>
-            `, 'utf-8')
-        })
+            `
+        }
 
-        if (info) {
+        const response = await sgMail.send(msg)
+
+        if (response) {
             res.send(successQuotePage(req))
         } else {
             if (process.env.NODE_ENV === 'development') {

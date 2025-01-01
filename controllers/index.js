@@ -45,8 +45,53 @@ export const postContact = async (req, res, next) => {
         return res.send(contactPage({ errors, values: req.body }, req))
     }
 
-    // Refactor this code
-    await sendEmail(req)
+    const { name, email, subject, content } = req.body
+
+    const msg = {
+        to: `${email}`,
+        from: `${process.env.SEND_GRID_EMAIL}`,
+        subject: 'Verify Email Address for Web Solutions',
+        html: `
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+                <title>User Contact Email</title>
+            </head>
+            <body>
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td align="center">
+                            <table width="600" cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td>
+                                        <h1>A User Has Submitted a Question or Comment</h1>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><h3>From: <strong>${name}</strong></h3></td>
+                                </tr>
+                                <tr>
+                                    <td><h3>Email: <strong>${email}</strong></h3></td>
+                                </tr>
+                                <tr>
+                                    <td><h3>Subject: <strong>${subject}</strong></h3></td>
+                                </tr>
+                                <tr>
+                                    <td><h3>Content: <strong>${content}</strong></h3></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </body>
+            </html>
+        `
+    }
+
+    const response = await sgMail.send(msg)
     res.send(successPage(req))
 }
 
@@ -535,13 +580,11 @@ export const resendEmailVerification = async (req, res, next) => {
             }
 
             const response = await sgMail.send(msg)
-        
-            if (process.env.NODE_ENV === 'development') {
-                console.log("Message sent: %s", info.messageId)
-            }
 
-            req.session.message = 'A new verification email is being sent to your email address on record. Please allow a few minutes for the email to be sent and check any spam or other folders if the email is not in your regular inbox.'
-            return res.send(verifyEmailPage({}, req))
+            if (response) {
+                req.session.message = 'A new verification email is being sent to your email address on record. Please allow a few minutes for the email to be sent and check any spam or other folders if the email is not in your regular inbox.'
+                return res.send(verifyEmailPage({}, req))
+            }
         } else {
             if (process.env.NODE_ENV === 'development') {
                 throw new Error('User could not be found')
