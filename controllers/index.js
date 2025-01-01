@@ -469,33 +469,19 @@ export const resendEmailVerification = async (req, res, next) => {
             user.emailVerifyToken = token
             user.emailVerifyTokenExpires = Date.now() + 10800000
 
-            const resetUrl = `http://${req.headers.host}/verify-email/${token}`
+            const resetUrl = `http://${req.headers.host}/verify-email/${user._id}/${token}`
 
-            const transporter = nodemailer.createTransport({
-                service: 'gmail',
-                auth: {
-                    type: 'OAuth2',
-                    user: `${process.env.GMAIL_EMAIL}`,
-                    clientId: gmailClientId,
-                    clientSecret: gmailClientSecret,
-                    refreshToken: gmailRefreshToken,
-                    accessToken: accessToken.token
-                }
-            })
-        
-            const info = await transporter.sendMail({
-                from: `"contact@handierme.com" <${process.env.OUTLOOK_EMAIL}>`,
-                to: `${userEmail}`,
+            const msg = {
+                to: `${email}`,
+                from: `${process.env.SEND_GRID_EMAIL}`,
                 subject: 'Verify Email Address for Web Solutions',
-                text: `From: Web Solutions, Subject: Verify Email Address`,
-                html: Buffer.from(`
+                html: `
                     <!DOCTYPE html>
                     <html lang="en">
                     <head>
                         <meta charset="UTF-8">
                         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
-                        <title>Verify Email</title>
+                        <title>Verify Email Address</title>
                     </head>
                         <body>
                             <table width="100%" cellpadding="0" cellspacing="0" border="0">
@@ -545,14 +531,16 @@ export const resendEmailVerification = async (req, res, next) => {
                             </table>
                         </body>
                     </html>
-                `, 'utf-8')
-            })
+                `
+            }
+
+            const response = await sgMail.send(msg)
         
             if (process.env.NODE_ENV === 'development') {
                 console.log("Message sent: %s", info.messageId)
             }
 
-            req.session.message = 'A new verification email is being sent to your email address on record. Please allow a few minutes for the email to be sent and check any spam or other folders if the email is not in your normal inbox.'
+            req.session.message = 'A new verification email is being sent to your email address on record. Please allow a few minutes for the email to be sent and check any spam or other folders if the email is not in your regular inbox.'
             return res.send(verifyEmailPage({}, req))
         } else {
             if (process.env.NODE_ENV === 'development') {

@@ -154,8 +154,8 @@ export const postRegister = async (req, res, next) => {
             user.emailVerifyTokenExpires = Date.now() + 10800000
 
             const msg = {
-                to: `${email}`, // Recipient's email
-                from: `${process.env.SEND_GRID_EMAIL}`, // Your verified sender email
+                to: `${email}`,
+                from: `${process.env.SEND_GRID_EMAIL}`,
                 subject: 'Verify Email Address for Web Solutions',
                 html: `
                     <!DOCTYPE html>
@@ -217,7 +217,6 @@ export const postRegister = async (req, res, next) => {
             }
 
             const response = await sgMail.send(msg)
-            console.log('Email sent successfully:', response)
 
             // const message = await twilioClient.messages.create({
             //     body: `Here is your Untitled verification code: ${otp}`,
