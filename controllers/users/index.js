@@ -116,6 +116,12 @@ export const postRegister = async (req, res, next) => {
         const encrypted = encryptStringData(email, key)
         const hashed = crypto.createHash('sha256').update(email).digest('hex')
 
+        const existingUser = await User.findOne({ emailHashed: hashed })
+
+        if (existingUser) {
+            return res.send(userRegisterPage({ errors: [{ msg: 'Email is already registered' }], values: req.body }, req))
+        }
+
         firstName = encryptStringData(firstName, key)
         lastName = encryptStringData(lastName, key)
         phoneNumber = encryptStringData(phoneNumber, key)
@@ -145,11 +151,20 @@ export const postRegister = async (req, res, next) => {
         })
 
         if (user) {
+            try {
+                await user.save()
+            } catch (err) {
+                console.log(err)
+            }
+
+            let userId = encryptStringData(String(user._id), key)
+            req.session.userId = userId.encryptedData
+            req.session.userIv = userId.iv
+            req.session.expiration = Date.now() + 10800000
+
             const emailToken = await crypto.randomBytes(20).toString('hex')
             const resetUrl = `http://${req.headers.host}/verify-email/${user._id}/${emailToken}`
-            // const otp = await crypto.randomBytes(3).toString('hex')
-            // user.mobileVerifyToken = otp
-            // user.mobileVerifyTokenExpires = Date.now() + 3600000
+        
             user.emailVerifyToken = emailToken
             user.emailVerifyTokenExpires = Date.now() + 10800000
 
@@ -216,24 +231,12 @@ export const postRegister = async (req, res, next) => {
                 `
             }
 
-            const response = await sgMail.send(msg)
-
-            // const message = await twilioClient.messages.create({
-            //     body: `Here is your Untitled verification code: ${otp}`,
-            //     from: "+14697784806",
-            //     to: `+1${req.body.phoneNumber}`
-            // })
-
-            let userId = encryptStringData(String(user._id), key)
-            req.session.userId = userId.encryptedData
-            req.session.userIv = userId.iv
-            req.session.expiration = Date.now() + 10800000
-            await user.save()
-            return res.redirect(`/verify-email-page`)
-
-            // if (message) {
-            //     res.send(verifyMobilePage({ userId: user._id }, req))
-            // }
+            try {
+                await sgMail.send(msg)
+                res.redirect('/verify-email-page')
+            } catch (err) {
+                res.send(userRegisterPage({ errors: [{ msg: 'Failed to send verification email' }], values: req.body }, req))
+            }
         } else {
             if (process.env.NODE_ENV === 'development') {
                 throw new Error('Could not create a new user')
